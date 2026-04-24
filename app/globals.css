@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary:     #0E7C66;
+  --color-secondary:   #1BAE91;
+  --color-accent-soft: #7AE0C3;
+  --color-success:     #2ECC71;
+  --color-warning:     #F1C40F;
+  --color-error:       #E74C3C;
+  --color-info:        #3498DB;
+
+  --bg:         #F2F8F6;
+  --card:       #FFFFFF;
+  --text:       #1C1F24;
+  --text-muted: #4A5568;
+  --border:     #D1E8E2;
+}
+
+.dark {
+  --bg:         #0F1E1A;
+  --card:       #1A3A33;
+  --text:       #E6F2EE;
+  --text-muted: #94B8B0;
+  --border:     #1E4A40;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); opacity: 0.3; }
+  50%       { transform: translateY(-20px); opacity: 0.6; }
+}
+
+@keyframes dashFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
