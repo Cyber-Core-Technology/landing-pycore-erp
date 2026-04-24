@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     volumes:
       - .:/app
       - /app/node_modules
@@ -14,16 +14,25 @@ services:
       - NODE_ENV=development
       - WATCHPACK_POLLING=true
     restart: unless-stopped
+    networks:
+      - proxy-network
 
   prod:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3001:3000"
+    expose:
+      - "3000"
     env_file: .env
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     profiles:
       - prod
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true
+    name: proxy-network
