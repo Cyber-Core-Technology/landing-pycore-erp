@@ -12,10 +12,10 @@ const TEZCA_EXAMPLES = [
 ];
 
 const PLAN_QUERIES = [
-  { plan: "Básico",      queries: "5 consultas/día",   color: "#94B8B0" },
-  { plan: "Profesional", queries: "20 consultas/día",  color: "#1BAE91" },
-  { plan: "Empresarial", queries: "100 consultas/día", color: "#7AE0C3" },
-  { plan: "Elite",  queries: "Ilimitado",         color: "#FFD700" },
+  { plan: "Básico",      queries: "No incluido",        color: "#94B8B0" },
+  { plan: "Profesional", queries: "50 consultas/día",   color: "#1BAE91" },
+  { plan: "Empresarial", queries: "100 consultas/día",  color: "#7AE0C3" },
+  { plan: "Elite",       queries: "Ilimitado",          color: "#FFD700" },
 ];
 
 const DIFF_ITEMS = [

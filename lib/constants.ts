@@ -208,7 +208,7 @@ export const PLANS: {
       "Finanzas: CxC, CxP, gastos",
       "Facturación CFDI ilimitada",
       "Recursos Humanos",
-      "TEZCA básico (20 consultas/día)",
+      "TEZCA (50 consultas/día)",
       "3 sucursales · 10 usuarios",
     ],
     highlight: true,
