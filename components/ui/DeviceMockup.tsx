@@ -10,7 +10,7 @@ export function DeviceMockup() {
         maxWidth: "580px",
         /* deja espacio a la izquierda y abajo para el phone */
         paddingLeft: "14%",
-        paddingBottom: "16%",
+        paddingBottom: "10%",
       }}
     >
       {/* ── Desktop / Browser frame ── */}
@@ -76,7 +76,7 @@ export function DeviceMockup() {
         style={{
           position: "absolute",
           /* cuelga por debajo del desktop para dar profundidad */
-          bottom: "-14%",
+          bottom: "-5%",
           left: 0,
           width: "30%",
           /* recorta la altura para mostrar solo la parte superior del mobile */
