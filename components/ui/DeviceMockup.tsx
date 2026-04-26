@@ -8,9 +8,9 @@ export function DeviceMockup() {
         position: "relative",
         width: "100%",
         maxWidth: "580px",
-        /* espacio para que el phone no se recorte */
-        paddingLeft: "8%",
-        paddingBottom: "18%",
+        /* deja espacio a la izquierda para que el phone no se recorte */
+        paddingLeft: "14%",
+        paddingBottom: "4%",
       }}
     >
       {/* ── Desktop / Browser frame ── */}
@@ -21,11 +21,9 @@ export function DeviceMockup() {
           border: "1px solid rgba(122,224,195,0.15)",
           boxShadow:
             "0 0 0 1px rgba(0,0,0,0.5), " +
-            "0 32px 80px rgba(0,0,0,0.6), " +
-            "0 0 60px rgba(14,124,102,0.22)",
+            "0 28px 72px rgba(0,0,0,0.55), " +
+            "0 0 56px rgba(14,124,102,0.2)",
           animation: "dashFloat 5s ease-in-out infinite",
-          transform: "perspective(1200px) rotateY(-4deg) rotateX(2deg)",
-          transformOrigin: "center center",
         }}
       >
         {/* Browser chrome */}
@@ -39,13 +37,11 @@ export function DeviceMockup() {
             borderBottom: "1px solid rgba(255,255,255,0.06)",
           }}
         >
-          {/* Traffic lights */}
           <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
-            <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FF5F57", display: "block" }} />
-            <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FEBC2E", display: "block" }} />
-            <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28C840", display: "block" }} />
+            <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#FF5F57", display: "block" }} />
+            <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#FEBC2E", display: "block" }} />
+            <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: "#28C840", display: "block" }} />
           </div>
-          {/* URL bar */}
           <div
             style={{
               flex: 1,
@@ -79,62 +75,72 @@ export function DeviceMockup() {
       <div
         style={{
           position: "absolute",
-          bottom: 0,
+          /* alineado al fondo del desktop, sobresale a la izquierda */
+          bottom: "4%",
           left: 0,
-          width: "36%",
-          borderRadius: "28px",
+          width: "30%",
+          /* recorta la altura para mostrar solo la parte superior del mobile */
+          maxHeight: "88%",
+          borderRadius: "22px",
           overflow: "hidden",
-          border: "1.5px solid rgba(122,224,195,0.25)",
+          border: "1.5px solid rgba(122,224,195,0.22)",
           boxShadow:
             "0 0 0 1px rgba(0,0,0,0.6), " +
-            "0 20px 56px rgba(0,0,0,0.7), " +
-            "0 0 40px rgba(14,124,102,0.35)",
+            "0 20px 52px rgba(0,0,0,0.65), " +
+            "0 0 36px rgba(14,124,102,0.32)",
           animation: "dashFloat 5s ease-in-out infinite",
-          animationDelay: "0.7s",
+          animationDelay: "0.8s",
           zIndex: 10,
           background: "#081410",
-          transform: "perspective(800px) rotateY(4deg)",
         }}
       >
         {/* Pill notch */}
         <div
           style={{
             background: "#081410",
-            height: "20px",
+            height: "18px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            flexShrink: 0,
           }}
         >
           <div
             style={{
-              width: "40px",
-              height: "5px",
-              background: "rgba(255,255,255,0.15)",
-              borderRadius: "3px",
+              width: "36px",
+              height: "4px",
+              background: "rgba(255,255,255,0.18)",
+              borderRadius: "2px",
             }}
           />
         </div>
 
-        {/* Screenshot mobile */}
-        <div style={{ lineHeight: 0 }}>
+        {/* Screenshot mobile — object-fit recorta el exceso vertical */}
+        <div style={{ lineHeight: 0, overflow: "hidden" }}>
           <Image
             src="/dashboard-mobile.png"
             alt="PyCore ERP — Dashboard en móvil"
             width={1080}
             height={2307}
-            style={{ width: "100%", height: "auto", display: "block" }}
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              objectFit: "cover",
+              objectPosition: "top",
+            }}
           />
         </div>
       </div>
 
-      {/* Glow ambiental detrás de los dispositivos */}
+      {/* Glow ambiental */}
       <div
         aria-hidden
         style={{
           position: "absolute",
-          inset: "20% 0 0 0",
-          background: "radial-gradient(ellipse at 60% 40%, rgba(27,174,145,0.12) 0%, transparent 70%)",
+          inset: "10% -10% 0 10%",
+          background:
+            "radial-gradient(ellipse at 55% 45%, rgba(27,174,145,0.1) 0%, transparent 65%)",
           pointerEvents: "none",
           zIndex: -1,
         }}
