@@ -7,55 +7,62 @@ export function DeviceMockup() {
       style={{
         position: "relative",
         width: "100%",
-        maxWidth: "560px",
-        paddingRight: "12%",
-        paddingBottom: "14%",
+        maxWidth: "580px",
+        /* espacio para que el phone no se recorte */
+        paddingLeft: "8%",
+        paddingBottom: "18%",
       }}
     >
       {/* ── Desktop / Browser frame ── */}
       <div
         style={{
-          borderRadius: "14px",
+          borderRadius: "12px",
           overflow: "hidden",
-          border: "1px solid rgba(122,224,195,0.18)",
+          border: "1px solid rgba(122,224,195,0.15)",
           boxShadow:
-            "0 0 0 1px rgba(0,0,0,0.4), 0 24px 64px rgba(0,0,0,0.55), 0 0 48px rgba(14,124,102,0.28)",
-          animation: "dashFloat 4s ease-in-out infinite",
+            "0 0 0 1px rgba(0,0,0,0.5), " +
+            "0 32px 80px rgba(0,0,0,0.6), " +
+            "0 0 60px rgba(14,124,102,0.22)",
+          animation: "dashFloat 5s ease-in-out infinite",
+          transform: "perspective(1200px) rotateY(-4deg) rotateX(2deg)",
+          transformOrigin: "center center",
         }}
       >
         {/* Browser chrome */}
         <div
           style={{
-            background: "#0B1914",
-            padding: "9px 12px",
+            background: "#081410",
+            padding: "8px 12px",
             display: "flex",
             alignItems: "center",
             gap: "8px",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
           }}
         >
+          {/* Traffic lights */}
           <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
             <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FF5F57", display: "block" }} />
             <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#FEBC2E", display: "block" }} />
             <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#28C840", display: "block" }} />
           </div>
+          {/* URL bar */}
           <div
             style={{
               flex: 1,
-              background: "rgba(255,255,255,0.06)",
+              background: "rgba(255,255,255,0.05)",
               borderRadius: "5px",
               padding: "3px 10px",
               fontSize: "10px",
               color: "#7AE0C3",
               fontFamily: "monospace",
-              letterSpacing: "0.02em",
+              letterSpacing: "0.03em",
             }}
           >
-            app.pycore.app/dashboard
+            plataforma.pycore.app/dashboard
           </div>
         </div>
 
-        {/* Screenshot */}
+        {/* Screenshot desktop */}
         <div style={{ lineHeight: 0, background: "#0F1E1A" }}>
           <Image
             src="/dashboard-desktop.png"
@@ -73,24 +80,27 @@ export function DeviceMockup() {
         style={{
           position: "absolute",
           bottom: 0,
-          right: 0,
-          width: "32%",
-          borderRadius: "24px",
+          left: 0,
+          width: "36%",
+          borderRadius: "28px",
           overflow: "hidden",
-          border: "1.5px solid rgba(122,224,195,0.28)",
+          border: "1.5px solid rgba(122,224,195,0.25)",
           boxShadow:
-            "0 0 0 1px rgba(0,0,0,0.5), 0 16px 48px rgba(0,0,0,0.65), 0 0 32px rgba(14,124,102,0.4)",
-          animation: "dashFloat 4s ease-in-out infinite",
-          animationDelay: "1s",
+            "0 0 0 1px rgba(0,0,0,0.6), " +
+            "0 20px 56px rgba(0,0,0,0.7), " +
+            "0 0 40px rgba(14,124,102,0.35)",
+          animation: "dashFloat 5s ease-in-out infinite",
+          animationDelay: "0.7s",
           zIndex: 10,
-          background: "#0B1914",
+          background: "#081410",
+          transform: "perspective(800px) rotateY(4deg)",
         }}
       >
-        {/* Status bar / pill notch */}
+        {/* Pill notch */}
         <div
           style={{
-            background: "#0B1914",
-            height: "18px",
+            background: "#081410",
+            height: "20px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -98,15 +108,15 @@ export function DeviceMockup() {
         >
           <div
             style={{
-              width: "44px",
+              width: "40px",
               height: "5px",
-              background: "rgba(255,255,255,0.18)",
+              background: "rgba(255,255,255,0.15)",
               borderRadius: "3px",
             }}
           />
         </div>
 
-        {/* Screenshot */}
+        {/* Screenshot mobile */}
         <div style={{ lineHeight: 0 }}>
           <Image
             src="/dashboard-mobile.png"
@@ -117,6 +127,18 @@ export function DeviceMockup() {
           />
         </div>
       </div>
+
+      {/* Glow ambiental detrás de los dispositivos */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: "20% 0 0 0",
+          background: "radial-gradient(ellipse at 60% 40%, rgba(27,174,145,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      />
     </div>
   );
 }
