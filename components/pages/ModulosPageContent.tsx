@@ -4,10 +4,10 @@ import { useDemoModal } from "@/lib/demo-context";
 
 const MODULES_DETAIL = [
   {
-    id: "empresa",
+    id: "core",
     icon: "🏢",
-    name: "Empresa y Sucursales",
-    subtitle: "Un solo sistema para todos tus puntos de venta",
+    name: "Core y sucursales",
+    subtitle: "Maneja todas tus ubicaciones desde un solo sistema",
     description:
       "Gestiona la información central de tu negocio y todas sus ubicaciones desde un panel unificado. Desde los datos fiscales hasta las configuraciones de cada sucursal, todo en un solo lugar.",
     features: [
@@ -20,10 +20,10 @@ const MODULES_DETAIL = [
     benefit: "Cada sucursal opera con independencia, pero toda la información queda centralizada.",
   },
   {
-    id: "usuarios",
+    id: "seguridad",
     icon: "🔐",
-    name: "Usuarios y Accesos",
-    subtitle: "Tu vendedor solo ve ventas. Tú ves todo.",
+    name: "Seguridad y accesos",
+    subtitle: "Tú decides quién ve qué y hasta dónde puede operar",
     description:
       "Define quién puede ver y hacer qué dentro del sistema. Control granular por módulo y por acción, con trazabilidad completa de cada operación.",
     features: [
@@ -38,8 +38,8 @@ const MODULES_DETAIL = [
   {
     id: "catalogos",
     icon: "🗂️",
-    name: "Catálogos (Datos Maestros)",
-    subtitle: "La base de todos tus procesos",
+    name: "Catálogos",
+    subtitle: "Productos, impuestos y unidades configurados a tu medida",
     description:
       "Categorías, unidades de medida e impuestos configurados una sola vez, usados en toda la plataforma. Consistencia total sin trabajo duplicado.",
     features: [
@@ -54,8 +54,8 @@ const MODULES_DETAIL = [
   {
     id: "clientes",
     icon: "👥",
-    name: "Clientes y Proveedores",
-    subtitle: "Nunca pierdas de vista quién te debe ni a quién le debes",
+    name: "Clientes y proveedores",
+    subtitle: "Historial, créditos y contactos siempre a la mano",
     description:
       "El directorio de relaciones comerciales del negocio, con control de crédito y condiciones de pago incluidos.",
     features: [
@@ -71,7 +71,7 @@ const MODULES_DETAIL = [
     id: "inventario",
     icon: "📦",
     name: "Inventario",
-    subtitle: "Stock en tiempo real con trazabilidad total",
+    subtitle: "Sabe exactamente cuánto tienes, dónde y cuánto vale en todo momento",
     description:
       "Control completo de existencias: entradas, salidas, traspasos, ajustes y levantamiento físico. El sistema distingue entre stock total, reservado y disponible real.",
     features: [
@@ -87,10 +87,27 @@ const MODULES_DETAIL = [
     benefit: "Sabes exactamente cuánto tienes, dónde está y cuánto te costó. Sin adivinar.",
   },
   {
+    id: "compras",
+    icon: "🛒",
+    name: "Compras",
+    subtitle: "Controla qué pediste, qué llegó y cuánto debes pagar",
+    description:
+      "Gestiona todo el ciclo de compra: desde la orden hasta la recepción en almacén, con cruce triple para eliminar errores con proveedores.",
+    features: [
+      "Órdenes de compra con folio automático",
+      "Recepción parcial o total contra la orden",
+      "Cruce triple: orden ↔ recepción ↔ factura del proveedor",
+      "Seguimiento de estado: borrador → activa → recibida → completa",
+      "Inventario se actualiza automáticamente al recibir",
+      "Compras a crédito generan cuentas por pagar automáticamente",
+    ],
+    benefit: "El cruce de tres vías elimina errores y discrepancias con el proveedor. Siempre.",
+  },
+  {
     id: "ventas",
     icon: "💰",
-    name: "Ventas / POS",
-    subtitle: "Vende rápido, con o sin internet",
+    name: "Ventas y POS",
+    subtitle: "Cobra rápido, aplica promociones y genera facturas al instante",
     description:
       "El motor de ingresos del negocio. Diseñado para capturar ventas rápido sin errores, con soporte para múltiples métodos de pago y operación offline.",
     features: [
@@ -106,27 +123,10 @@ const MODULES_DETAIL = [
     benefit: "No pierdes una venta por caída de internet. El negocio no para.",
   },
   {
-    id: "compras",
-    icon: "🛒",
-    name: "Compras y Abastecimiento",
-    subtitle: "Del pedido al almacén sin sorpresas",
-    description:
-      "Gestiona todo el ciclo de compra: desde la orden hasta la recepción en almacén, con cruce triple para eliminar errores con proveedores.",
-    features: [
-      "Órdenes de compra con folio automático",
-      "Recepción parcial o total contra la orden",
-      "Cruce triple: orden ↔ recepción ↔ factura del proveedor",
-      "Seguimiento de estado: borrador → activa → recibida → completa",
-      "Inventario se actualiza automáticamente al recibir",
-      "Compras a crédito generan cuentas por pagar automáticamente",
-    ],
-    benefit: "El cruce de tres vías elimina errores y discrepancias con el proveedor. Siempre.",
-  },
-  {
     id: "finanzas",
     icon: "💳",
     name: "Finanzas",
-    subtitle: "Visibilidad completa de tu flujo de dinero",
+    subtitle: "Ve tu flujo de dinero, cobros pendientes y gastos en tiempo real",
     description:
       "CxC, CxP, gastos operativos y cuentas bancarias en un solo módulo. Siempre sabes cuánto dinero tienes disponible y cuánto debes.",
     features: [
@@ -140,29 +140,10 @@ const MODULES_DETAIL = [
     benefit: "No más sorpresas. Ves los vencimientos antes de que lleguen.",
   },
   {
-    id: "cfdi",
-    icon: "🧾",
-    name: "Facturación CFDI",
-    subtitle: "Timbrado ante el SAT sin complicaciones",
-    description:
-      "Emisión de facturas digitales con timbrado ante el SAT directo desde el sistema, sin intermediarios ni pasos adicionales.",
-    features: [
-      "CFDI generado desde la venta con un solo clic",
-      "PAC integrado: Facturama — sin contratar aparte",
-      "Cancelación de facturas con sustitución",
-      "Descarga de PDF y XML con UUID SAT",
-      "Envío de factura por correo directo desde el sistema",
-      "Facturas en lote para múltiples ventas",
-      "Modo sandbox para pruebas antes de producción",
-      "Configuración de Certificado de Sello Digital (CSD)",
-    ],
-    benefit: "Tus clientes reciben su factura en minutos. Sin esperar al contador.",
-  },
-  {
     id: "rrhh",
     icon: "👨‍💼",
-    name: "Recursos Humanos",
-    subtitle: "Expediente y asistencia de tu equipo",
+    name: "Recursos humanos",
+    subtitle: "Empleados, asistencias y datos de nómina en un solo lugar",
     description:
       "Administración básica del equipo: expedientes completos y control de asistencia desde cualquier dispositivo móvil.",
     features: [
@@ -176,89 +157,34 @@ const MODULES_DETAIL = [
     benefit: "Expediente siempre actualizado y accesible. El registro de asistencia desde móvil elimina el papel.",
   },
   {
-    id: "tienda",
-    icon: "🌐",
-    name: "Tienda en Línea",
-    subtitle: "Tu catálogo público conectado al inventario",
+    id: "auditoria",
+    icon: "📋",
+    name: "Auditoría",
+    subtitle: "Registro completo de todo lo que pasa en tu negocio, siempre",
     description:
-      "Una tienda en línea propia, conectada en tiempo real con el inventario. Sin doble captura, sin desincronía. Cualquier negocio puede tener presencia digital en minutos.",
+      "Trazabilidad total de cada operación en el sistema. Cada acción queda registrada con nombre de usuario, fecha y detalle del cambio, sin excepciones.",
     features: [
-      "URL pública única: plataforma.pycore.app/p/tu-negocio",
-      "Stock en tiempo real — nunca vendas lo que no tienes",
-      "Checkout con Mercado Pago integrado",
-      "Pedidos programados (panadería, despensa, canastas)",
-      "Seguimiento del pedido en tiempo real para el cliente",
-      "Modalidades: recoger en tienda o envío a domicilio",
-      "Gestión de pedidos desde el ERP con actualización automática",
+      "Cada acción registrada: quién, cuándo y exactamente qué cambió",
+      "Historial de movimientos en ventas, compras e inventario",
+      "Trazabilidad por usuario en todos los módulos",
+      "Alertas automáticas ante cambios críticos o inusuales",
+      "Exportación de logs para revisión externa o contabilidad",
     ],
-    benefit: "Cuando llega un pedido, el stock se descuenta y la venta se registra sola.",
-  },
-  {
-    id: "reportes",
-    icon: "📊",
-    name: "Reportes",
-    subtitle: "Datos accionables de toda tu operación",
-    description:
-      "Información real de ventas, compras, márgenes y finanzas. Exportable para análisis externo.",
-    features: [
-      "Ventas por período, vendedor, producto o cliente",
-      "Análisis de márgenes de utilidad por producto y por venta",
-      "Reporte de antigüedad de cuentas por cobrar y pagar",
-      "Inventario valorado con costo promedio ponderado",
-      "Reportes de compras y abastecimiento",
-      "Exportación de datos para análisis externo",
-    ],
-    benefit: "Los números siempre disponibles. Sin generar reportes manuales.",
-  },
-  {
-    id: "tezca",
-    icon: "🤖",
-    name: "TEZCA (IA)",
-    subtitle: "Tu consejero de negocios con inteligencia artificial",
-    description:
-      "Asistente de IA integrado con los datos de tu negocio. Modo interactivo para preguntas específicas y modo observador que analiza automáticamente cada hora.",
-    features: [
-      "Modo Consejero: pregúntale cualquier cosa de tu operación",
-      "Modo Observador: genera alertas e insights sin que preguntes",
-      "Respuestas con datos reales de tu negocio, no genéricas",
-      "Insignias y logros automáticos por hitos del negocio",
-      "Generación de imágenes de productos con IA",
-      "Historial completo de conversaciones guardado",
-    ],
-    benefit: "La mayoría de los ERPs te dan datos. TEZCA te dice qué hacer con ellos.",
-    link: "/tezca",
-  },
-  {
-    id: "notificaciones",
-    icon: "🔔",
-    name: "Notificaciones",
-    subtitle: "Alertas en tiempo real, dentro y fuera del sistema",
-    description:
-      "Sistema de alertas que mantiene a cada miembro del equipo informado en el momento en que ocurren los eventos, incluso con el navegador cerrado.",
-    features: [
-      "Notificaciones push incluso con la pestaña cerrada",
-      "Mensajes del administrador a roles específicos",
-      "Alertas automáticas del sistema (stock bajo, vencimientos)",
-      "Avisos de TEZCA integrados en el flujo",
-      "Historial de notificaciones leídas y no leídas",
-    ],
-    benefit: "El equipo siempre informado. El admin puede enviar avisos a un rol específico.",
+    benefit: "Siempre sabes qué pasó, quién lo hizo y cuándo. Sin lagunas.",
   },
 ];
 
 const CATEGORIES = [
-  { label: "Todos",          value: "todos" },
-  { label: "Operación",      value: "operacion" },
-  { label: "Ventas",         value: "ventas" },
-  { label: "Finanzas",       value: "finanzas" },
-  { label: "Digital",        value: "digital" },
+  { label: "Todos",      value: "todos" },
+  { label: "Operación",  value: "operacion" },
+  { label: "Ventas",     value: "ventas" },
+  { label: "Finanzas",   value: "finanzas" },
 ];
 
 const CATEGORY_MAP: Record<string, string[]> = {
-  operacion: ["empresa", "usuarios", "catalogos", "clientes", "rrhh", "notificaciones"],
-  ventas:    ["ventas", "inventario", "compras", "reportes"],
-  finanzas:  ["finanzas", "cfdi"],
-  digital:   ["tienda", "tezca"],
+  operacion: ["core", "seguridad", "catalogos", "clientes", "rrhh", "auditoria"],
+  ventas:    ["ventas", "inventario", "compras"],
+  finanzas:  ["finanzas"],
 };
 
 import { useState } from "react";
@@ -285,7 +211,7 @@ export function ModulosPageContent() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
           >
-            🧩 14 módulos integrados
+            🧩 10 módulos integrados
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -331,7 +257,7 @@ export function ModulosPageContent() {
       <div className="bg-[var(--card)] border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
-            { value: "14", label: "Módulos integrados" },
+            { value: "10", label: "Módulos integrados" },
             { value: "1", label: "Única plataforma" },
             { value: "∞", label: "Escalabilidad" },
             { value: "100%", label: "Hecho en México" },

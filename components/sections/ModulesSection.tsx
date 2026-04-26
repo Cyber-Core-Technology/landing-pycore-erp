@@ -26,7 +26,7 @@ export function ModulesSection() {
             Todo lo que tu negocio necesita
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-            14 módulos integrados. Un solo sistema. Activa los que necesitas y desactiva los que no. Sin costos ocultos por funciones que no usas.
+            10 módulos integrados. Un solo sistema. Activa los que necesitas y desactiva los que no. Sin costos ocultos por funciones que no usas.
           </p>
         </div>
 
