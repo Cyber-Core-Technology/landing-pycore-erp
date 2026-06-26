@@ -62,7 +62,7 @@ export function DeviceMockup() {
         <div style={{ lineHeight: 0, background: "#0F1E1A" }}>
           <Image
             src="/dashboard-desktop.png"
-            alt="PyCore ERP — Dashboard en escritorio"
+            alt="PyCore SGC — Dashboard en escritorio"
             width={1280}
             height={748}
             style={{ width: "100%", height: "auto", display: "block" }}
@@ -119,7 +119,7 @@ export function DeviceMockup() {
         <div style={{ lineHeight: 0, overflow: "hidden" }}>
           <Image
             src="/dashboard-mobile.png"
-            alt="PyCore ERP — Dashboard en móvil"
+            alt="PyCore SGC — Dashboard en móvil"
             width={1080}
             height={2307}
             style={{

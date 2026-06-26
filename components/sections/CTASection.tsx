@@ -49,7 +49,7 @@ export function CTASection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-white/80 text-lg mb-8 max-w-2xl mx-auto"
         >
-          Únete a cientos de PyMEs mexicanas que ya gestionan su negocio con PyCore ERP. Demo gratuita, sin compromiso.
+          Únete a cientos de PyMEs mexicanas que ya gestionan su negocio con PyCore SGC. Demo gratuita, sin compromiso.
         </motion.p>
 
         <motion.button
@@ -60,7 +60,7 @@ export function CTASection() {
           whileTap={{ scale: 0.97 }}
           onClick={() => openModal()}
           className="inline-block bg-white text-[var(--color-primary)] font-bold px-8 py-4 rounded-full hover:bg-[var(--color-accent-soft)] transition-colors text-lg cursor-pointer"
-          aria-label="Solicitar demo gratuita de PyCore ERP"
+          aria-label="Solicitar demo gratuita de PyCore SGC"
         >
           Solicitar Demo Gratis →
         </motion.button>

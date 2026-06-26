@@ -11,7 +11,6 @@ const productLinks = [
 const modulesLinks = [
   { label: "Inventario",        href: "/modulos#inventario" },
   { label: "Ventas / POS",      href: "/modulos#ventas" },
-  { label: "Facturación CFDI",  href: "/modulos#cfdi" },
   { label: "Finanzas",          href: "/modulos#finanzas" },
   { label: "Compras",           href: "/modulos#compras" },
 ];
@@ -43,7 +42,7 @@ export function Footer() {
                 height={32}
                 className="h-8 w-8 object-contain"
               />
-              <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore ERP</span>
+              <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore SGC</span>
             </a>
             <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-xs">
               ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas y tienda en línea en un solo sistema.

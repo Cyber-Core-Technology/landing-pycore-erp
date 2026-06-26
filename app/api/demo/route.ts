@@ -19,7 +19,7 @@ async function sendEmailViaResend(data: DemoFormData): Promise<boolean> {
   if (!apiKey || apiKey.includes("xxxx")) return false;
 
   const html = `
-    <h2>Nueva solicitud de demo — PyCore ERP</h2>
+    <h2>Nueva solicitud de demo — PyCore SGC</h2>
     <table style="border-collapse:collapse;width:100%;max-width:560px">
       <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Nombre</td><td style="padding:8px">${esc(data.nombre)}</td></tr>
       <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Empresa</td><td style="padding:8px">${esc(data.empresa)}</td></tr>

@@ -1,6 +1,6 @@
-# PyCore ERP — Landing Page
+# PyCore SGC — Landing Page
 
-Sitio de marketing para **PyCore ERP**, el sistema ERP en la nube diseñado para PyMEs mexicanas.
+Sitio de marketing para **PyCore SGC**, el sistema ERP en la nube diseñado para PyMEs mexicanas.
 
 ## Stack
 

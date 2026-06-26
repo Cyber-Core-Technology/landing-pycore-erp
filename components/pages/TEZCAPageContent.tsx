@@ -56,7 +56,7 @@ export function TEZCAPageContent() {
             transition={{ delay: 0.1 }}
             className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
           >
-            Inteligencia Artificial integrada en PyCore ERP
+            Inteligencia Artificial integrada en PyCore SGC
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}

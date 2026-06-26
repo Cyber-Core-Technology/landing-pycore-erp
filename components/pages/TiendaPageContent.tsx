@@ -24,7 +24,7 @@ const HOW_IT_WORKS = [
 ];
 
 const BUSINESS_FEATURES = [
-  "URL pública única: plataforma.pycore.app/p/tu-negocio",
+  "URL pública única: pycore.app/p/tu-negocio",
   "Personalización: nombre, descripción, colores y banners",
   "Activar/desactivar la tienda con un switch",
   "Control de visibilidad: mostrar u ocultar precios y stock",
@@ -77,7 +77,7 @@ export function TiendaPageContent() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
           >
-            🌐 Módulo de Tienda en Línea — PyCore ERP
+            🌐 Módulo de Tienda en Línea — PyCore SGC
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
@@ -126,7 +126,7 @@ export function TiendaPageContent() {
             className="inline-flex items-center gap-2 bg-[rgba(27,174,145,0.12)] border border-[#1BAE91]/30 rounded-xl px-5 py-3"
           >
             <span className="text-[#1BAE91] text-sm">🔗</span>
-            <span className="font-mono text-[#7AE0C3] text-sm">plataforma.pycore.app/p/<span className="text-white">tu-negocio</span></span>
+            <span className="font-mono text-[#7AE0C3] text-sm">pycore.app/p/<span className="text-white">tu-negocio</span></span>
           </motion.div>
         </div>
       </section>

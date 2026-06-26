@@ -12,7 +12,6 @@ const worlds = [
       "Ventas y POS con modo offline",
       "Inventario y compras en tiempo real",
       "Finanzas, CxC, CxP y gastos",
-      "Facturación CFDI integrada",
       "Recursos Humanos y asistencia",
     ],
     accent: "#0E7C66",
@@ -20,7 +19,7 @@ const worlds = [
   {
     icon: "🛍️",
     title: "Tienda en Línea",
-    url: "plataforma.pycore.app/p/tu-negocio",
+    url: "pycore.app/p/tu-negocio",
     desc: "Tu catálogo público conectado en tiempo real con tu inventario. Sin doble captura, sin desincronía de stock.",
     features: [
       "Catálogo con filtros por categoría",

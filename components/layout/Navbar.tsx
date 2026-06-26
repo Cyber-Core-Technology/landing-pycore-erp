@@ -44,7 +44,7 @@ export function Navbar() {
             height={36}
             className="h-9 w-9 object-contain"
           />
-          <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore ERP</span>
+          <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore SGC</span>
         </a>
 
         <ul className="hidden md:flex items-center gap-6 list-none">
@@ -66,7 +66,7 @@ export function Navbar() {
             whileTap={{ scale: 0.97 }}
             onClick={() => openModal()}
             className="bg-[var(--color-primary)] text-white rounded-full px-5 py-2 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
-            aria-label="Solicitar demo de PyCore ERP"
+            aria-label="Solicitar demo de PyCore SGC"
           >
             Solicitar Demo
           </motion.button>

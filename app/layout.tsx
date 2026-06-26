@@ -34,15 +34,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default:  "PyCore ERP — El núcleo de tu negocio",
-    template: "%s · PyCore ERP",
+    default:  "PyCore SGC — El núcleo de tu negocio",
+    template: "%s · PyCore SGC",
   },
   description:
-    "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas, facturación CFDI y tienda en línea conectados en un solo sistema.",
+    "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas y tienda en línea conectados en un solo sistema.",
   keywords: [
     "ERP México", "sistema ERP PyME", "software administrativo México",
-    "facturación CFDI", "control de inventario", "punto de venta POS",
-    "tienda en línea México", "PyCore ERP", "TEZCA IA", "ERP en la nube",
+    "control de inventario", "punto de venta POS",
+    "tienda en línea México", "PyCore SGC", "TEZCA IA", "ERP en la nube",
   ],
   authors: [{ name: "Cyber Core Technology", url: SITE_URL }],
   creator: "Cyber Core Technology",
@@ -56,23 +56,23 @@ export const metadata: Metadata = {
   openGraph: {
     type:        "website",
     url:         SITE_URL,
-    siteName:    "PyCore ERP",
-    title:       "PyCore ERP — El núcleo de tu negocio",
-    description: "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas, facturación CFDI y tienda en línea en un solo sistema.",
+    siteName:    "PyCore SGC",
+    title:       "PyCore SGC — El núcleo de tu negocio",
+    description: "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas y tienda en línea en un solo sistema.",
     locale:      "es_MX",
     images: [
       {
         url:    "/og-image.png",
         width:  1200,
         height: 630,
-        alt:    "PyCore ERP — El núcleo de tu negocio",
+        alt:    "PyCore SGC — El núcleo de tu negocio",
       },
     ],
   },
 
   twitter: {
     card:        "summary_large_image",
-    title:       "PyCore ERP — El núcleo de tu negocio",
+    title:       "PyCore SGC — El núcleo de tu negocio",
     description: "ERP modular en la nube para PyMEs mexicanas.",
     images:      ["/og-image.png"],
     creator:     "@pycoreerp",
@@ -129,22 +129,22 @@ const jsonLd = {
     {
       "@type":            "SoftwareApplication",
       "@id":              `${SITE_URL}/#software`,
-      name:               "PyCore ERP",
+      name:               "PyCore SGC",
       url:                SITE_URL,
-      description:        "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas, facturación CFDI y tienda en línea en un solo sistema.",
+      description:        "ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas y tienda en línea en un solo sistema.",
       applicationCategory: "BusinessApplication",
       operatingSystem:    "Web",
       datePublished: "2024-01-01",
       offers: {
         "@type":       "AggregateOffer",
         priceCurrency: "MXN",
-        lowPrice:      "649",
-        highPrice:     "1399",
+        lowPrice:      "999",
+        highPrice:     "1999",
         offerCount:    "4",
         offers: [
-          { "@type": "Offer", name: "Básico",       price: "649",  priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "649",  priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Profesional",  price: "1000", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1000", priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Empresarial",  price: "1399", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1399", priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Básico",       price: "999",  priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999",  priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Profesional",  price: "1499", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1499", priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Empresarial",  price: "1999", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1999", priceCurrency: "MXN", unitText: "MON" } },
           { "@type": "Offer", name: "Elite",        priceSpecification: { "@type": "UnitPriceSpecification", description: "Precio personalizado" } },
         ],
       },
@@ -153,7 +153,6 @@ const jsonLd = {
       featureList: [
         "Inventario en tiempo real",
         "Ventas y Punto de Venta (POS) offline",
-        "Facturación CFDI integrada con SAT",
         "Tienda en línea con Mercado Pago",
         "Asistente de IA TEZCA",
         "Multi-sucursal",
@@ -165,7 +164,7 @@ const jsonLd = {
       "@type":       "WebSite",
       "@id":         `${SITE_URL}/#website`,
       url:           SITE_URL,
-      name:          "PyCore ERP",
+      name:          "PyCore SGC",
       publisher:     { "@id": `${SITE_URL}/#organization` },
       inLanguage:    "es-MX",
     },
@@ -175,55 +174,47 @@ const jsonLd = {
       mainEntity: [
         {
           "@type":          "Question",
-          name:             "¿Qué es PyCore ERP?",
+          name:             "¿Qué es PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "PyCore ERP es un sistema de gestión empresarial (ERP) modular en la nube diseñado para PyMEs mexicanas. Integra inventario, ventas, facturación CFDI, finanzas, recursos humanos y tienda en línea en una sola plataforma.",
+            text:    "PyCore SGC es un sistema de gestión empresarial (ERP) modular en la nube diseñado para PyMEs mexicanas. Integra inventario, ventas, finanzas, recursos humanos y tienda en línea en una sola plataforma.",
           },
         },
         {
           "@type":          "Question",
-          name:             "¿Cuánto cuesta PyCore ERP?",
+          name:             "¿Cuánto cuesta PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "PyCore ERP tiene tres planes: Básico desde $649 MXN/mes, Profesional a $1,000 MXN/mes y Empresarial a $1,399 MXN/mes. También existe un plan Elite con precio personalizado para cadenas y grupos empresariales. Todos los precios son más IVA y sin contratos de permanencia.",
+            text:    "PyCore SGC tiene cuatro planes que se cobran por cada sucursal activa: Básico a $999 MXN/mes, Profesional a $1,499 MXN/mes y Empresarial a $1,999 MXN/mes. También existe un plan Elite con precio personalizado para cadenas y grupos empresariales. Todos los precios son más IVA y sin contratos de permanencia.",
           },
         },
         {
           "@type":          "Question",
-          name:             "¿PyCore ERP incluye facturación CFDI?",
+          name:             "¿Puedo usar PyCore SGC sin conexión a internet?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "Sí. PyCore ERP incluye facturación CFDI ilimitada integrada directamente con el SAT desde el plan Profesional. Genera facturas, notas de crédito y complementos de pago sin salir del sistema.",
+            text:    "Sí. El módulo de Ventas y Punto de Venta (POS) de PyCore SGC funciona en modo offline. Las ventas se sincronizan automáticamente cuando se recupera la conexión.",
           },
         },
         {
           "@type":          "Question",
-          name:             "¿Puedo usar PyCore ERP sin conexión a internet?",
+          name:             "¿PyCore SGC sirve para negocios con varias sucursales?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "Sí. El módulo de Ventas y Punto de Venta (POS) de PyCore ERP funciona en modo offline. Las ventas se sincronizan automáticamente cuando se recupera la conexión.",
+            text:    "Sí. PyCore SGC es multi-sucursal: se cobra por cada sucursal activa, así que puedes agregar las sucursales que necesites. Gestiona inventario, ventas y personal de cada una desde un solo panel.",
           },
         },
         {
           "@type":          "Question",
-          name:             "¿PyCore ERP sirve para negocios con varias sucursales?",
+          name:             "¿Qué es TEZCA en PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "Sí. PyCore ERP soporta multi-sucursal desde el plan Profesional (hasta 3 sucursales) y sucursales ilimitadas en el plan Empresarial y Elite. Puedes gestionar inventario, ventas y personal de cada sucursal desde un solo panel.",
+            text:    "TEZCA es el asistente de inteligencia artificial integrado en PyCore SGC. Analiza tu operación cada hora, genera alertas automáticas de stock bajo o cuentas vencidas, responde preguntas con tus datos reales y proporciona recomendaciones de negocio.",
           },
         },
         {
           "@type":          "Question",
-          name:             "¿Qué es TEZCA en PyCore ERP?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text:    "TEZCA es el asistente de inteligencia artificial integrado en PyCore ERP. Analiza tu operación cada hora, genera alertas automáticas de stock bajo o cuentas vencidas, responde preguntas con tus datos reales y proporciona recomendaciones de negocio.",
-          },
-        },
-        {
-          "@type":          "Question",
-          name:             "¿PyCore ERP tiene tienda en línea?",
+          name:             "¿PyCore SGC tiene tienda en línea?",
           acceptedAnswer: {
             "@type": "Answer",
             text:    "Sí. El plan Empresarial incluye tienda en línea conectada en tiempo real con el inventario del ERP, con cobros integrados via Mercado Pago, seguimiento de pedidos y catálogo público personalizable.",
@@ -231,10 +222,10 @@ const jsonLd = {
         },
         {
           "@type":          "Question",
-          name:             "¿Hay contrato de permanencia en PyCore ERP?",
+          name:             "¿Hay contrato de permanencia en PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "No. PyCore ERP no tiene contratos de permanencia ni costos de migración. Puedes cambiar de plan o cancelar cuando tu negocio lo necesite.",
+            text:    "No. PyCore SGC no tiene contratos de permanencia ni costos de migración. Puedes cambiar de plan o cancelar cuando tu negocio lo necesite.",
           },
         },
       ],

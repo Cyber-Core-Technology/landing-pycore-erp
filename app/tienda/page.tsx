@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${SITE_URL}/tienda` },
   openGraph: {
-    title:       "Tienda en Línea para tu Negocio — PyCore ERP",
+    title:       "Tienda en Línea para tu Negocio — PyCore SGC",
     description: "Tu catálogo público conectado en tiempo real con tu inventario. Sin doble captura. Mercado Pago incluido.",
     url:         `${SITE_URL}/tienda`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tienda en Línea — PyCore ERP" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tienda en Línea — PyCore SGC" }],
   },
 };
 
@@ -34,12 +34,12 @@ const jsonLd = {
   },
   {
   "@type": "WebPage",
-  name: "Tienda en Línea — PyCore ERP",
-  description: "Módulo de tienda en línea de PyCore ERP conectado en tiempo real al inventario.",
+  name: "Tienda en Línea — PyCore SGC",
+  description: "Módulo de tienda en línea de PyCore SGC conectado en tiempo real al inventario.",
   url: `${SITE_URL}/tienda`,
   about: {
     "@type": "SoftwareApplication",
-    name: "Módulo Tienda en Línea PyCore ERP",
+    name: "Módulo Tienda en Línea PyCore SGC",
     featureList: [
       "URL pública personalizada",
       "Stock en tiempo real",

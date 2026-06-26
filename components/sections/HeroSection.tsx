@@ -13,7 +13,6 @@ const ParticleBackground = dynamic(
 const pillStats = [
   { icon: "🧩", text: "10 módulos integrados" },
   { icon: "📶", text: "Funciona sin internet" },
-  { icon: "🧾", text: "CFDI incluido" },
   { icon: "🤖", text: "IA integrada" },
 ];
 
@@ -24,7 +23,7 @@ export function HeroSection() {
     <section
       style={{ background: "#0F1E1A", position: "relative", overflow: "hidden" }}
       className="min-h-screen flex items-center"
-      aria-label="Hero — PyCore ERP"
+      aria-label="Hero — PyCore SGC"
     >
       <ParticleBackground />
 
@@ -68,7 +67,7 @@ export function HeroSection() {
               className="text-[#94B8B0] text-lg lg:text-xl max-w-lg mb-8 leading-relaxed"
             >
               ERP modular y escalable para PyMEs mexicanas. Ventas, inventario,
-              finanzas, facturación CFDI y tienda en línea, todo conectado en un solo lugar.
+              finanzas y tienda en línea, todo conectado en un solo lugar.
             </motion.p>
 
             <motion.div
@@ -81,7 +80,7 @@ export function HeroSection() {
                 whileTap={{ scale: 0.97 }}
                 onClick={() => openModal()}
                 className="bg-[#0E7C66] hover:bg-[#1BAE91] text-white font-semibold px-7 py-3.5 rounded-full transition-colors text-base cursor-pointer"
-                aria-label="Solicitar demo de PyCore ERP"
+                aria-label="Solicitar demo de PyCore SGC"
               >
                 Solicitar Demo Gratis
               </motion.button>
@@ -89,7 +88,7 @@ export function HeroSection() {
                 href="#funciones"
                 whileTap={{ scale: 0.97 }}
                 className="border border-white/40 text-white hover:bg-white/10 px-7 py-3.5 rounded-full transition-colors text-base"
-                aria-label="Ver funciones de PyCore ERP"
+                aria-label="Ver funciones de PyCore SGC"
               >
                 Ver Funciones →
               </motion.a>

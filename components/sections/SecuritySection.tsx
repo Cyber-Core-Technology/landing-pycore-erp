@@ -29,7 +29,7 @@ export function SecuritySection() {
                 Arquitectura multitenancy: los datos de cada empresa están completamente aislados. Nadie ve lo que es tuyo. Cada movimiento queda ligado al usuario que lo realizó, con fecha y detalle exacto.
               </p>
               <div className="flex items-center gap-3 flex-wrap">
-                {["CFDI certificado", "PAC Facturama", "Nube segura", "2FA disponible"].map((tag) => (
+                {["Datos aislados", "Nube segura", "2FA disponible"].map((tag) => (
                   <span
                     key={tag}
                     className="text-xs font-medium px-3 py-1.5 rounded-full bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 text-[var(--color-secondary)]"

@@ -64,8 +64,7 @@ export function PlansSection() {
                   className="p-6 pb-5 rounded-t-[18px]"
                   style={plan.highlight ? { background: "rgba(14,124,102,0.08)" } : {}}
                 >
-                  <h3 className="font-heading font-bold text-xl text-[var(--text)] mb-0.5">{plan.name}</h3>
-                  <p className="text-[var(--text-muted)] text-xs mb-5 min-h-[32px]">{plan.subtitle}</p>
+                  <h3 className="font-heading font-bold text-xl text-[var(--text)] mb-3">{plan.name}</h3>
 
                   {/* Precio */}
                   <div className="flex items-end gap-1 min-h-[52px]">
@@ -76,15 +75,10 @@ export function PlansSection() {
                       {plan.price}
                     </span>
                     {plan.priceNote && (
-                      <span className="text-[var(--text-muted)] text-sm mb-1">{plan.priceNote}</span>
+                      <span className="text-[var(--text-muted)] text-xs mb-1 leading-tight">{plan.priceNote}</span>
                     )}
                   </div>
-                  {plan.price !== "Personalizado" && (
-                    <p className="text-[var(--text-muted)] text-xs mt-1">MXN + IVA · mensual</p>
-                  )}
-                  {plan.price === "Personalizado" && (
-                    <p className="text-[var(--text-muted)] text-xs mt-1">Cotización a medida</p>
-                  )}
+                  <p className="text-[var(--text-muted)] text-xs mt-1 min-h-[32px]">{plan.subtitle}</p>
                 </div>
 
                 <div className="h-px bg-[var(--border)] mx-6" />

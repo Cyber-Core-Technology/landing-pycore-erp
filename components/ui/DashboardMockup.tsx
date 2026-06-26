@@ -10,7 +10,7 @@ export function DashboardMockup() {
   return (
     <div
       role="img"
-      aria-label="Vista previa del dashboard de PyCore ERP"
+      aria-label="Vista previa del dashboard de PyCore SGC"
       style={{
         background: "#1A3A33",
         borderRadius: "20px",
@@ -27,7 +27,7 @@ export function DashboardMockup() {
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontSize: "20px" }}>⚙️</span>
           <span style={{ fontFamily: "var(--font-poppins, sans-serif)", fontWeight: 700, fontSize: "14px", color: "#E6F2EE" }}>
-            PyCore ERP
+            PyCore SGC
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>

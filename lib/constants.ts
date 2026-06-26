@@ -144,7 +144,7 @@ export const DIFFERENTIATORS = [
   {
     icon: "🇲🇽",
     title: "Hecho para México",
-    desc: "Facturación CFDI, IVA, IEPS, IEPS retenciones, SAT. Todo resuelto desde adentro con PAC Facturama integrado.",
+    desc: "IVA, IEPS, IEPS retenciones y manejo fiscal mexicano. Todo resuelto desde adentro, sin complicaciones.",
   },
   {
     icon: "🔒",
@@ -183,15 +183,13 @@ export const PLANS: {
 }[] = [
   {
     name: "Básico",
-    subtitle: "Negocios informales que empiezan a organizarse",
-    price: "$649",
-    priceNote: "/ mes",
+    subtitle: "Se cobra por cada sucursal activa",
+    price: "$999",
+    priceNote: "MXN + IVA / sucursal / mes",
     features: [
       "Inventario en tiempo real",
       "Ventas / POS offline",
-      "Catálogo de clientes",
-      "Catálogos de productos",
-      "1 sucursal",
+      "Catálogo de clientes y productos",
       "3 usuarios",
       "Soporte por correo",
     ],
@@ -199,40 +197,39 @@ export const PLANS: {
   },
   {
     name: "Profesional",
-    subtitle: "Negocios establecidos que necesitan control total",
-    price: "$1,000",
-    priceNote: "/ mes",
+    subtitle: "Se cobra por cada sucursal activa",
+    price: "$1,499",
+    priceNote: "MXN + IVA / sucursal / mes",
     features: [
       "Todo lo del plan Básico",
       "Compras y abastecimiento",
       "Finanzas: CxC, CxP, gastos",
-      "Facturación CFDI ilimitada",
       "Recursos Humanos",
       "TEZCA (50 consultas/día)",
-      "3 sucursales · 10 usuarios",
+      "10 usuarios",
     ],
     highlight: true,
     cta: "Empezar ahora",
   },
   {
     name: "Empresarial",
-    subtitle: "Operaciones multi-sucursal con equipo amplio",
-    price: "$1,399",
-    priceNote: "/ mes",
+    subtitle: "Se cobra por cada sucursal activa",
+    price: "$1,999",
+    priceNote: "MXN + IVA / sucursal / mes",
     features: [
       "Todo lo del plan Profesional",
       "Tienda en Línea con Mercado Pago",
       "TEZCA avanzado (100 consultas/día)",
       "Generación de imágenes con IA",
       "Reportes extendidos y exportación",
-      "Sucursales ilimitadas · 30 usuarios",
+      "30 usuarios",
       "Soporte prioritario",
     ],
     cta: "Solicitar demo",
   },
   {
     name: "Elite",
-    subtitle: "Cadenas y grupos empresariales",
+    subtitle: "Cotización a medida",
     price: "Personalizado",
     priceNote: "",
     features: [
@@ -254,7 +251,7 @@ export const STATS = [
   { value: "10",   label: "Módulos integrados" },
   { value: "100%", label: "Mexicano y en la nube" },
   { value: "∞",    label: "Escalabilidad de módulos" },
-  { value: "SAT",  label: "CFDI timbrado incluido" },
+  { value: "2FA",  label: "Seguridad empresarial" },
 ] as const;
 
 // ─── TEZCA ────────────────────────────────────────────────────────────────────
