@@ -77,7 +77,7 @@ export function TEZCASection() {
             </div>
             <div className="flex flex-col gap-3 mb-4">
               {TEZCA_INSIGHTS.map((ins, i) => (
-                <InsightBadge key={i} level={ins.level} text={ins.text} delay={i * 0.1} />
+                <InsightBadge key={i} level={ins.level} text={ins.text} delay={i * 0.1} onDark />
               ))}
             </div>
             <p className="text-[#94B8B0] text-xs mt-2">

@@ -28,7 +28,7 @@ export function Navbar() {
     <header
       className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-[var(--bg)]/80 backdrop-blur-md border-b border-[var(--border)]"
+          ? "bg-[var(--bg)] border-b border-[var(--border)] shadow-lg shadow-black/10"
           : "bg-transparent"
       }`}
     >
@@ -47,7 +47,7 @@ export function Navbar() {
           <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore SGC</span>
         </a>
 
-        <ul className="hidden md:flex items-center gap-6 list-none">
+        <ul className="hidden lg:flex items-center gap-6 list-none">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -60,32 +60,42 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <ThemeToggle />
+          <a
+            href="https://plataforma.pycore.app"
+            className="flex-none whitespace-nowrap border border-[var(--border)] text-[var(--text)] rounded-full px-5 py-2 text-sm font-semibold hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
+            aria-label="Iniciar sesión en la plataforma PyCore SGC"
+          >
+            Iniciar sesión
+          </a>
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={() => openModal()}
-            className="bg-[var(--color-primary)] text-white rounded-full px-5 py-2 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
+            className="flex-none whitespace-nowrap bg-[var(--color-primary)] text-white rounded-full px-5 py-2 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
             aria-label="Solicitar demo de PyCore SGC"
           >
             Solicitar Demo
           </motion.button>
         </div>
 
-        <button
-          className="md:hidden p-2 text-[var(--text)] rounded"
-          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
+        <div className="lg:hidden flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            className="p-2 rounded text-xl leading-none text-[var(--text)]"
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </nav>
 
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-[var(--bg)] border-b border-[var(--border)] px-4 pb-4"
+          className="lg:hidden bg-[var(--bg)] border-b border-[var(--border)] px-4 pb-4"
         >
           <ul className="flex flex-col gap-3 list-none pt-2">
             {links.map((l) => (
@@ -100,11 +110,17 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-3 pt-3">
-            <ThemeToggle />
+          <div className="flex flex-col gap-2 pt-3 mt-2 border-t border-[var(--border)]">
+            <a
+              href="https://plataforma.pycore.app"
+              onClick={() => setMenuOpen(false)}
+              className="w-full text-center border border-[var(--border)] text-[var(--text)] rounded-full px-5 py-2.5 text-sm font-semibold hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors"
+            >
+              Iniciar sesión
+            </a>
             <button
               onClick={() => { setMenuOpen(false); openModal(); }}
-              className="bg-[var(--color-primary)] text-white rounded-full px-5 py-2 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
+              className="w-full text-center bg-[var(--color-primary)] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
             >
               Solicitar Demo
             </button>

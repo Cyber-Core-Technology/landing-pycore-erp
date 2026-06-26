@@ -5,6 +5,8 @@ interface InsightBadgeProps {
   level: "urgent" | "warning" | "success" | "info";
   text: string;
   delay?: number;
+  /** Forzar texto claro cuando la tarjeta vive sobre un fondo siempre oscuro */
+  onDark?: boolean;
 }
 
 const levelStyles = {
@@ -14,7 +16,7 @@ const levelStyles = {
   info:    { bg: "rgba(52,152,219,0.15)",  border: "#3498DB", dot: "#3498DB",   label: "Info"     },
 };
 
-export function InsightBadge({ level, text, delay = 0 }: InsightBadgeProps) {
+export function InsightBadge({ level, text, delay = 0, onDark = false }: InsightBadgeProps) {
   const s = levelStyles[level];
   return (
     <motion.div
@@ -30,7 +32,7 @@ export function InsightBadge({ level, text, delay = 0 }: InsightBadgeProps) {
         display: "flex",
         alignItems: "center",
         gap: "8px",
-        color: "var(--text, #E6F2EE)",
+        color: onDark ? "#E6F2EE" : "var(--text, #E6F2EE)",
         fontSize: "clamp(11px, 3vw, 13px)",
       }}
     >

@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { MascotPopup } from "@/components/ui/MascotPopup";
 import "./globals.css";
 
 const inter = Inter({
@@ -257,6 +258,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <DemoModal />
             <ScrollToTop />
+            <MascotPopup />
           </DemoModalProvider>
         </ThemeProvider>
       </body>
