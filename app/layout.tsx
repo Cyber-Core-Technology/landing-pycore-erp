@@ -140,12 +140,12 @@ const jsonLd = {
         "@type":       "AggregateOffer",
         priceCurrency: "MXN",
         lowPrice:      "999",
-        highPrice:     "1999",
+        highPrice:     "999",
         offerCount:    "4",
         offers: [
           { "@type": "Offer", name: "Básico",       price: "999",  priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999",  priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Profesional",  price: "1499", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1499", priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Empresarial",  price: "1999", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1999", priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Profesional",  price: "999",  priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999",  priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Empresarial",  price: "999",  priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999",  priceCurrency: "MXN", unitText: "MON" } },
           { "@type": "Offer", name: "Elite",        priceSpecification: { "@type": "UnitPriceSpecification", description: "Precio personalizado" } },
         ],
       },
@@ -186,7 +186,7 @@ const jsonLd = {
           name:             "¿Cuánto cuesta PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "PyCore SGC tiene cuatro planes que se cobran por cada sucursal activa: Básico a $999 MXN/mes, Profesional a $1,499 MXN/mes y Empresarial a $1,999 MXN/mes. También existe un plan Elite con precio personalizado para cadenas y grupos empresariales. Todos los precios son más IVA y sin contratos de permanencia.",
+            text:    "PyCore SGC tiene cuatro planes que se cobran por cada sucursal activa. Durante agosto, todos los planes están en oferta a $999 MXN/mes, con un plan Elite personalizado para cadenas y grupos empresariales. Sin contratos de permanencia.",
           },
         },
         {

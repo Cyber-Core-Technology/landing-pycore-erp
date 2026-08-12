@@ -185,7 +185,7 @@ export const PLANS: {
     name: "Básico",
     subtitle: "Se cobra por cada sucursal activa",
     price: "$999",
-    priceNote: "MXN + IVA / sucursal / mes",
+    priceNote: "MXN / sucursal / mes",
     features: [
       "Inventario en tiempo real",
       "Ventas / POS offline",
@@ -198,8 +198,8 @@ export const PLANS: {
   {
     name: "Profesional",
     subtitle: "Se cobra por cada sucursal activa",
-    price: "$1,499",
-    priceNote: "MXN + IVA / sucursal / mes",
+    price: "$999",
+    priceNote: "MXN / sucursal / mes",
     features: [
       "Todo lo del plan Básico",
       "Compras y abastecimiento",
@@ -214,8 +214,8 @@ export const PLANS: {
   {
     name: "Empresarial",
     subtitle: "Se cobra por cada sucursal activa",
-    price: "$1,999",
-    priceNote: "MXN + IVA / sucursal / mes",
+    price: "$999",
+    priceNote: "MXN / sucursal / mes",
     features: [
       "Todo lo del plan Profesional",
       "Tienda en Línea con Mercado Pago",
