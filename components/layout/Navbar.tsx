@@ -9,6 +9,7 @@ const links = [
   { label: "Módulos",  href: "/modulos" },
   { label: "TEZCA",    href: "/tezca" },
   { label: "Tienda",   href: "/tienda" },
+  { label: "Blog",     href: "/blog" },
   { label: "Planes",   href: "/#planes" },
   { label: "Contacto", href: "/#contacto" },
 ];

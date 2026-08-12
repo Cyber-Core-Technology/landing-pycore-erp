@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000/sitemap.xml)",
+      "Bash(curl -s http://localhost:3000/blog/pos-offline-por-que-importa)",
+      "Bash(npx next *)",
+      "Bash(./node_modules/.bin/next lint *)",
+      "Bash(curl -s -o /dev/null -w \"blog: %{http_code}\\\\n\" --max-time 60 http://localhost:3000/blog)"
+    ]
+  }
+}

@@ -16,6 +16,7 @@ const modulesLinks = [
 ];
 
 const companyLinks = [
+  { label: "Blog",        href: "/blog" },
   { label: "Contacto",    href: "/#contacto" },
   { label: "Solicitar Demo", href: "#" },
 ];
