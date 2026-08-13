@@ -25,7 +25,7 @@ export function PlansSection() {
             Empieza pequeño, crece sin límites
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-            Sin contratos de permanencia. Sin costos de migración. Cambia de plan cuando tu negocio lo pida.
+            Durante agosto, todos los planes están en promoción a $999 MXN/mes por sucursal activa.
           </p>
         </div>
 
@@ -67,18 +67,30 @@ export function PlansSection() {
                   <h3 className="font-heading font-bold text-xl text-[var(--text)] mb-3">{plan.name}</h3>
 
                   {/* Precio */}
-                  <div className="flex items-end gap-1 min-h-[52px]">
-                    <span
-                      className="font-heading font-extrabold leading-none text-[var(--text)]"
-                      style={{ fontSize: plan.price === "Personalizado" ? "22px" : "38px" }}
-                    >
-                      {plan.price}
-                    </span>
-                    {plan.priceNote && (
-                      <span className="text-[var(--text-muted)] text-xs mb-1 leading-tight">{plan.priceNote}</span>
+                  <div className="flex min-h-[52px] flex-col items-start gap-1">
+                    {plan.oldPrice && (
+                      <span className="text-sm text-[var(--text-muted)] line-through decoration-2 decoration-[var(--color-primary)]/80 opacity-80">
+                        {plan.oldPrice}
+                      </span>
                     )}
+                    <div className="flex items-end gap-1">
+                      <span
+                        className="font-heading font-extrabold leading-none text-[var(--text)]"
+                        style={{ fontSize: plan.price === "Personalizado" ? "22px" : "38px" }}
+                      >
+                        {plan.price}
+                      </span>
+                      {plan.priceNote && (
+                        <span className="text-[var(--text-muted)] text-xs mb-1 leading-tight">{plan.priceNote}</span>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-[var(--text-muted)] text-xs mt-1 min-h-[32px]">{plan.subtitle}</p>
+                  {plan.promoLabel && (
+                    <div className="mt-2 inline-flex items-center rounded-full border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-primary)]">
+                      {plan.promoLabel}
+                    </div>
+                  )}
+                  <p className="text-[var(--text-muted)] text-xs mt-2 min-h-[32px]">{plan.subtitle}</p>
                 </div>
 
                 <div className="h-px bg-[var(--border)] mx-6" />

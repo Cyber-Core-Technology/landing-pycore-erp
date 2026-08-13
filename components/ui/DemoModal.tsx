@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useDemoModal } from "@/lib/demo-context";
 import type { DemoFormData } from "@/app/api/demo/route";
 
-const PLANES = ["No lo sé aún", "Básico — $499/mes", "Profesional — $799/mes", "Empresarial — $1,099/mes", "Elite"];
+const PLANES = ["No lo sé aún", "Básico — $999/mes", "Profesional — $999/mes", "Empresarial — $999/mes", "Elite"];
 const USUARIOS = ["1–3 usuarios", "4–10 usuarios", "11–30 usuarios", "Más de 30 usuarios"];
 
 const EMPTY: DemoFormData = {
