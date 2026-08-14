@@ -108,3 +108,4 @@ Todo el contenido de texto (módulos, planes, precios, TEZCA) está centralizado
 ---
 
 Desarrollado por [Cyber Core Technology](https://cyco.tech) · Hecho en México 🇲🇽
+
