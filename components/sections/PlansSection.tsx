@@ -25,7 +25,7 @@ export function PlansSection() {
             Empieza pequeño, crece sin límites
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-            Durante agosto, todos los planes están en promoción a $999 MXN/mes por sucursal activa.
+            Planes que se cobran por cada sucursal activa, desde $1,500 MXN/mes.
           </p>
         </div>
 

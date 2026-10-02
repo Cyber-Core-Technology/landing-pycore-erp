@@ -107,5 +107,5 @@ Todo el contenido de texto (módulos, planes, precios, TEZCA) está centralizado
 
 ---
 
-Desarrollado por [Cyber Core Technology](https://cyco.tech) · Hecho en México 🇲🇽
+Desarrollado por [Global-IAnalytics S. A de C. V](https://global-ianalytics.com) · Hecho en México 🇲🇽
 
