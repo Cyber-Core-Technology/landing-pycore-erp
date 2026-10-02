@@ -5,7 +5,7 @@ import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { MascotPopup } from "@/components/ui/MascotPopup";
-import { COMPANY_NAME, COMPANY_URL, SOCIAL_LINKS } from "@/lib/constants";
+import { COMPANY_NAME, COMPANY_URL, DEVELOPER_NAME, DEVELOPER_URL, REPO_URL, SOCIAL_LINKS } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     "control de inventario", "punto de venta POS",
     "tienda en línea México", "PyCore SGC", "TEZCA IA", "ERP en la nube",
   ],
-  authors: [{ name: COMPANY_NAME, url: COMPANY_URL }],
-  creator: COMPANY_NAME,
+  authors: [{ name: DEVELOPER_NAME, url: DEVELOPER_URL }],
+  creator: DEVELOPER_NAME,
   publisher: COMPANY_NAME,
 
   alternates: {
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD: Organización + SoftwareApplication
+// JSON-LD: Organización (dueña) + Persona (desarrollador) + SoftwareApplication
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -131,6 +131,13 @@ const jsonLd = {
       },
     },
     {
+      "@type":   "Person",
+      "@id":     `${SITE_URL}/#developer`,
+      name:      DEVELOPER_NAME,
+      url:       DEVELOPER_URL,
+      jobTitle:  "Desarrollador de software",
+    },
+    {
       "@type":            "SoftwareApplication",
       "@id":              `${SITE_URL}/#software`,
       name:               "PyCore SGC",
@@ -151,7 +158,10 @@ const jsonLd = {
           { "@type": "Offer", name: "Empresarial",  price: "2500", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "2500", priceCurrency: "MXN", unitText: "MON" } },
         ],
       },
+      author:    { "@id": `${SITE_URL}/#developer` },
+      creator:   { "@id": `${SITE_URL}/#developer` },
       publisher: { "@id": `${SITE_URL}/#organization` },
+      copyrightHolder: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "es-MX",
       featureList: [
         "Inventario en tiempo real",
@@ -162,6 +172,18 @@ const jsonLd = {
         "Recursos Humanos",
         "Reportes y analítica",
       ],
+    },
+    {
+      "@type":        "SoftwareSourceCode",
+      "@id":          `${SITE_URL}/#source-code`,
+      name:           "PyCore SGC — código fuente público",
+      description:    "Repositorio público en GitHub con el código fuente de PyCore SGC, el ERP modular en la nube para PyMEs mexicanas.",
+      codeRepository: REPO_URL,
+      url:            REPO_URL,
+      targetProduct:  { "@id": `${SITE_URL}/#software` },
+      author:         { "@id": `${SITE_URL}/#developer` },
+      publisher:     { "@id": `${SITE_URL}/#organization` },
+      inLanguage:     "es-MX",
     },
     {
       "@type":       "WebSite",

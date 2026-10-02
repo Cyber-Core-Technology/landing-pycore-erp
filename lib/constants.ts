@@ -3,10 +3,19 @@
 export const COMPANY_NAME = "Global-IAnalytics S. A de C. V";
 export const COMPANY_URL  = "https://global-ianalytics.com";
 
+// Desarrollador del sistema (la empresa es la responsable/dueña)
+export const DEVELOPER_NAME = "Raul Callejas";
+export const DEVELOPER_URL  = "https://scorpion.cyco.tech";
+
+// Repositorio público (el código original completo es privado)
+export const REPO_URL = "https://github.com/Cyber-Core-Technology/pycore";
+
 export const SOCIAL_LINKS = [
   { name: "Facebook",  href: "https://www.facebook.com/pycoresgc" },
   { name: "Instagram", href: "https://www.instagram.com/pycoresgc" },
   { name: "X",         href: "https://x.com/PycoreSGC" },
+  { name: "YouTube",   href: "https://www.youtube.com/@PyCore-ERP" },
+  { name: "GitHub",    href: REPO_URL },
 ] as const;
 
 // ─── Módulos ──────────────────────────────────────────────────────────────────

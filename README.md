@@ -107,5 +107,5 @@ Todo el contenido de texto (módulos, planes, precios, TEZCA) está centralizado
 
 ---
 
-Desarrollado por [Global-IAnalytics S. A de C. V](https://global-ianalytics.com) · Hecho en México 🇲🇽
+Desarrollado por [Raul Callejas](https://scorpion.cyco.tech) · Propiedad de [Global-IAnalytics S. A de C. V](https://global-ianalytics.com) · Hecho en México 🇲🇽
 
