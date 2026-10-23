@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Icon } from "@/components/ui/Icon";
 import { ChatConversation } from "@/components/ui/ChatConversation";
 import { InsightBadge } from "@/components/ui/InsightBadge";
 import { TEZCA_INSIGHTS, TEZCA_BADGES } from "@/lib/constants";
@@ -12,7 +13,7 @@ const TEZCA_EXAMPLES = [
 ];
 
 const PLAN_QUERIES = [
-  { plan: "Básico",      queries: "No incluido",        color: "#94B8B0" },
+  { plan: "Básico",      queries: "No incluido",        color: "#A8A094" },
   { plan: "Profesional", queries: "50 consultas/día",   color: "#1BAE91" },
   { plan: "Empresarial", queries: "100 consultas/día",  color: "#7AE0C3" },
   { plan: "Elite",       queries: "Ilimitado",          color: "#FFD700" },
@@ -40,7 +41,7 @@ export function TEZCAPageContent() {
       {/* Hero */}
       <section
         className="py-24 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0A1714 0%, #0F1E1A 50%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <motion.div
@@ -54,16 +55,17 @@ export function TEZCAPageContent() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
+            className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
           >
-            Inteligencia Artificial integrada en PyCore SGC
+            INTELIGENCIA ARTIFICIAL INTEGRADA EN PYCORE SGC
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
             className="font-heading text-4xl sm:text-5xl lg:text-7xl font-bold mb-5"
-            style={{ color: "#E6F2EE" }}
+            style={{ color: "#F2EEE6" }}
           >
             TEZCA
           </motion.h1>
@@ -79,7 +81,7 @@ export function TEZCAPageContent() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
-            className="text-[#94B8B0] text-lg max-w-2xl mx-auto mb-10"
+            className="text-[#A8A094] text-lg max-w-2xl mx-auto mb-10"
           >
             La mayoría de los ERPs te dan datos. TEZCA te dice qué hacer con ellos.
             Analiza tu operación 24/7, genera alertas automáticas y responde tus preguntas con los datos reales de tu negocio.
@@ -92,7 +94,8 @@ export function TEZCAPageContent() {
           >
             <button
               onClick={() => openModal()}
-              className="bg-[#1BAE91] text-white rounded-full px-7 py-3 font-semibold hover:bg-[#159A7E] transition-colors"
+              className="rounded-btn px-7 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Quiero ver TEZCA en acción
             </button>
@@ -128,7 +131,12 @@ export function TEZCAPageContent() {
                 className="rounded-2xl p-6"
                 style={{ background: "var(--card)", border: "1px solid var(--border)" }}
               >
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <span
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4"
+                  style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name={item.icon} size={24} />
+                </span>
                 <h3 className="font-heading font-semibold text-[var(--text)] mb-2">{item.title}</h3>
                 <p className="text-[var(--text-muted)] text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -140,18 +148,20 @@ export function TEZCAPageContent() {
       {/* Modo Consejero */}
       <section
         className="py-20"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-14 items-start">
             <div>
-              <span className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5">
-                💬 Modo Consejero
-              </span>
-              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#E6F2EE] mb-4">
+              <span className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
+          >
+            MODO CONSEJERO
+          </span>
+              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#F2EEE6] mb-4">
                 Pregúntale lo que quieras
               </h2>
-              <p className="text-[#94B8B0] text-base leading-relaxed mb-8">
+              <p className="text-[#A8A094] text-base leading-relaxed mb-8">
                 TEZCA tiene acceso en tiempo real a todos los datos de tu negocio: ventas, inventario, clientes, proveedores, finanzas. Hazle cualquier pregunta y responde con contexto específico de tu operación.
               </p>
               <div className="flex flex-col gap-4">
@@ -166,7 +176,7 @@ export function TEZCAPageContent() {
                     style={{ background: "rgba(27,174,145,0.08)", border: "1px solid rgba(27,174,145,0.2)" }}
                   >
                     <p className="text-[#7AE0C3] text-sm font-medium mb-2">Tú: {ex.q}</p>
-                    <p className="text-[#94B8B0] text-sm">TEZCA: {ex.a}</p>
+                    <p className="text-[#A8A094] text-sm">TEZCA: {ex.a}</p>
                   </motion.div>
                 ))}
               </div>
@@ -178,7 +188,7 @@ export function TEZCAPageContent() {
               transition={{ duration: 0.5 }}
             >
               <ChatConversation />
-              <p className="text-[#94B8B0] text-xs mt-3">
+              <p className="text-[#A8A094] text-xs mt-3">
                 El historial completo de conversaciones se guarda. Las respuestas frecuentes se cachean para no consumir tu cupo diario.
               </p>
             </motion.div>
@@ -191,8 +201,11 @@ export function TEZCAPageContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-14 items-start">
             <div>
-              <span className="inline-flex items-center gap-2 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 rounded-full px-4 py-1.5 text-[var(--color-secondary)] text-sm font-medium mb-5">
-                👁 Modo Observador
+              <span
+                className="block text-xs font-semibold tracking-[0.16em] mb-5"
+                style={{ color: "var(--accent-ink)" }}
+              >
+                MODO OBSERVADOR
               </span>
               <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[var(--text)] mb-4">
                 Analiza tu negocio cada hora, solo
@@ -202,13 +215,17 @@ export function TEZCAPageContent() {
               </p>
               <ul className="flex flex-col gap-3 mb-6">
                 {[
-                  { icon: "🔴", type: "Urgente", example: "El cliente ABC lleva 12 días sin pagar su factura de $8,400." },
-                  { icon: "🟡", type: "Alerta",  example: "El stock de Producto X bajó al 15%. Considera reabastecer." },
-                  { icon: "🟢", type: "Positivo",example: "Llevas 5 ventas hoy. ¡Buen ritmo! El ticket promedio subió un 8%." },
-                  { icon: "🔵", type: "Info",    example: "Tu categoría Electrónica creció un 12% vs el mes pasado." },
+                  { tone: "var(--color-error)",   type: "Urgente",  example: "El cliente ABC lleva 12 días sin pagar su factura de $8,400." },
+                  { tone: "var(--color-warning)", type: "Alerta",   example: "El stock de Producto X bajó al 15%. Considera reabastecer." },
+                  { tone: "var(--color-success)", type: "Positivo", example: "Llevas 5 ventas hoy. ¡Buen ritmo! El ticket promedio subió un 8%." },
+                  { tone: "var(--color-info)",    type: "Info",     example: "Tu categoría Electrónica creció un 12% vs el mes pasado." },
                 ].map((row) => (
                   <li key={row.type} className="flex items-start gap-3 text-sm">
-                    <span className="text-xl flex-shrink-0">{row.icon}</span>
+                    <span
+                      className="flex-shrink-0 mt-1.5 w-2.5 h-2.5 rounded-full"
+                      style={{ background: row.tone }}
+                      aria-hidden="true"
+                    />
                     <div>
                       <span className="font-medium text-[var(--text)]">{row.type}: </span>
                       <span className="text-[var(--text-muted)]">{row.example}</span>
@@ -235,23 +252,25 @@ export function TEZCAPageContent() {
       {/* Imágenes con IA */}
       <section
         className="py-20"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-14 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5">
-                🎨 Imágenes con IA
-              </span>
-              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#E6F2EE] mb-4">
+              <span className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
+          >
+            IMÁGENES CON IA
+          </span>
+              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#F2EEE6] mb-4">
                 Catálogo visual sin sesiones de foto
               </h2>
-              <p className="text-[#94B8B0] text-base leading-relaxed mb-6">
+              <p className="text-[#A8A094] text-base leading-relaxed mb-6">
                 TEZCA puede generar imágenes para los productos de tu catálogo automáticamente. Ideal para negocios que arrancan sin fotos profesionales o quieren lanzar productos rápido.
               </p>
               <ul className="flex flex-col gap-3">
                 {IMAGE_GEN_USES.map((use) => (
-                  <li key={use} className="flex items-start gap-2 text-sm text-[#94B8B0]">
+                  <li key={use} className="flex items-start gap-2 text-sm text-[#A8A094]">
                     <span className="text-[#1BAE91] font-bold mt-0.5 flex-shrink-0">✓</span>
                     {use}
                   </li>
@@ -267,10 +286,10 @@ export function TEZCAPageContent() {
             >
               <div className="text-6xl mb-4">🎨</div>
               <p className="text-[#7AE0C3] font-medium mb-2">Genera imágenes de productos</p>
-              <div className="bg-[rgba(27,174,145,0.15)] rounded-xl p-3 text-left mb-3 text-sm text-[#94B8B0]">
+              <div className="bg-[rgba(27,174,145,0.15)] rounded-xl p-3 text-left mb-3 text-sm text-[#A8A094]">
                 Describe tu producto: "Silla de oficina ergonómica negra con apoyabrazos"
               </div>
-              <div className="text-[#94B8B0] text-xs">→ TEZCA genera o busca la imagen ideal para tu tienda en línea</div>
+              <div className="text-[#A8A094] text-xs">→ TEZCA genera o busca la imagen ideal para tu tienda en línea</div>
             </motion.div>
           </div>
         </div>
@@ -302,7 +321,12 @@ export function TEZCAPageContent() {
                   border: "1px solid var(--border)",
                 }}
               >
-                <div className="text-3xl mb-3">{b.icon}</div>
+                <span
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl mb-3 mx-auto"
+                  style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name={b.icon} size={22} />
+                </span>
                 <p className="font-heading font-semibold text-[var(--text)] text-xs mb-1">{b.name}</p>
                 <p className="text-[var(--text-muted)] text-xs leading-tight">{b.desc}</p>
               </motion.div>
@@ -341,20 +365,21 @@ export function TEZCAPageContent() {
       {/* CTA */}
       <section
         className="py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #0A1714 0%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-2xl mx-auto px-4">
           <div className="text-5xl mb-5">🤖</div>
-          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#E6F2EE] mb-4">
+          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#F2EEE6] mb-4">
             Comienza a usar TEZCA hoy
           </h2>
-          <p className="text-[#94B8B0] text-lg mb-8">
+          <p className="text-[#A8A094] text-lg mb-8">
             TEZCA empieza a generar insights desde el primer día. Sin configuración, sin entrenamiento previo.
           </p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={() => openModal()}
-              className="bg-[#1BAE91] text-white rounded-full px-8 py-3 font-semibold hover:bg-[#159A7E] transition-colors"
+              className="rounded-btn px-8 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Solicitar Demo con TEZCA
             </button>

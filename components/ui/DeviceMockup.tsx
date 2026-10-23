@@ -29,7 +29,7 @@ export function DeviceMockup() {
         {/* Browser chrome */}
         <div
           style={{
-            background: "#081410",
+            background: "#0B0A07",
             padding: "8px 12px",
             display: "flex",
             alignItems: "center",
@@ -59,7 +59,7 @@ export function DeviceMockup() {
         </div>
 
         {/* Screenshot desktop */}
-        <div style={{ lineHeight: 0, background: "#0F1E1A" }}>
+        <div style={{ lineHeight: 0, background: "#16140F" }}>
           <Image
             src="/dashboard-desktop.png"
             alt="PyCore SGC — Dashboard en escritorio"
@@ -91,13 +91,13 @@ export function DeviceMockup() {
           animation: "dashFloat 5s ease-in-out infinite",
           animationDelay: "0.8s",
           zIndex: 10,
-          background: "#081410",
+          background: "#0B0A07",
         }}
       >
         {/* Pill notch */}
         <div
           style={{
-            background: "#081410",
+            background: "#0B0A07",
             height: "18px",
             display: "flex",
             alignItems: "center",

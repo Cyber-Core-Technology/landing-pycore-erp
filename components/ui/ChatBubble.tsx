@@ -21,10 +21,10 @@ export function ChatBubble({ text, delay = 0 }: ChatBubbleProps) {
       <div
         style={{
           background: "rgba(26,58,51,0.6)",
-          border: "1px solid rgba(30,74,64,0.8)",
+          border: "1px solid rgba(51,46,37,0.8)",
           borderRadius: "4px 16px 16px 16px",
           padding: "10px 14px",
-          color: "#E6F2EE",
+          color: "#F2EEE6",
           fontSize: "14px",
           lineHeight: 1.5,
           maxWidth: "280px",

@@ -21,13 +21,13 @@ async function sendEmailViaResend(data: DemoFormData): Promise<boolean> {
   const html = `
     <h2>Nueva solicitud de demo — PyCore SGC</h2>
     <table style="border-collapse:collapse;width:100%;max-width:560px">
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Nombre</td><td style="padding:8px">${esc(data.nombre)}</td></tr>
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Empresa</td><td style="padding:8px">${esc(data.empresa)}</td></tr>
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Email</td><td style="padding:8px">${esc(data.email)}</td></tr>
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Teléfono</td><td style="padding:8px">${esc(data.telefono)}</td></tr>
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Plan interés</td><td style="padding:8px">${esc(data.plan)}</td></tr>
-      <tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Usuarios</td><td style="padding:8px">${esc(data.usuarios)}</td></tr>
-      ${data.mensaje ? `<tr><td style="padding:8px;font-weight:bold;background:#f2f8f6">Mensaje</td><td style="padding:8px">${esc(data.mensaje)}</td></tr>` : ""}
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Nombre</td><td style="padding:8px">${esc(data.nombre)}</td></tr>
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Empresa</td><td style="padding:8px">${esc(data.empresa)}</td></tr>
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Email</td><td style="padding:8px">${esc(data.email)}</td></tr>
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Teléfono</td><td style="padding:8px">${esc(data.telefono)}</td></tr>
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Plan interés</td><td style="padding:8px">${esc(data.plan)}</td></tr>
+      <tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Usuarios</td><td style="padding:8px">${esc(data.usuarios)}</td></tr>
+      ${data.mensaje ? `<tr><td style="padding:8px;font-weight:bold;background:#FAF8F5">Mensaje</td><td style="padding:8px">${esc(data.mensaje)}</td></tr>` : ""}
     </table>
   `;
 

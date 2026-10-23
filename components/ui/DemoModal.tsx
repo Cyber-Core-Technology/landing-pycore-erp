@@ -103,7 +103,7 @@ export function DemoModal() {
           >
             <div
               className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[20px] bg-[var(--card)] border border-[var(--border)] shadow-2xl"
-              style={{ boxShadow: "0 0 60px rgba(14,124,102,0.25), 0 20px 60px rgba(0,0,0,0.4)" }}
+              style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.45)" }}
             >
               {status === "success" ? (
                 <div className="flex flex-col items-center justify-center p-10 text-center">
@@ -116,7 +116,8 @@ export function DemoModal() {
                   </p>
                   <button
                     onClick={closeModal}
-                    className="bg-[var(--color-primary)] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[var(--color-secondary)] transition-colors"
+                    className="rounded-btn px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
+                    style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
                   >
                     Cerrar
                   </button>
@@ -264,10 +265,11 @@ export function DemoModal() {
                     <button
                       type="submit"
                       disabled={status === "loading"}
-                      className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-secondary)] text-white font-semibold py-3 rounded-full transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-sm mt-1"
+                      className="w-full font-semibold py-3.5 rounded-btn transition-opacity hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed text-sm mt-1"
+                      style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
                       aria-label="Enviar solicitud de demo"
                     >
-                      {status === "loading" ? "Enviando…" : "Solicitar Demo Gratis →"}
+                      {status === "loading" ? "Enviando…" : "Solicitar demo gratis"}
                     </button>
 
                     <p className="text-center text-[var(--text-muted)] text-xs">

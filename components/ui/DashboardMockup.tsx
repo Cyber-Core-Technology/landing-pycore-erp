@@ -12,11 +12,11 @@ export function DashboardMockup() {
       role="img"
       aria-label="Vista previa del dashboard de PyCore SGC"
       style={{
-        background: "#1A3A33",
+        background: "#1E1B15",
         borderRadius: "20px",
-        boxShadow: "0 0 40px rgba(14,124,102,0.4)",
+        boxShadow: "0 18px 48px rgba(0,0,0,0.45)",
         padding: "24px",
-        color: "#E6F2EE",
+        color: "#F2EEE6",
         animation: "dashFloat 4s ease-in-out infinite",
         maxWidth: "min(480px, 100%)",
         width: "100%",
@@ -26,13 +26,13 @@ export function DashboardMockup() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontSize: "20px" }}>⚙️</span>
-          <span style={{ fontFamily: "var(--font-poppins, sans-serif)", fontWeight: 700, fontSize: "14px", color: "#E6F2EE" }}>
+          <span style={{ fontFamily: "var(--font-outfit, sans-serif)", fontWeight: 700, fontSize: "14px", color: "#F2EEE6" }}>
             PyCore SGC
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#2ECC71", display: "inline-block" }} />
-          <span style={{ fontSize: "12px", color: "#94B8B0" }}>En línea</span>
+          <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#27B07F", display: "inline-block" }} />
+          <span style={{ fontSize: "12px", color: "#A8A094" }}>En línea</span>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ export function DashboardMockup() {
         {metrics.map((m) => (
           <div key={m.label} style={{ background: "rgba(14,124,102,0.15)", borderRadius: "12px", padding: "14px 16px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
-              <span style={{ fontSize: "11px", color: "#94B8B0", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <span style={{ fontSize: "11px", color: "#A8A094", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 {m.label}
               </span>
               <span
@@ -50,8 +50,8 @@ export function DashboardMockup() {
                   fontWeight: 700,
                   padding: "2px 8px",
                   borderRadius: "20px",
-                  background: m.changeType === "neutral" ? "rgba(241,196,15,0.2)" : "rgba(46,204,113,0.2)",
-                  color: m.changeType === "neutral" ? "#F1C40F" : "#2ECC71",
+                  background: m.changeType === "neutral" ? "rgba(241,196,15,0.2)" : "rgba(39,176,127,0.2)",
+                  color: m.changeType === "neutral" ? "#E0A32E" : "#27B07F",
                 }}
               >
                 {m.change}
@@ -62,7 +62,7 @@ export function DashboardMockup() {
                 fontFamily: "var(--font-mono, monospace)",
                 fontSize: "22px",
                 fontWeight: 700,
-                color: "#E6F2EE",
+                color: "#F2EEE6",
                 marginBottom: "10px",
               }}
             >
@@ -73,7 +73,7 @@ export function DashboardMockup() {
                 style={{
                   width: `${m.progress}%`,
                   height: "100%",
-                  background: "linear-gradient(to right, #0E7C66, #1BAE91)",
+                  background: "#1BAE91",
                   borderRadius: "4px",
                 }}
               />

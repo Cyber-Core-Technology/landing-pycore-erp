@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
+import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
@@ -14,10 +14,10 @@ const inter = Inter({
   preload: true,
 });
 
-const poppins = Poppins({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-poppins",
+  weight: ["500", "600", "700"],
+  variable: "--font-outfit",
   display: "swap",
   preload: true,
 });
@@ -101,7 +101,7 @@ export const metadata: Metadata = {
 
   other: {
     "theme-color":               "#0E7C66",
-    "color-scheme":              "dark light",
+    "color-scheme":              "light dark",
     "msapplication-TileColor":   "#0E7C66",
   },
 };
@@ -245,15 +245,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} font-sans bg-bg text-[var(--text)]`}
+        className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} font-sans bg-bg text-[var(--text)]`}
       >
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded z-[9999]"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-accent text-[color:var(--accent-fg)] px-4 py-2 rounded-btn z-[9999]"
         >
           Ir al contenido principal
         </a>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <DemoModalProvider>
             {children}
             <DemoModal />

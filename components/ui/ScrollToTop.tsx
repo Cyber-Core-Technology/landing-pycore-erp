@@ -25,11 +25,11 @@ export function ScrollToTop() {
           whileTap={{ scale: 0.95 }}
           onClick={scrollUp}
           aria-label="Volver arriba"
-          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center shadow-lg"
+          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center shadow-card-lg"
           style={{
-            background: "var(--color-primary)",
-            color: "#fff",
-            border: "2px solid rgba(255,255,255,0.15)",
+            background: "var(--accent)",
+            color: "var(--accent-fg)",
+            border: "1px solid var(--band-border)",
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

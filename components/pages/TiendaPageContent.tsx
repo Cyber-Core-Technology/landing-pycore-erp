@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Icon } from "@/components/ui/Icon";
 import { useDemoModal } from "@/lib/demo-context";
 
 const HOW_IT_WORKS = [
@@ -69,21 +70,22 @@ export function TiendaPageContent() {
       {/* Hero */}
       <section
         className="py-24 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0A1714 0%, #0F2D26 60%, #0E3D30 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
+            className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
           >
-            🌐 Módulo de Tienda en Línea — PyCore SGC
+            MÓDULO DE TIENDA EN LÍNEA · PYCORE SGC
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold text-[#E6F2EE] mb-5"
+            className="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold text-[#F2EEE6] mb-5"
           >
             Tu tienda en línea,
             <br />
@@ -93,7 +95,7 @@ export function TiendaPageContent() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-[#94B8B0] text-lg max-w-2xl mx-auto mb-8"
+            className="text-[#A8A094] text-lg max-w-2xl mx-auto mb-8"
           >
             Sin doble captura. Sin desincronía de stock. Sin sistemas separados.
             Un solo inventario que alimenta tanto tu punto de venta como tu tienda pública.
@@ -106,7 +108,8 @@ export function TiendaPageContent() {
           >
             <button
               onClick={() => openModal()}
-              className="bg-[#1BAE91] text-white rounded-full px-7 py-3 font-semibold hover:bg-[#159A7E] transition-colors"
+              className="rounded-btn px-7 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Ver demo de la tienda
             </button>
@@ -126,7 +129,7 @@ export function TiendaPageContent() {
             className="inline-flex items-center gap-2 bg-[rgba(27,174,145,0.12)] border border-[#1BAE91]/30 rounded-xl px-5 py-3"
           >
             <span className="text-[#1BAE91] text-sm">🔗</span>
-            <span className="font-mono text-[#7AE0C3] text-sm">pycore.app/p/<span className="text-white">tu-negocio</span></span>
+            <span className="font-mono text-[#7AE0C3] text-sm">pycore.app/p/<span style={{ color: "#F2EEE6" }}>tu-negocio</span></span>
           </motion.div>
         </div>
       </section>
@@ -154,12 +157,17 @@ export function TiendaPageContent() {
                 style={{ background: "var(--card)", border: "1px solid var(--border)" }}
               >
                 <div
-                  className="absolute -top-4 left-6 rounded-full w-8 h-8 flex items-center justify-center text-white text-xs font-bold"
-                  style={{ background: "var(--color-primary)" }}
+                  className="absolute -top-4 left-6 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold"
+                  style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
                 >
                   {step.step}
                 </div>
-                <div className="text-4xl mb-4 mt-2">{step.icon}</div>
+                <span
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 mt-2"
+                  style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name={step.icon} size={24} />
+                </span>
                 <h3 className="font-heading font-semibold text-[var(--text)] mb-2">{step.title}</h3>
                 <p className="text-[var(--text-muted)] text-sm leading-relaxed">{step.desc}</p>
               </motion.div>
@@ -171,25 +179,27 @@ export function TiendaPageContent() {
       {/* Sincronización en tiempo real */}
       <section
         className="py-20"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-14 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5">
-                ⚡ Sincronización en tiempo real
-              </span>
-              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#E6F2EE] mb-4">
+              <span className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
+          >
+            SINCRONIZACIÓN EN TIEMPO REAL
+          </span>
+              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#F2EEE6] mb-4">
                 Un solo inventario para todo
               </h2>
-              <p className="text-[#94B8B0] text-base leading-relaxed mb-8">
+              <p className="text-[#A8A094] text-base leading-relaxed mb-8">
                 El ERP es la única fuente de verdad. Todo parte de ahí. No hay dos bases de datos que mantener sincronizadas manualmente.
               </p>
               <ul className="flex flex-col gap-4">
                 {SYNC_POINTS.map((p) => (
                   <li key={p.text} className="flex items-start gap-3">
-                    <span className="text-2xl flex-shrink-0">{p.icon}</span>
-                    <span className="text-[#94B8B0] text-sm leading-relaxed">{p.text}</span>
+                    <span className="flex-shrink-0 mt-0.5" style={{ color: "#7AE0C3" }}><Icon name={p.icon} size={20} /></span>
+                    <span className="text-[#A8A094] text-sm leading-relaxed">{p.text}</span>
                   </li>
                 ))}
               </ul>
@@ -205,21 +215,21 @@ export function TiendaPageContent() {
                 {[
                   { label: "ERP (inventario)", value: "Stock: 42 unidades", icon: "🏭", color: "#1BAE91" },
                   { label: "Tienda en línea", value: "Disponible: 42 unidades", icon: "🌐", color: "#7AE0C3" },
-                  { label: "POS (vendedor)",  value: "Stock visible: 42 unidades", icon: "💻", color: "#94B8B0" },
+                  { label: "POS (vendedor)",  value: "Stock visible: 42 unidades", icon: "💻", color: "#A8A094" },
                 ].map((node) => (
                   <div
                     key={node.label}
                     className="rounded-xl p-4 flex items-center gap-4"
                     style={{ background: "rgba(27,174,145,0.1)", border: `1px solid ${node.color}30` }}
                   >
-                    <span className="text-2xl">{node.icon}</span>
+                    <span style={{ color: node.color, display: "flex" }}><Icon name={node.icon} size={20} /></span>
                     <div>
                       <p className="text-xs font-medium" style={{ color: node.color }}>{node.label}</p>
-                      <p className="text-[#E6F2EE] text-sm font-semibold">{node.value}</p>
+                      <p className="text-[#F2EEE6] text-sm font-semibold">{node.value}</p>
                     </div>
                   </div>
                 ))}
-                <div className="text-center text-[#94B8B0] text-xs mt-2">
+                <div className="text-center text-[#A8A094] text-xs mt-2">
                   ↕ Se actualizan al mismo tiempo, siempre
                 </div>
               </div>
@@ -303,7 +313,12 @@ export function TiendaPageContent() {
                 className="rounded-xl p-4"
                 style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
               >
-                <div className="text-3xl mb-2">{c.icon}</div>
+                <span
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-2"
+                  style={{ background: "var(--warm-tint)", color: "var(--warm-ink)" }}
+                >
+                  <Icon name={c.icon} size={20} />
+                </span>
                 <p className="text-[var(--text-muted)] text-xs">{c.example}</p>
               </div>
             ))}
@@ -333,7 +348,12 @@ export function TiendaPageContent() {
                 className="rounded-2xl p-6"
                 style={{ background: "var(--card)", border: "1px solid var(--border)" }}
               >
-                <div className="text-4xl mb-4">{uc.icon}</div>
+                <span
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4"
+                  style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name={uc.icon} size={24} />
+                </span>
                 <h3 className="font-heading font-semibold text-[var(--text)] mb-2">{uc.title}</h3>
                 <p className="text-[var(--text-muted)] text-sm leading-relaxed">{uc.desc}</p>
               </motion.div>
@@ -345,14 +365,14 @@ export function TiendaPageContent() {
       {/* Mercado Pago */}
       <section
         className="py-16"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #1A3A33 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="text-5xl mb-5">💳</div>
-          <h2 className="font-heading text-2xl lg:text-3xl font-bold text-[#E6F2EE] mb-3">
+          <h2 className="font-heading text-2xl lg:text-3xl font-bold text-[#F2EEE6] mb-3">
             Cobros en línea con Mercado Pago
           </h2>
-          <p className="text-[#94B8B0] text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-[#A8A094] text-base leading-relaxed mb-8 max-w-2xl mx-auto">
             La integración con Mercado Pago está incluida en el módulo de Tienda en Línea. Tus clientes pagan con tarjeta, transferencia o en efectivo en OXXO, directamente desde el checkout de tu tienda.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -381,7 +401,8 @@ export function TiendaPageContent() {
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={() => openModal()}
-              className="bg-[var(--color-primary)] text-white rounded-full px-8 py-3 font-semibold hover:bg-[var(--color-secondary)] transition-colors"
+              className="rounded-btn px-8 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Solicitar Demo
             </button>

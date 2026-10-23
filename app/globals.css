@@ -2,28 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-primary:     #0E7C66;
-  --color-secondary:   #1BAE91;
-  --color-accent-soft: #7AE0C3;
-  --color-success:     #2ECC71;
-  --color-warning:     #F1C40F;
-  --color-error:       #E74C3C;
-  --color-info:        #3498DB;
+/*
+  PyCore SGC — sistema de color "Núcleo Cálido".
 
-  --bg:         #F2F8F6;
+  Regla rectora: el acento ES el logo. #0E7C66 y #1BAE91 son los dos únicos
+  tonos del archivo de marca (matiz 168° los dos), así que la interfaz no
+  inventa un verde propio: lo hereda. El lienzo es neutro cálido para que el
+  verde recupere saturación aparente por contraste simultáneo — sobre fondo
+  verdoso el ojo se adapta y la marca se apaga.
+
+  El cálido (#B5602F / #FFCC99, del brochure) es condimento: cejillas, una
+  cifra, un encabezado. Nunca una acción primaria ni un fondo grande.
+*/
+
+:root {
+  color-scheme: light;
+
+  /* ---- Marca ---- */
+  --color-primary:     #0E7C66;   /* logo, tono oscuro — acción primaria */
+  --color-secondary:   #1BAE91;   /* logo, tono claro */
+  --brand:             #0E7C66;
+  --brand-fg:          #FFFFFF;
+
+  --accent:            #0E7C66;
+  --accent-fg:         #FFFFFF;
+  --accent-ink:        #0A6654;   /* acento como texto: 6.6:1 sobre --bg */
+  --tint:              #E3F1EC;   /* fondo suave del acento */
+  --color-accent-soft: #7AE0C3;   /* mint claro, solo sobre superficies oscuras */
+
+  /* ---- Cálido (condimento) ---- */
+  --warm:              #B5602F;
+  --warm-fg:           #FFFFFF;
+  --warm-ink:          #8A4A1E;
+  --warm-strong:       #7A3F18;
+  --warm-tint:         #F6EBE1;
+  --warm-tint-border:  #ECDCCB;
+
+  /* ---- Superficies y texto ---- */
+  --bg:         #FAF8F5;
   --card:       #FFFFFF;
-  --text:       #1C1F24;
-  --text-muted: #4A5568;
-  --border:     #D1E8E2;
+  --surface-2:  #FAF8F5;
+  --text:       #1C1A17;
+  --text-2:     #45403A;
+  --text-3:     #534C44;
+  --text-muted: #6B645B;
+  --border:     #E8E2D9;
+  --chip:       #F2EFE9;
+  --chip-ink:   #534C44;
+  --btn2:       #FFFFFF;
+  --btn2-border:#DCD4C9;
+
+  /* ---- Banda de marca: único bloque donde el verde ocupa todo ---- */
+  --band:         #0F5443;
+  --band-ink:     #FFFFFF;
+  --band-ink-2:   #CBE3D9;
+  --band-border:  #2A6F5A;
+  --band-eyebrow: #FFCC99;
+  --band-tile:    rgba(255, 255, 255, 0.07);
+  --band-btn:     #FFFFFF;
+  --band-btn-fg:  #0F5443;
+
+  /* ---- Estado ---- */
+  --color-success: #27B07F;
+  --color-warning: #E0A32E;
+  --color-error:   #D9503F;
+  --color-info:    #3498DB;
 }
 
 .dark {
-  --bg:         #0F1E1A;
-  --card:       #1A3A33;
-  --text:       #E6F2EE;
-  --text-muted: #94B8B0;
-  --border:     #1E4A40;
+  color-scheme: dark;
+
+  --color-primary:     #1BAE91;
+  --color-secondary:   #52D3B4;
+  --brand:             #1BAE91;
+  --brand-fg:          #04291F;
+
+  --accent:            #1BAE91;
+  --accent-fg:         #04291F;
+  --accent-ink:        #52D3B4;
+  --tint:              #10302A;
+  --color-accent-soft: #7AE0C3;
+
+  --warm:              #E08A4F;
+  --warm-fg:           #2A1608;
+  --warm-ink:          #F0B07A;
+  --warm-strong:       #F0B07A;
+  --warm-tint:         #2A1F16;
+  --warm-tint-border:  #3D2C1E;
+
+  /* Oscuro cálido, no verde oscuro: ahí estaba la saturación. */
+  --bg:         #16140F;
+  --card:       #1E1B15;
+  --surface-2:  #16140F;
+  --text:       #F2EEE6;
+  --text-2:     #D4CCBF;
+  --text-3:     #C2B9AA;
+  --text-muted: #A8A094;
+  --border:     #332E25;
+  --chip:       #241F18;
+  --chip-ink:   #C2B9AA;
+  --btn2:       #241F18;
+  --btn2-border:#3D3629;
+
+  --band:         #0C3A2F;
+  --band-ink:     #FFFFFF;
+  --band-ink-2:   #C4DDD3;
+  --band-border:  #1F5A49;
+  --band-eyebrow: #FFCC99;
+  --band-tile:    rgba(255, 255, 255, 0.06);
+  --band-btn:     #1BAE91;
+  --band-btn-fg:  #04291F;
+
+  --color-success: #3FC996;
+  --color-warning: #F0B340;
+  --color-error:   #E8705F;
+  --color-info:    #5AAEE8;
 }
 
 @keyframes float {

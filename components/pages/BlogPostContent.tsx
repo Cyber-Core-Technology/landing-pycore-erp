@@ -26,11 +26,11 @@ export function BlogPostContent({ post, minutes, related }: Props) {
       {/* Encabezado */}
       <header
         className="pt-14 pb-12"
-        style={{ background: "linear-gradient(135deg, #0A1714 0%, #0F2D26 60%, #0E3D30 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <nav aria-label="Ruta de navegación" className="mb-6 text-sm">
-            <Link href="/blog" className="text-[#7AE0C3] hover:text-white transition-colors">
+            <Link href="/blog" className="transition-opacity hover:opacity-70" style={{ color: "#7AE0C3" }}>
               ← Todos los artículos
             </Link>
           </nav>
@@ -43,13 +43,13 @@ export function BlogPostContent({ post, minutes, related }: Props) {
               </span>
             </div>
 
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#E6F2EE] mb-4 leading-tight">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F2EEE6] mb-4 leading-tight">
               {post.title}
             </h1>
 
-            <p className="text-[#94B8B0] text-lg leading-relaxed mb-6">{post.excerpt}</p>
+            <p className="text-[#A8A094] text-lg leading-relaxed mb-6">{post.excerpt}</p>
 
-            <div className="flex items-center gap-2 text-[#94B8B0] text-sm flex-wrap">
+            <div className="flex items-center gap-2 text-[#A8A094] text-sm flex-wrap">
               <span>{post.author}</span>
               <span aria-hidden="true">·</span>
               <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -87,18 +87,19 @@ export function BlogPostContent({ post, minutes, related }: Props) {
           {/* CTA */}
           <div
             className="mt-8 rounded-2xl p-8 text-center"
-            style={{ background: "linear-gradient(135deg, #0F2D26 0%, #0E3D30 100%)" }}
+            style={{ background: "#1E1B15" }}
           >
-            <h2 className="font-heading text-xl lg:text-2xl font-bold text-[#E6F2EE] mb-3">
+            <h2 className="font-heading text-xl lg:text-2xl font-bold text-[#F2EEE6] mb-3">
               Del artículo a tu operación
             </h2>
-            <p className="text-[#94B8B0] text-base mb-6 max-w-lg mx-auto">
+            <p className="text-[#A8A094] text-base mb-6 max-w-lg mx-auto">
               Agenda una demo de 30 minutos y revisamos con tus propios números cómo se
               resolvería esto en PyCore SGC.
             </p>
             <button
               onClick={() => openModal()}
-              className="bg-[#1BAE91] text-white rounded-full px-7 py-3 font-semibold hover:bg-[#159A7E] transition-colors"
+              className="rounded-btn px-7 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Solicitar Demo
             </button>

@@ -10,9 +10,9 @@ interface InsightBadgeProps {
 }
 
 const levelStyles = {
-  urgent:  { bg: "rgba(231,76,60,0.15)",   border: "#E74C3C", dot: "#E74C3C",   label: "Urgente"  },
-  warning: { bg: "rgba(241,196,15,0.15)",  border: "#F1C40F", dot: "#F1C40F",   label: "Alerta"   },
-  success: { bg: "rgba(46,204,113,0.15)",  border: "#2ECC71", dot: "#2ECC71",   label: "Positivo" },
+  urgent:  { bg: "rgba(231,76,60,0.15)",   border: "#D9503F", dot: "#D9503F",   label: "Urgente"  },
+  warning: { bg: "rgba(241,196,15,0.15)",  border: "#E0A32E", dot: "#E0A32E",   label: "Alerta"   },
+  success: { bg: "rgba(39,176,127,0.15)",  border: "#27B07F", dot: "#27B07F",   label: "Positivo" },
   info:    { bg: "rgba(52,152,219,0.15)",  border: "#3498DB", dot: "#3498DB",   label: "Info"     },
 };
 
@@ -32,7 +32,7 @@ export function InsightBadge({ level, text, delay = 0, onDark = false }: Insight
         display: "flex",
         alignItems: "center",
         gap: "8px",
-        color: onDark ? "#E6F2EE" : "var(--text, #E6F2EE)",
+        color: onDark ? "#F2EEE6" : "var(--text, #F2EEE6)",
         fontSize: "clamp(11px, 3vw, 13px)",
       }}
     >

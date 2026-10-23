@@ -29,21 +29,22 @@ export function BlogPageContent({ posts }: { posts: PostSummary[] }) {
       {/* Hero */}
       <section
         className="py-20 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0A1714 0%, #0F2D26 60%, #0E3D30 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
+            className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
           >
-            📝 Blog PyCore
+            BLOG PYCORE
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#E6F2EE] mb-5"
+            className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F2EEE6] mb-5"
           >
             Ideas para operar mejor
             <br />
@@ -53,7 +54,7 @@ export function BlogPageContent({ posts }: { posts: PostSummary[] }) {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-[#94B8B0] text-lg max-w-2xl mx-auto"
+            className="text-[#A8A094] text-lg max-w-2xl mx-auto"
           >
             Inventario, ventas, impuestos y tecnología, explicados para PyMEs mexicanas.
             Sin humo y sin tecnicismos innecesarios.
@@ -142,7 +143,8 @@ export function BlogPageContent({ posts }: { posts: PostSummary[] }) {
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <button
               onClick={() => openModal()}
-              className="bg-[var(--color-primary)] text-white rounded-full px-8 py-3 font-semibold hover:bg-[var(--color-secondary)] transition-colors"
+              className="rounded-btn px-8 py-3.5 font-semibold transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Solicitar Demo
             </button>

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { Icon } from "@/components/ui/Icon";
 
 const productLinks = [
   { label: "Módulos",       href: "/modulos" },
@@ -43,25 +44,25 @@ export function Footer() {
                 height={32}
                 className="h-8 w-8 object-contain"
               />
-              <span className="font-heading font-bold text-lg text-[var(--text)]">PyCore SGC</span>
+              <span className="font-heading font-bold text-lg" style={{ color: "var(--text)" }}>PyCore <span style={{ color: "var(--text-muted)", fontWeight: 500 }}>SGC</span></span>
             </a>
-            <p className="text-[var(--text-muted)] text-sm leading-relaxed max-w-xs">
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--text-3)" }}>
               ERP modular en la nube para PyMEs mexicanas. Ventas, inventario, finanzas y tienda en línea en un solo sistema.
             </p>
-            <p className="text-[var(--text-muted)] text-xs mt-4">
-              Construido con ❤️ en México 🇲🇽
+            <p className="text-xs mt-4" style={{ color: "var(--text-muted)" }}>
+              Construido en México, para México.
             </p>
           </div>
 
           {/* Producto */}
           <div>
-            <h4 className="font-heading font-semibold text-[var(--text)] text-sm mb-4">Producto</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4" style={{ color: "var(--text)" }}>Producto</h4>
             <ul className="flex flex-col gap-2.5 list-none">
               {productLinks.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors text-sm"
+                    className="text-sm transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
                   >
                     {l.label}
                   </a>
@@ -72,13 +73,13 @@ export function Footer() {
 
           {/* Módulos */}
           <div>
-            <h4 className="font-heading font-semibold text-[var(--text)] text-sm mb-4">Módulos</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4" style={{ color: "var(--text)" }}>Módulos</h4>
             <ul className="flex flex-col gap-2.5 list-none">
               {modulesLinks.map((l) => (
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors text-sm"
+                    className="text-sm transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
                   >
                     {l.label}
                   </a>
@@ -89,34 +90,38 @@ export function Footer() {
 
           {/* Empresa */}
           <div>
-            <h4 className="font-heading font-semibold text-[var(--text)] text-sm mb-4">Empresa</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4" style={{ color: "var(--text)" }}>Empresa</h4>
             <ul className="flex flex-col gap-2.5 list-none">
               {companyLinks.map((l) => (
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors text-sm"
+                    className="text-sm transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 p-3 rounded-xl text-sm" style={{ background: "var(--color-primary)", opacity: 1 }}>
-              <p className="text-white font-medium text-xs mb-1">¿Listo para empezar?</p>
+            <div className="mt-5 p-4 rounded-card" style={{ background: "var(--band)" }}>
+              <p className="font-heading font-semibold text-sm mb-1" style={{ color: "var(--band-ink)" }}>
+                ¿Listo para empezar?
+              </p>
               <a
                 href="/#contacto"
-                className="text-white/80 hover:text-white text-xs underline transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold transition-opacity hover:opacity-80"
+                style={{ color: "var(--band-eyebrow)" }}
               >
-                Solicitar demo gratis →
+                Solicitar demo gratis
+                <Icon name="arrowRight" size={14} strokeWidth={2.2} />
               </a>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[var(--border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-[var(--text-muted)] text-xs">
+        <div className="pt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs" style={{ color: "var(--text-muted)" }}>
             © {new Date().getFullYear()} Cyber Core Technology · Todos los derechos reservados
           </p>
           <div className="flex items-center gap-3 flex-wrap justify-center">
@@ -124,24 +129,23 @@ export function Footer() {
               href="https://plataforma.pycore.app/privacidad"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors text-xs"
+              className="text-xs transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
             >
               Aviso de Privacidad
             </a>
-            <span className="text-[var(--border)] text-xs">·</span>
+            <span className="text-xs" style={{ color: "var(--border)" }}>·</span>
             <a
               href="https://plataforma.pycore.app/terminos"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--text-muted)] hover:text-[var(--color-primary)] transition-colors text-xs"
+              className="text-xs transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
             >
               Términos de Uso
             </a>
-            <span className="text-[var(--border)] text-xs hidden sm:inline">·</span>
-            <div className="flex items-center gap-1 text-[var(--text-muted)] text-xs">
-              <span>Diseñado en México</span>
-              <span>🇲🇽</span>
-            </div>
+            <span className="text-xs hidden sm:inline" style={{ color: "var(--border)" }}>·</span>
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Diseñado en México
+            </span>
           </div>
         </div>
 

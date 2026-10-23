@@ -2,32 +2,21 @@
 import { motion } from "framer-motion";
 import { PLANS } from "@/lib/constants";
 import { useDemoModal } from "@/lib/demo-context";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Icon } from "@/components/ui/Icon";
 
 export function PlansSection() {
   const { openModal } = useDemoModal();
 
   return (
-    <section id="planes" className="py-20 bg-[var(--bg)]" aria-labelledby="plans-heading">
+    <section id="planes" className="py-20" style={{ background: "var(--bg)" }} aria-labelledby="plans-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <motion.span
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 rounded-full px-4 py-1.5 text-[var(--color-secondary)] text-sm font-medium mb-4"
-          >
-            📈 Planes y precios
-          </motion.span>
-          <h2
-            id="plans-heading"
-            className="font-heading text-3xl lg:text-4xl font-bold text-[var(--text)] mb-4"
-          >
-            Empieza pequeño, crece sin límites
-          </h2>
-          <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-            Durante agosto, todos los planes están en promoción a $999 MXN/mes por sucursal activa.
-          </p>
-        </div>
+        <SectionHeading
+          id="plans-heading"
+          eyebrow="PLANES Y PRECIOS"
+          title={<>Elige el control que<br />tu negocio necesita.</>}
+          subtitle="Empieza simple y escala cuando tu operación lo pida. Todos los planes se cobran por sucursal activa."
+        />
 
         {/* Grid: mismo tamaño para todas las tarjetas */}
         <div className="overflow-x-auto pb-4 md:overflow-x-visible md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -41,66 +30,92 @@ export function PlansSection() {
                 transition={{ duration: 0.4, delay: i * 0.08 }}
                 // h-full asegura que todas las cards en el mismo row de grid tengan igual altura
                 className={`
-                  relative flex flex-col rounded-[20px] border h-full
+                  relative flex flex-col rounded-card-lg border h-full
                   w-72 md:w-auto
                   ${plan.highlight
-                    ? "border-2 border-[var(--color-primary)] shadow-[0_0_28px_rgba(14,124,102,0.4)]"
-                    : "border-[var(--border)]"
+                    ? "border-2 shadow-card-lg dark:shadow-[0_18px_48px_rgba(0,0,0,0.40)]"
+                    : ""
                   }
                 `}
-                style={{ background: "var(--card)" }}
+                style={{
+                  background: "var(--card)",
+                  borderColor: plan.highlight ? "var(--accent)" : "var(--border)",
+                }}
               >
-                {/* Badge "más popular" */}
+                {/* Badge "más elegido" */}
                 {plan.highlight && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
-                    <span className="bg-[var(--color-primary)] text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap shadow-md">
-                      ⭐ Más popular
+                    <span
+                      className="text-[11px] font-bold tracking-[0.04em] px-4 py-1.5 rounded-full whitespace-nowrap shadow-card-md"
+                      style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
+                    >
+                      MÁS ELEGIDO
                     </span>
                   </div>
                 )}
 
-                {/* Header con color en plan destacado */}
+                {/* Header */}
                 <div
-                  className="p-6 pb-5 rounded-t-[18px]"
-                  style={plan.highlight ? { background: "rgba(14,124,102,0.08)" } : {}}
+                  className="p-6 pb-5 rounded-t-[20px]"
+                  style={plan.highlight ? { background: "var(--tint)" } : {}}
                 >
-                  <h3 className="font-heading font-bold text-xl text-[var(--text)] mb-3">{plan.name}</h3>
+                  <h3 className="font-heading font-bold text-xl mb-3" style={{ color: "var(--text)" }}>
+                    {plan.name}
+                  </h3>
 
                   {/* Precio */}
                   <div className="flex min-h-[52px] flex-col items-start gap-1">
                     {plan.oldPrice && (
-                      <span className="text-sm text-[var(--text-muted)] line-through decoration-2 decoration-[var(--color-primary)]/80 opacity-80">
+                      <span
+                        className="text-sm line-through decoration-2 opacity-80"
+                        style={{ color: "var(--text-muted)", textDecorationColor: "var(--accent)" }}
+                      >
                         {plan.oldPrice}
                       </span>
                     )}
                     <div className="flex items-end gap-1">
                       <span
-                        className="font-heading font-extrabold leading-none text-[var(--text)]"
-                        style={{ fontSize: plan.price === "Personalizado" ? "22px" : "38px" }}
+                        className="font-heading font-bold leading-none tracking-[-0.03em] tabular-nums"
+                        style={{
+                          color: "var(--text)",
+                          fontSize: plan.price === "Personalizado" ? "22px" : "38px",
+                        }}
                       >
                         {plan.price}
                       </span>
                       {plan.priceNote && (
-                        <span className="text-[var(--text-muted)] text-xs mb-1 leading-tight">{plan.priceNote}</span>
+                        <span className="text-xs mb-1 leading-tight" style={{ color: "var(--text-muted)" }}>
+                          {plan.priceNote}
+                        </span>
                       )}
                     </div>
                   </div>
                   {plan.promoLabel && (
-                    <div className="mt-2 inline-flex items-center rounded-full border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--color-primary)]">
+                    <div
+                      className="mt-2 inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]"
+                      style={{ background: "var(--warm-tint)", color: "var(--warm-ink)" }}
+                    >
                       {plan.promoLabel}
                     </div>
                   )}
-                  <p className="text-[var(--text-muted)] text-xs mt-2 min-h-[32px]">{plan.subtitle}</p>
+                  <p className="text-xs mt-2 min-h-[32px]" style={{ color: "var(--text-muted)" }}>
+                    {plan.subtitle}
+                  </p>
                 </div>
 
-                <div className="h-px bg-[var(--border)] mx-6" />
+                <div className="h-px mx-6" style={{ background: "var(--border)" }} />
 
                 {/* Features — flex-1 empuja el CTA al fondo */}
                 <ul className="flex flex-col gap-2.5 flex-1 p-6 pt-5">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-[var(--text)]">
-                      <span className="text-[var(--color-success)] font-bold mt-0.5 flex-shrink-0">✓</span>
-                      <span className={f.startsWith("Todo lo") ? "font-semibold text-[var(--color-secondary)]" : ""}>
+                    <li key={f} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-2)" }}>
+                      <span className="flex-shrink-0 mt-0.5" style={{ color: "var(--accent-ink)" }}>
+                        <Icon name="check" size={15} strokeWidth={2.4} />
+                      </span>
+                      <span
+                        className={f.startsWith("Todo lo") ? "font-semibold" : ""}
+                        style={f.startsWith("Todo lo") ? { color: "var(--accent-ink)" } : {}}
+                      >
                         {f}
                       </span>
                     </li>
@@ -111,13 +126,16 @@ export function PlansSection() {
                 <div className="p-6 pt-0 mt-auto">
                   <button
                     onClick={() => openModal(plan.name)}
-                    className={`
-                      w-full text-center rounded-full px-4 py-3 text-sm font-semibold transition-colors
-                      ${plan.highlight
-                        ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-secondary)]"
-                        : "border border-[var(--border)] text-[var(--text)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-                      }
-                    `}
+                    className="w-full text-center rounded-btn px-4 py-3.5 text-sm font-semibold transition-colors"
+                    style={
+                      plan.highlight
+                        ? { background: "var(--accent)", color: "var(--accent-fg)" }
+                        : {
+                            background: "var(--btn2)",
+                            color: "var(--text)",
+                            border: "1px solid var(--btn2-border)",
+                          }
+                    }
                     aria-label={`Solicitar plan ${plan.name}`}
                   >
                     {plan.cta}
@@ -128,7 +146,7 @@ export function PlansSection() {
           </div>
         </div>
 
-        <p className="text-center text-[var(--text-muted)] text-sm mt-10">
+        <p className="text-sm mt-10" style={{ color: "var(--text-muted)" }}>
           Todos los planes incluyen soporte técnico y acceso a todas las actualizaciones. Precios en pesos mexicanos.
         </p>
       </div>

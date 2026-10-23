@@ -1,5 +1,6 @@
 import React from "react";
 import type { Block } from "@/lib/blog";
+import { Icon } from "@/components/ui/Icon";
 
 /** Soporta **negritas** dentro del texto de los bloques. */
 function inline(text: string): React.ReactNode[] {
@@ -64,7 +65,7 @@ export function PostBlocks({ blocks }: { blocks: readonly Block[] }) {
                 {block.items.map((item, n) => (
                   <li key={item} className="flex items-start gap-3 text-[var(--text-muted)] text-base leading-[1.7]">
                     <span
-                      className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
+                      className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mt-0.5"
                       style={{ background: "var(--color-primary)" }}
                     >
                       {n + 1}
@@ -95,13 +96,18 @@ export function PostBlocks({ blocks }: { blocks: readonly Block[] }) {
                 key={i}
                 className="rounded-2xl p-5 my-2 flex items-start gap-4"
                 style={{
-                  background: "rgba(27,174,145,0.10)",
-                  border:     "1px solid rgba(27,174,145,0.3)",
+                  background: "var(--tint)",
+                  border:     "1px solid var(--border)",
                 }}
               >
-                <span className="text-2xl flex-shrink-0" aria-hidden="true">{block.icon}</span>
+                <span
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-lg flex-shrink-0"
+                  style={{ background: "var(--card)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name={block.icon ?? "bulb"} size={18} />
+                </span>
                 <div>
-                  <p className="font-heading font-semibold text-[var(--text)] mb-1">{block.title}</p>
+                  <p className="font-heading font-semibold mb-1" style={{ color: "var(--text)" }}>{block.title}</p>
                   <p className="text-[var(--text-muted)] text-sm leading-relaxed">{inline(block.text)}</p>
                 </div>
               </aside>

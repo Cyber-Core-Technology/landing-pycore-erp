@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Icon } from "@/components/ui/Icon";
 import { ChatConversation } from "@/components/ui/ChatConversation";
 import { InsightBadge } from "@/components/ui/InsightBadge";
 import { TEZCA_INSIGHTS, TEZCA_BADGES, TEZCA_FEATURES } from "@/lib/constants";
@@ -8,7 +9,7 @@ export function TEZCASection() {
   return (
     <section
       id="tezca"
-      style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #1A3A33 100%)" }}
+      style={{ background: "#16140F" }}
       className="py-20"
       aria-labelledby="tezca-heading"
     >
@@ -20,9 +21,10 @@ export function TEZCASection() {
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-4"
+            className="block text-xs font-semibold tracking-[0.16em] mb-4"
+            style={{ color: "#FFCC99" }}
           >
-            🤖 Inteligencia Artificial integrada
+            INTELIGENCIA ARTIFICIAL INTEGRADA
           </motion.span>
           <motion.h2
             id="tezca-heading"
@@ -30,7 +32,7 @@ export function TEZCASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-heading text-2xl sm:text-3xl lg:text-5xl font-bold text-[#E6F2EE] mb-4"
+            className="font-heading text-3xl sm:text-4xl lg:text-[44px] font-bold leading-[1.1] tracking-[-0.03em] text-[#F2EEE6] mb-4"
           >
             TEZCA — Tu consejero de negocios con IA
           </motion.h2>
@@ -39,7 +41,7 @@ export function TEZCASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-[#94B8B0] text-lg max-w-2xl mx-auto"
+            className="text-[#A8A094] text-lg max-w-2xl mx-auto"
           >
             La mayoría de los ERPs te dan datos. TEZCA te dice qué hacer con ellos.
             Analiza tu negocio en segundo plano las 24 horas, sin que tengas que preguntar.
@@ -60,7 +62,7 @@ export function TEZCASection() {
               💬 Modo Consejero — Pregúntale lo que quieras
             </div>
             <ChatConversation />
-            <p className="text-[#94B8B0] text-xs mt-3">
+            <p className="text-[#A8A094] text-xs mt-3">
               Responde con tus datos reales, no respuestas genéricas. El historial se guarda completo.
             </p>
           </motion.div>
@@ -72,7 +74,7 @@ export function TEZCASection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-2 bg-[#3498DB]/20 border border-[#3498DB]/40 rounded-full px-4 py-1.5 text-[#94B8B0] text-sm font-medium mb-5">
+            <div className="inline-flex items-center gap-2 bg-[#3498DB]/20 border border-[#3498DB]/40 rounded-full px-4 py-1.5 text-[#A8A094] text-sm font-medium mb-5">
               👁 Modo Observador — Analiza cada hora en segundo plano
             </div>
             <div className="flex flex-col gap-3 mb-4">
@@ -80,7 +82,7 @@ export function TEZCASection() {
                 <InsightBadge key={i} level={ins.level} text={ins.text} delay={i * 0.1} onDark />
               ))}
             </div>
-            <p className="text-[#94B8B0] text-xs mt-2">
+            <p className="text-[#A8A094] text-xs mt-2">
               Cada insight incluye una acción concreta sugerida. Los insights se guardan por 30 días y puedes filtrarlos por tipo o urgencia.
             </p>
           </motion.div>
@@ -89,10 +91,10 @@ export function TEZCASection() {
         {/* Insignias */}
         <div className="mb-14">
           <div className="text-center mb-6">
-            <h3 className="font-heading font-bold text-xl text-[#E6F2EE]">
+            <h3 className="font-heading font-bold text-xl text-[#F2EEE6]">
               🏆 Insignias y logros automáticos
             </h3>
-            <p className="text-[#94B8B0] text-sm mt-1">
+            <p className="text-[#A8A094] text-sm mt-1">
               TEZCA reconoce los hitos de tu negocio y los celebra contigo.
             </p>
           </div>
@@ -113,11 +115,11 @@ export function TEZCASection() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontSize: "28px", marginBottom: "8px" }}>{b.icon}</div>
-                <p style={{ fontFamily: "var(--font-poppins,sans-serif)", fontWeight: 600, fontSize: "11px", color: "#E6F2EE", marginBottom: "4px" }}>
+                <div style={{ color: "#7AE0C3", marginBottom: "8px", display: "flex", justifyContent: "center" }}><Icon name={b.icon} size={26} /></div>
+                <p style={{ fontFamily: "var(--font-outfit,sans-serif)", fontWeight: 600, fontSize: "11px", color: "#F2EEE6", marginBottom: "4px" }}>
                   {b.name}
                 </p>
-                <p style={{ fontSize: "10px", color: "#94B8B0", lineHeight: 1.4 }}>{b.desc}</p>
+                <p style={{ fontSize: "10px", color: "#A8A094", lineHeight: 1.4 }}>{b.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -142,7 +144,7 @@ export function TEZCASection() {
                 padding: "12px 16px",
               }}
             >
-              <span style={{ fontSize: "20px", flexShrink: 0 }}>{f.icon}</span>
+              <span style={{ flexShrink: 0, color: "#7AE0C3", display: "flex" }}><Icon name={f.icon} size={18} /></span>
               <span style={{ fontSize: "13px", color: "#7AE0C3" }}>{f.label}</span>
             </motion.div>
           ))}

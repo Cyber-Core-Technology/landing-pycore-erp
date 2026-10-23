@@ -71,10 +71,10 @@ export function ChatConversation() {
   return (
     <div
       style={{
-        background: "#0F1E1A",
+        background: "#16140F",
         borderRadius: "18px",
-        border: "1px solid rgba(30,74,64,0.8)",
-        boxShadow: "0 0 40px rgba(14,124,102,0.25)",
+        border: "1px solid rgba(51,46,37,0.8)",
+        boxShadow: "0 18px 48px rgba(0,0,0,0.38)",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -86,12 +86,12 @@ export function ChatConversation() {
       {/* Header */}
       <div
         style={{
-          background: "#1A3A33",
+          background: "#1E1B15",
           padding: "12px 16px",
           display: "flex",
           alignItems: "center",
           gap: "10px",
-          borderBottom: "1px solid rgba(30,74,64,0.8)",
+          borderBottom: "1px solid rgba(51,46,37,0.8)",
           flexShrink: 0,
         }}
       >
@@ -100,7 +100,7 @@ export function ChatConversation() {
             width: "34px",
             height: "34px",
             borderRadius: "50%",
-            background: "linear-gradient(135deg, #0E7C66, #1BAE91)",
+            background: "#0E7C66",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -111,7 +111,7 @@ export function ChatConversation() {
           🤖
         </div>
         <div>
-          <p style={{ fontFamily: "var(--font-poppins,sans-serif)", fontWeight: 700, fontSize: "13px", color: "#E6F2EE" }}>
+          <p style={{ fontFamily: "var(--font-outfit,sans-serif)", fontWeight: 700, fontSize: "13px", color: "#F2EEE6" }}>
             TEZCA
           </p>
           <p style={{ fontSize: "10px", color: "#1BAE91" }}>
@@ -156,7 +156,7 @@ export function ChatConversation() {
                     width: "26px",
                     height: "26px",
                     borderRadius: "50%",
-                    background: "linear-gradient(135deg, #0E7C66, #1BAE91)",
+                    background: "#0E7C66",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -178,13 +178,13 @@ export function ChatConversation() {
                     padding:      "8px 12px",
                     fontSize:     "12px",
                     lineHeight:   1.55,
-                    color:        "#E6F2EE",
+                    color:        "#F2EEE6",
                     whiteSpace:   "pre-line",
                   }}
                 >
                   {msg.text}
                 </div>
-                <span style={{ fontSize: "9px", color: "#94B8B0", paddingInline: "2px" }}>{msg.time}</span>
+                <span style={{ fontSize: "9px", color: "#A8A094", paddingInline: "2px" }}>{msg.time}</span>
               </div>
 
               {/* Avatar usuario — derecha, después del bubble */}
@@ -221,7 +221,7 @@ export function ChatConversation() {
               <div
                 style={{
                   width: "26px", height: "26px", borderRadius: "50%",
-                  background: "linear-gradient(135deg, #0E7C66, #1BAE91)",
+                  background: "#0E7C66",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: "12px", flexShrink: 0,
                 }}

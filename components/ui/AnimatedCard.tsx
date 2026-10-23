@@ -17,11 +17,11 @@ export function AnimatedCard({ children, delay = 0, className, glow }: AnimatedC
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, delay, ease: "easeOut" }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      whileTap={{ scale: 0.97 }}
+            style={{ background: "var(--card)", border: "1px solid var(--border)" }}
       className={clsx(
-        "bg-[var(--card)] border border-[var(--border)] rounded-[16px] p-6",
+        "rounded-card p-6",
         "transition-shadow duration-300",
-        glow && "dark:shadow-[0_0_16px_rgba(14,124,102,0.35)] hover:dark:shadow-[0_0_32px_rgba(14,124,102,0.45)]",
+        glow && "shadow-card-sm hover:shadow-card-lg dark:shadow-[0_2px_8px_rgba(0,0,0,0.30)] hover:dark:shadow-[0_18px_48px_rgba(0,0,0,0.42)]",
         className
       )}
     >

@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Icon } from "@/components/ui/Icon";
 import { useDemoModal } from "@/lib/demo-context";
 
 const MODULES_DETAIL = [
@@ -203,21 +204,22 @@ export function ModulosPageContent() {
       {/* Hero */}
       <section
         className="py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #0E2A23 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <motion.span
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-[#1BAE91]/20 border border-[#1BAE91]/40 rounded-full px-4 py-1.5 text-[#7AE0C3] text-sm font-medium mb-5"
+            className="block text-xs font-semibold tracking-[0.16em] mb-5"
+            style={{ color: "#FFCC99" }}
           >
-            🧩 10 módulos integrados
+            10 MÓDULOS INTEGRADOS
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold text-[#E6F2EE] mb-5"
+            className="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold text-[#F2EEE6] mb-5"
           >
             Todo lo que tu negocio necesita,
             <br />
@@ -227,7 +229,7 @@ export function ModulosPageContent() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-[#94B8B0] text-lg max-w-2xl mx-auto mb-8"
+            className="text-[#A8A094] text-lg max-w-2xl mx-auto mb-8"
           >
             Activa solo los módulos que necesitas. PyCore crece contigo: empieza con lo básico y expande conforme tu negocio lo exija, sin cambiar de sistema ni migrar datos.
           </motion.p>
@@ -239,7 +241,8 @@ export function ModulosPageContent() {
           >
             <button
               onClick={() => openModal()}
-              className="bg-[#1BAE91] text-white rounded-full px-6 py-2.5 font-semibold text-sm hover:bg-[#159A7E] transition-colors"
+              className="rounded-btn px-6 py-3 font-semibold text-sm transition-opacity hover:opacity-90"
+              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
             >
               Solicitar Demo
             </button>
@@ -280,7 +283,7 @@ export function ModulosPageContent() {
                 onClick={() => setActiveCategory(cat.value)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeCategory === cat.value
-                    ? "bg-[var(--color-primary)] text-white"
+                    ? "text-[color:var(--accent-fg)] bg-[var(--accent)]"
                     : "bg-[var(--card)] text-[var(--text-muted)] hover:text-[var(--color-primary)] border border-[var(--border)]"
                 }`}
               >
@@ -305,12 +308,17 @@ export function ModulosPageContent() {
                 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="text-4xl flex-shrink-0">{mod.icon}</span>
+                  <span
+                    className="inline-flex items-center justify-center w-12 h-12 rounded-xl flex-shrink-0"
+                    style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                  >
+                    <Icon name={mod.icon} size={24} />
+                  </span>
                   <div>
                     <h2 className="font-heading font-bold text-[var(--text)] text-lg leading-tight">
                       {mod.name}
                     </h2>
-                    <p className="text-[var(--color-primary)] text-xs font-medium mt-0.5">
+                    <p className="text-xs font-medium mt-0.5" style={{ color: "var(--accent-ink)" }}>
                       {mod.subtitle}
                     </p>
                   </div>
@@ -350,18 +358,19 @@ export function ModulosPageContent() {
       {/* CTA */}
       <section
         className="py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #0F1E1A 0%, #0E2A23 100%)" }}
+        style={{ background: "#16140F" }}
       >
         <div className="max-w-2xl mx-auto px-4">
-          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#E6F2EE] mb-4">
+          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-[#F2EEE6] mb-4">
             ¿Listo para ver todo esto funcionando?
           </h2>
-          <p className="text-[#94B8B0] text-lg mb-8">
+          <p className="text-[#A8A094] text-lg mb-8">
             Solicita un demo personalizado y te mostramos los módulos que más se ajustan a tu negocio.
           </p>
           <button
             onClick={() => openModal()}
-            className="bg-[#1BAE91] text-white rounded-full px-8 py-3 font-semibold text-base hover:bg-[#159A7E] transition-colors"
+            className="rounded-btn px-8 py-3.5 font-semibold text-base transition-opacity hover:opacity-90"
+            style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
           >
             Solicitar Demo Gratis
           </button>
