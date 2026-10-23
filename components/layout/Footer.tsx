@@ -1,6 +1,21 @@
 import React from "react";
 import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
+import { COMPANY_NAME, COMPANY_URL, DEVELOPER_NAME, DEVELOPER_URL, REPO_URL, SOCIAL_LINKS } from "@/lib/constants";
+
+// Marcas de terceros: trazos oficiales, no del set de iconos del sistema.
+const socialIcons: Record<(typeof SOCIAL_LINKS)[number]["name"], string> = {
+  Facebook:
+    "M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.03 1.79-4.7 4.53-4.7 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07z",
+  Instagram:
+    "M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 0 0-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.88 5.88 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z",
+  X:
+    "M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41z",
+  YouTube:
+    "M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z",
+  GitHub:
+    "M12 .3a12 12 0 0 0-3.8 23.38c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .3z",
+};
 
 const productLinks = [
   { label: "Módulos",       href: "/modulos" },
@@ -52,6 +67,29 @@ export function Footer() {
             <p className="text-xs mt-4" style={{ color: "var(--text-muted)" }}>
               Construido en México, para México.
             </p>
+            <ul className="flex items-center gap-2 mt-4 list-none">
+              {SOCIAL_LINKS.map((s) => (
+                <li key={s.name}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.name === "GitHub" ? "Código fuente de PyCore SGC en GitHub" : `PyCore SGC en ${s.name}`}
+                    title={s.name === "GitHub" ? "Código fuente en GitHub" : s.name}
+                    className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+                    style={{
+                      border: "1px solid var(--btn2-border)",
+                      background: "var(--btn2)",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+                      <path d={socialIcons[s.name]} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Producto */}
@@ -122,7 +160,29 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-            © {new Date().getFullYear()} Cyber Core Technology · Todos los derechos reservados
+            © {new Date().getFullYear()}{" "}
+            <a
+              href={COMPANY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-opacity hover:opacity-70"
+            >
+              {COMPANY_NAME}
+            </a>{" "}
+            · Todos los derechos reservados
+            <span className="block mt-1 text-center sm:text-left">
+              Desarrollado por{" "}
+              <a
+                href={DEVELOPER_URL}
+                target="_blank"
+                rel="author noopener"
+                title={`Portafolio de ${DEVELOPER_NAME}`}
+                className="font-medium transition-opacity hover:opacity-70"
+                style={{ color: "var(--accent-ink)" }}
+              >
+                {DEVELOPER_NAME}
+              </a>
+            </span>
           </p>
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <a
@@ -141,6 +201,17 @@ export function Footer() {
               className="text-xs transition-opacity hover:opacity-70" style={{ color: "var(--text-muted)" }}
             >
               Términos de Uso
+            </a>
+            <span className="text-xs hidden sm:inline" style={{ color: "var(--border)" }}>·</span>
+            <a
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Código fuente público de PyCore SGC en GitHub"
+              className="text-xs transition-opacity hover:opacity-70"
+              style={{ color: "var(--text-muted)" }}
+            >
+              Código fuente en GitHub
             </a>
             <span className="text-xs hidden sm:inline" style={{ color: "var(--border)" }}>·</span>
             <span className="text-xs" style={{ color: "var(--text-muted)" }}>

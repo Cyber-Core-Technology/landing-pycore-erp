@@ -1,3 +1,23 @@
+// ─── Empresa y redes sociales ─────────────────────────────────────────────────
+
+export const COMPANY_NAME = "Global-IAnalytics S. A de C. V";
+export const COMPANY_URL  = "https://global-ianalytics.com";
+
+// Desarrollador del sistema (la empresa es la responsable/dueña)
+export const DEVELOPER_NAME = "Raul Callejas";
+export const DEVELOPER_URL  = "https://scorpion.cyco.tech";
+
+// Repositorio público (el código original completo es privado)
+export const REPO_URL = "https://github.com/Cyber-Core-Technology/pycore";
+
+export const SOCIAL_LINKS = [
+  { name: "Facebook",  href: "https://www.facebook.com/pycoresgc" },
+  { name: "Instagram", href: "https://www.instagram.com/pycoresgc" },
+  { name: "X",         href: "https://x.com/PycoreSGC" },
+  { name: "YouTube",   href: "https://www.youtube.com/@PyCore-ERP" },
+  { name: "GitHub",    href: REPO_URL },
+] as const;
+
 // ─── Módulos ──────────────────────────────────────────────────────────────────
 
 export const MODULES = [
@@ -186,10 +206,8 @@ export const PLANS: {
   {
     name: "Básico",
     subtitle: "Se cobra por cada sucursal activa",
-    price: "$999",
-    oldPrice: "$999",
+    price: "$1,500",
     priceNote: "MXN / sucursal / mes",
-    promoLabel: "Promo Agosto",
     features: [
       "Inventario en tiempo real",
       "Ventas / POS offline",
@@ -202,10 +220,8 @@ export const PLANS: {
   {
     name: "Profesional",
     subtitle: "Se cobra por cada sucursal activa",
-    price: "$999",
-    oldPrice: "$1,499",
+    price: "$2,000",
     priceNote: "MXN / sucursal / mes",
-    promoLabel: "Promo Agosto",
     features: [
       "Todo lo del plan Básico",
       "Compras y abastecimiento",
@@ -220,10 +236,8 @@ export const PLANS: {
   {
     name: "Empresarial",
     subtitle: "Se cobra por cada sucursal activa",
-    price: "$999",
-    oldPrice: "$1,999",
+    price: "$2,500",
     priceNote: "MXN / sucursal / mes",
-    promoLabel: "Promo Agosto",
     features: [
       "Todo lo del plan Profesional",
       "Tienda en Línea con Mercado Pago",

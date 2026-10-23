@@ -5,6 +5,7 @@ import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { MascotPopup } from "@/components/ui/MascotPopup";
+import { COMPANY_NAME, COMPANY_URL, DEVELOPER_NAME, DEVELOPER_URL, REPO_URL, SOCIAL_LINKS } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -45,9 +46,9 @@ export const metadata: Metadata = {
     "control de inventario", "punto de venta POS",
     "tienda en línea México", "PyCore SGC", "TEZCA IA", "ERP en la nube",
   ],
-  authors: [{ name: "Cyber Core Technology", url: SITE_URL }],
-  creator: "Cyber Core Technology",
-  publisher: "Cyber Core Technology",
+  authors: [{ name: DEVELOPER_NAME, url: DEVELOPER_URL }],
+  creator: DEVELOPER_NAME,
+  publisher: COMPANY_NAME,
 
   alternates: {
     canonical: SITE_URL,
@@ -76,7 +77,8 @@ export const metadata: Metadata = {
     title:       "PyCore SGC — El núcleo de tu negocio",
     description: "ERP modular en la nube para PyMEs mexicanas.",
     images:      ["/og-image.png"],
-    creator:     "@pycoreerp",
+    site:        "@PycoreSGC",
+    creator:     "@PycoreSGC",
   },
 
   robots: {
@@ -106,15 +108,16 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD: Organización + SoftwareApplication
+// JSON-LD: Organización (dueña) + Persona (desarrollador) + SoftwareApplication
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type":       "Organization",
       "@id":         `${SITE_URL}/#organization`,
-      name:          "Cyber Core Technology",
-      url:           SITE_URL,
+      name:          COMPANY_NAME,
+      url:           COMPANY_URL,
+      sameAs:        SOCIAL_LINKS.map((s) => s.href),
       logo: {
         "@type": "ImageObject",
         url:     `${SITE_URL}/Logo-Completo.png`,
@@ -128,6 +131,13 @@ const jsonLd = {
       },
     },
     {
+      "@type":   "Person",
+      "@id":     `${SITE_URL}/#developer`,
+      name:      DEVELOPER_NAME,
+      url:       DEVELOPER_URL,
+      jobTitle:  "Desarrollador de software",
+    },
+    {
       "@type":            "SoftwareApplication",
       "@id":              `${SITE_URL}/#software`,
       name:               "PyCore SGC",
@@ -139,17 +149,19 @@ const jsonLd = {
       offers: {
         "@type":       "AggregateOffer",
         priceCurrency: "MXN",
-        lowPrice:      "999",
-        highPrice:     "999",
-        offerCount:    "4",
+        lowPrice:      "1500",
+        highPrice:     "2500",
+        offerCount:    "3",
         offers: [
-          { "@type": "Offer", name: "Básico",       price: "999", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999", priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Profesional",  price: "999", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999", priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Empresarial",  price: "999", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "999", priceCurrency: "MXN", unitText: "MON" } },
-          { "@type": "Offer", name: "Elite",        priceSpecification: { "@type": "UnitPriceSpecification", description: "Precio personalizado" } },
+          { "@type": "Offer", name: "Básico",       price: "1500", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "1500", priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Profesional",  price: "2000", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "2000", priceCurrency: "MXN", unitText: "MON" } },
+          { "@type": "Offer", name: "Empresarial",  price: "2500", priceCurrency: "MXN", priceSpecification: { "@type": "UnitPriceSpecification", price: "2500", priceCurrency: "MXN", unitText: "MON" } },
         ],
       },
+      author:    { "@id": `${SITE_URL}/#developer` },
+      creator:   { "@id": `${SITE_URL}/#developer` },
       publisher: { "@id": `${SITE_URL}/#organization` },
+      copyrightHolder: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "es-MX",
       featureList: [
         "Inventario en tiempo real",
@@ -160,6 +172,18 @@ const jsonLd = {
         "Recursos Humanos",
         "Reportes y analítica",
       ],
+    },
+    {
+      "@type":        "SoftwareSourceCode",
+      "@id":          `${SITE_URL}/#source-code`,
+      name:           "PyCore SGC — código fuente público",
+      description:    "Repositorio público en GitHub con el código fuente de PyCore SGC, el ERP modular en la nube para PyMEs mexicanas.",
+      codeRepository: REPO_URL,
+      url:            REPO_URL,
+      targetProduct:  { "@id": `${SITE_URL}/#software` },
+      author:         { "@id": `${SITE_URL}/#developer` },
+      publisher:     { "@id": `${SITE_URL}/#organization` },
+      inLanguage:     "es-MX",
     },
     {
       "@type":       "WebSite",
@@ -186,7 +210,7 @@ const jsonLd = {
           name:             "¿Cuánto cuesta PyCore SGC?",
           acceptedAnswer: {
             "@type": "Answer",
-            text:    "PyCore SGC tiene cuatro planes que se cobran por cada sucursal activa. Durante agosto, todos los planes están en promoción a $999 MXN/mes, con un plan Elite personalizado para cadenas y grupos empresariales. Sin contratos de permanencia.",
+            text:    "PyCore SGC tiene cuatro planes que se cobran por cada sucursal activa: Básico $1,500 MXN/mes, Profesional $2,000 MXN/mes y Empresarial $2,500 MXN/mes, con un plan Elite personalizado para cadenas y grupos empresariales. Sin contratos de permanencia.",
           },
         },
         {
@@ -236,7 +260,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es-MX" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script

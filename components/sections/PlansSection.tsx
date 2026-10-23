@@ -15,7 +15,7 @@ export function PlansSection() {
           id="plans-heading"
           eyebrow="PLANES Y PRECIOS"
           title={<>Elige el control que<br />tu negocio necesita.</>}
-          subtitle="Empieza simple y escala cuando tu operación lo pida. Todos los planes se cobran por sucursal activa."
+          subtitle="Empieza simple y escala cuando tu operación lo pida. Se cobra por cada sucursal activa, desde $1,500 MXN al mes."
         />
 
         {/* Grid: mismo tamaño para todas las tarjetas */}
