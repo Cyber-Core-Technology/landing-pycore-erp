@@ -41,10 +41,23 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  experimental: {
-    // Optimiza el bundle de paquetes del servidor
-    optimizePackageImports: ["framer-motion", "lucide-react"],
-  },
+  /*
+    `optimizePackageImports` está apagado a propósito.
+
+    Reescribe `import { motion, useScroll } from "framer-motion"` en imports
+    profundos uno por uno, y en framer-motion 11 no todos los exportados
+    tienen su módulo 1:1: el que no resuelve queda `undefined` en el grafo de
+    webpack y lo que se ve es un «Cannot read properties of undefined
+    (reading 'call')» señalando al primer componente de cliente de la página
+    — un sitio que no tiene nada que ver con la causa.
+
+    Además listaba `lucide-react`, que **no es una dependencia** de este
+    proyecto: optimizar un paquete que no está instalado no ahorra nada y sí
+    mete una resolución que puede fallar.
+
+    Next 15 ya optimiza por su cuenta los paquetes que sabe tratar. Si algún
+    día vuelve, que sea con una medición del bundle que lo justifique.
+  */
 };
 
 export default nextConfig;

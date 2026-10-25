@@ -184,7 +184,7 @@ export function HeroSection() {
               className="text-[13px] mt-4"
               style={{ color: "var(--text-muted)" }}
             >
-              Hecho en México · 10 módulos integrados · funciona sin internet
+              Hecho en México · 11 módulos integrados · funciona sin internet
             </motion.p>
           </div>
 

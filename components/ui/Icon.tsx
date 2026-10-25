@@ -66,6 +66,8 @@ const P: Record<string, string> = {
   chevronDown: "M6 9l6 6 6-6",
   arrowRight:  "M5 12h14M13 6l6 6-6 6",
   arrowUp:     "M12 19V5M6 11l6-6 6 6",
+  arrowDown:   "M12 5v14M6 13l6 6 6-6",
+  download:    "M12 3v12M8 11l4 4 4-4M4 19h16",
   ban:         "M12 3a9 9 0 100 18 9 9 0 000-18zM6 6l12 12",
   question:    "M12 3a9 9 0 100 18 9 9 0 000-18zM9.5 9.5a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 4M12 17h.01",
   flag:        "M5 21V4h14l-3 4 3 4H5",

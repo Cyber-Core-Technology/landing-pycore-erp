@@ -16,7 +16,7 @@ export function ModulesSection() {
           id="modules-heading"
           eyebrow="MÓDULOS DEL SISTEMA"
           title={<>Todo conectado.<br />Todo bajo control.</>}
-          subtitle="Diez módulos integrados en un solo sistema. Activa los que necesitas y desactiva los que no, sin costos ocultos por funciones que no usas."
+          subtitle="Once módulos integrados en un solo sistema. Activa los que necesitas y desactiva los que no, sin costos ocultos por funciones que no usas."
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

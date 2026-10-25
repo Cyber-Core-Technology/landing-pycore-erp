@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { TEZCAPageContent } from "@/components/pages/TEZCAPageContent";
+import { TEZCASection } from "@/components/sections/TEZCASection";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
@@ -62,6 +63,7 @@ export default function TEZCAPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <TEZCAPageContent />
+        <TEZCASection />
       </main>
       <Footer />
     </>

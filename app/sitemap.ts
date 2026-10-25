@@ -13,10 +13,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority:         1.0,
     },
     {
+      url:              `${base}/demo`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.9,
+    },
+    {
       url:              `${base}/modulos`,
       lastModified:     now,
       changeFrequency:  "monthly",
       priority:         0.9,
+    },
+    {
+      url:              `${base}/capacidades`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.9,
+    },
+    {
+      url:              `${base}/documentos`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.9,
+    },
+    {
+      url:              `${base}/plataforma`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.8,
     },
     {
       url:              `${base}/tezca`,

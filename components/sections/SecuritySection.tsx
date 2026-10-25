@@ -41,6 +41,7 @@ export function SecuritySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className="rounded-card p-5"
                 style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
               >

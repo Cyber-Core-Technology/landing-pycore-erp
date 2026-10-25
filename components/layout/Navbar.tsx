@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
@@ -7,18 +7,67 @@ import { Icon } from "@/components/ui/Icon";
 import { useDemoModal } from "@/lib/demo-context";
 
 const links = [
-  { label: "Módulos",  href: "/modulos" },
-  { label: "TEZCA",    href: "/tezca" },
-  { label: "Tienda",   href: "/tienda" },
-  { label: "Blog",     href: "/blog" },
-  { label: "Planes",   href: "/#planes" },
-  { label: "Contacto", href: "/#contacto" },
+  { label: "Pruébalo",    href: "/demo" },
+  { label: "Módulos",     href: "/modulos" },
+  { label: "Capacidades", href: "/capacidades" },
+  { label: "Documentos",  href: "/documentos" },
+  { label: "TEZCA",       href: "/tezca" },
+  { label: "Tienda",      href: "/tienda" },
+  { label: "Planes",      href: "/#planes" },
+  { label: "Blog",        href: "/blog" },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { openModal } = useDemoModal();
+  const botonMenu = useRef<HTMLButtonElement>(null);
+  const cajon = useRef<HTMLDivElement>(null);
+
+  /*
+    El cajón del móvil es un diálogo, no un `div` encima de la pantalla.
+
+    Sin esto se entraba tabulando al contenido de atrás —que sigue ahí—, y
+    Escape no hacía nada: el menú sólo cerraba con un clic fuera, que es un
+    gesto de puntero. Quien navega con teclado entraba y no salía.
+
+    Al cerrarlo el foco **vuelve al botón que lo abrió**: dejarlo en el aire
+    manda el siguiente Tab al principio de la página.
+  */
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const alPulsar = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        botonMenu.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      // `offsetParent` es el truco de siempre para «¿está visible?» y
+      // devuelve nulo para todo lo que viva en un contenedor `fixed` — que es
+      // exactamente lo que es esta cabecera.
+      const foco = [...(cajon.current?.querySelectorAll<HTMLElement>("a, button") ?? [])]
+        .filter((el) => el.checkVisibility());
+      if (!foco.length) return;
+
+      const primero = foco[0]!;
+      const ultimo = foco[foco.length - 1]!;
+      if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
+    };
+
+    document.addEventListener("keydown", alPulsar);
+    // El foco entra al cajón, no se queda en el botón de abrir.
+    cajon.current?.querySelector<HTMLElement>("a, button")?.focus();
+    return () => document.removeEventListener("keydown", alPulsar);
+  }, [menuOpen]);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -96,6 +145,7 @@ export function Navbar() {
         <div className="lg:hidden flex items-center gap-1">
           <ThemeToggle />
           <button
+            ref={botonMenu}
             className="p-2.5 rounded-lg leading-none"
             style={{ color: "var(--text)" }}
             aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
@@ -109,6 +159,10 @@ export function Navbar() {
 
       {menuOpen && (
         <motion.div
+          ref={cajon}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menú de navegación"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           className="lg:hidden px-4 pb-4"

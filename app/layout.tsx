@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { TransicionPagina, BarraDeAvance } from "@/components/layout/TransicionPagina";
 import { MascotPopup } from "@/components/ui/MascotPopup";
 import { COMPANY_NAME, COMPANY_URL, DEVELOPER_NAME, DEVELOPER_URL, REPO_URL, SOCIAL_LINKS } from "@/lib/constants";
 import "./globals.css";
@@ -279,7 +280,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <DemoModalProvider>
-            {children}
+            <BarraDeAvance />
+            <TransicionPagina>{children}</TransicionPagina>
             <DemoModal />
             <ScrollToTop />
             <MascotPopup />
