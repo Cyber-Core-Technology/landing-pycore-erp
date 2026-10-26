@@ -4,16 +4,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@/components/ui/Icon";
 import { TezcaDemo } from "@/components/demo/TezcaDemo";
 import { TicketDemo } from "@/components/demo/TicketDemo";
+import { EtiquetaVariacion } from "@/components/demo/EtiquetaVariacion";
 import {
   buscar,
   cantidadBase,
+  claveStock,
   construirTicket,
+  etiquetasProducto,
   gramosDesdeImporte,
   importeLinea,
   mxn,
+  nombreLinea,
   porCodigoDeBarras,
   precioUnitario,
   problemasParaCobrar,
+  stockDe,
+  stockInicial,
   type CatalogoDemo,
   type Linea,
   type LineaExtra,
@@ -25,31 +31,49 @@ import {
 
   Lo que lo separa de una maqueta bonita es que **las reglas son las del
   sistema**: el granel se captura en gramos, la presentación tiene precio
-  absoluto, el extra va en su renglón y una línea en cero no se cobra. Lo que
-  no hace —y lo dice— es guardar: al recargar, el mostrador vuelve a abrir.
+  absoluto, la variante lleva su propia existencia, el extra va en su renglón
+  y una línea en cero no se cobra. Lo que no hace —y lo dice— es guardar.
 
   La aritmética vive en `lib/demoMostrador.ts`, probada aparte. Aquí sólo se
   pinta y se recoge lo que la persona hace.
 */
 
-type Props = { catalogo: CatalogoDemo };
+type Props = {
+  catalogo: CatalogoDemo;
+  /** Lo que se dio de alta en el paso anterior: entra al mostrador. */
+  agregados?: ProductoDemo[];
+};
 
 let contador = 0;
 const nuevoUid = () => `l${++contador}`;
 
-export function Mostrador({ catalogo }: Props) {
+export function Mostrador({ catalogo, agregados = [] }: Props) {
+  const productos = useMemo(
+    () => [...agregados, ...catalogo.productos],
+    [agregados, catalogo.productos],
+  );
+
   const [q, setQ] = useState("");
   const [lineas, setLineas] = useState<Linea[]>([]);
   const [extras, setExtras] = useState<LineaExtra[]>([]);
-  const [stock, setStock] = useState<Map<string, number>>(
-    () => new Map(catalogo.productos.map((p) => [p.id, p.stock])),
-  );
+  const [stock, setStock] = useState<Map<string, number>>(() => stockInicial(productos));
   const [cobrado, setCobrado] = useState<ReturnType<typeof construirTicket> | null>(null);
   const [ventas, setVentas] = useState({ n: 0, importe: 0 });
   const [aviso, setAviso] = useState<string | null>(null);
   const busqueda = useRef<HTMLInputElement>(null);
+  const cerrarTicket = useRef<HTMLButtonElement>(null);
 
-  const resultados = useMemo(() => buscar(catalogo.productos, q).slice(0, 24), [catalogo.productos, q]);
+  // Lo dado de alta en el paso anterior tiene que estrenar su existencia sin
+  // borrar lo que ya se vendió aquí.
+  useEffect(() => {
+    setStock((prev) => {
+      const m = new Map(prev);
+      for (const [k, v] of stockInicial(agregados)) if (!m.has(k)) m.set(k, v);
+      return m;
+    });
+  }, [agregados]);
+
+  const resultados = useMemo(() => buscar(productos, q).slice(0, 30), [productos, q]);
   const ticket = useMemo(() => construirTicket(lineas, extras), [lineas, extras]);
   const problemas = useMemo(() => problemasParaCobrar(lineas, stock), [lineas, stock]);
 
@@ -60,13 +84,24 @@ export function Mostrador({ catalogo }: Props) {
     return () => clearTimeout(t);
   }, [aviso]);
 
+  // El ticket se superpone a la venta, así que es un diálogo: se cierra con
+  // Escape y el foco entra en él. Sin eso, con teclado se entra y no se sale.
+  useEffect(() => {
+    if (!cobrado) return;
+    cerrarTicket.current?.focus();
+    const alPulsar = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCobrado(null);
+    };
+    document.addEventListener("keydown", alPulsar);
+    return () => document.removeEventListener("keydown", alPulsar);
+  }, [cobrado]);
+
   const agregar = useCallback((p: ProductoDemo) => {
     setCobrado(null);
     setLineas((prev) => {
-      // Sin presentaciones y no granel: si ya está, sube uno. Es lo que hace
-      // un mostrador cuando pasas dos veces el mismo código.
-      if (!p.granel && !p.presentaciones) {
-        const i = prev.findIndex((l) => l.producto.id === p.id && l.presentacion === null);
+      const simple = !p.granel && !p.presentaciones && !p.variantes;
+      if (simple) {
+        const i = prev.findIndex((l) => l.producto.id === p.id);
         if (i >= 0) {
           const copia = [...prev];
           copia[i] = { ...copia[i]!, cantidad: copia[i]!.cantidad + 1 };
@@ -79,6 +114,7 @@ export function Mostrador({ catalogo }: Props) {
           uid: nuevoUid(),
           producto: p,
           presentacion: p.presentaciones ? 0 : null,
+          variante: p.variantes ? 0 : null,
           // Una línea por peso nace sin cantidad: «falta pesar» es un estado
           // legítimo, y un 0.1 de oficio hay que borrarlo antes de escribir.
           cantidad: p.granel ? 0 : 1,
@@ -95,19 +131,19 @@ export function Mostrador({ catalogo }: Props) {
     setExtras((prev) => prev.filter((e) => e.padre !== uid));
   };
 
-  const alternarExtra = (uid: string) => {
-    const extra = catalogo.extras[0];
+  const alternarExtra = (uid: string, idExtra: string) => {
+    const extra = catalogo.extras.find((x) => x.id === idExtra);
     if (!extra) return;
     setExtras((prev) =>
-      prev.some((e) => e.padre === uid)
-        ? prev.filter((e) => e.padre !== uid)
+      prev.some((e) => e.padre === uid && e.extra.id === idExtra)
+        ? prev.filter((e) => !(e.padre === uid && e.extra.id === idExtra))
         : [...prev, { uid: nuevoUid(), extra, veces: 1, padre: uid }],
     );
   };
 
   function escanear(e: React.FormEvent) {
     e.preventDefault();
-    const p = porCodigoDeBarras(catalogo.productos, q);
+    const p = porCodigoDeBarras(productos, q);
     if (p) {
       agregar(p);
       setQ("");
@@ -128,11 +164,11 @@ export function Mostrador({ catalogo }: Props) {
       setAviso("No hay nada que cobrar todavía.");
       return;
     }
-    // El almacén se descuenta con lo que de verdad salió: unidad base.
     setStock((prev) => {
       const m = new Map(prev);
       for (const l of lineas) {
-        m.set(l.producto.id, Math.round(((m.get(l.producto.id) ?? 0) - cantidadBase(l)) * 100) / 100);
+        const k = claveStock(l.producto, l.variante);
+        m.set(k, Math.round(((m.get(k) ?? 0) - cantidadBase(l)) * 100) / 100);
       }
       return m;
     });
@@ -141,11 +177,10 @@ export function Mostrador({ catalogo }: Props) {
     setLineas([]);
     setExtras([]);
     setQ("");
-    busqueda.current?.focus();
   }
 
   function reiniciar() {
-    setStock(new Map(catalogo.productos.map((p) => [p.id, p.stock])));
+    setStock(stockInicial(productos));
     setLineas([]);
     setExtras([]);
     setCobrado(null);
@@ -154,10 +189,10 @@ export function Mostrador({ catalogo }: Props) {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] items-start">
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:items-start">
       {/* ── Catálogo ──────────────────────────────────────────────── */}
       <div
-        className="rounded-card p-4 sm:p-5"
+        className="rounded-card p-4 sm:p-5 flex flex-col min-h-0"
         style={{ background: "var(--card)", border: "1px solid var(--border)" }}
       >
         <form onSubmit={escanear} className="flex gap-2">
@@ -179,16 +214,12 @@ export function Mostrador({ catalogo }: Props) {
               placeholder="Busca o escanea un código…"
               autoComplete="off"
               className="w-full rounded-btn pl-10 pr-3 py-2.5 text-sm outline-none focus-visible:ring-2"
-              style={{
-                background: "var(--bg)",
-                border: "1px solid var(--border-control, var(--btn2-border))",
-                color: "var(--text)",
-              }}
+              style={{ background: "var(--bg)", border: "1px solid var(--btn2-border)", color: "var(--text)" }}
             />
           </div>
           <button
             type="submit"
-            className="rounded-btn px-4 py-2.5 text-sm font-semibold flex-shrink-0"
+            className="rounded-btn px-4 py-2.5 flex-shrink-0"
             style={{ background: "var(--btn2)", color: "var(--text-2)", border: "1px solid var(--btn2-border)" }}
           >
             <span className="sr-only">Agregar el código escaneado</span>
@@ -197,46 +228,44 @@ export function Mostrador({ catalogo }: Props) {
         </form>
 
         <p className="text-xs mt-2.5" style={{ color: "var(--text-muted)" }}>
-          {catalogo.productos.length} productos reales del negocio de demostración. Prueba{" "}
-          <button
-            type="button"
-            onClick={() => setQ("granel")}
-            className="underline underline-offset-2 font-semibold"
-            style={{ color: "var(--accent-ink)" }}
-          >
-            granel
-          </button>{" "}
-          o{" "}
-          <button
-            type="button"
-            onClick={() => setQ("coca")}
-            className="underline underline-offset-2 font-semibold"
-            style={{ color: "var(--accent-ink)" }}
-          >
-            coca
-          </button>
-          .
+          {productos.length} productos del negocio de demostración. Prueba{" "}
+          {["granel", "botana", "coca", "café"].map((t, i) => (
+            <span key={t}>
+              {i > 0 && " · "}
+              <button
+                type="button"
+                onClick={() => setQ(t)}
+                className="underline underline-offset-2 font-semibold"
+                style={{ color: "var(--accent-ink)" }}
+              >
+                {t}
+              </button>
+            </span>
+          ))}
         </p>
 
         <ul
+          aria-label="Productos del catálogo"
           className="grid grid-cols-2 xl:grid-cols-3 gap-2 mt-4 list-none p-0 overflow-y-auto content-start"
           /*
-            Alto fijo, no `maxHeight`: con `maxHeight` el panel se encoge al
-            filtrar y deja un hueco en blanco del alto del ticket a su lado —
-            y la rejilla salta de tamaño con cada tecla del buscador.
+            Alto acotado, con suelo y techo: sin techo la rejilla crece con
+            los 52 productos y la columna de la venta queda flotando sobre un
+            vacío de pantalla y media; sin suelo se encoge al filtrar y deja
+            el hueco al revés. El scroll va dentro de la lista.
           */
-          style={{ height: "clamp(300px, 46vh, 480px)" }}
+          style={{ minHeight: 300, maxHeight: "clamp(320px, 56vh, 600px)" }}
         >
           {resultados.map((p) => {
-            const hay = stock.get(p.id) ?? 0;
+            const hay = stockDe(p, stock);
             const agotado = hay <= 0;
+            const etiquetas = etiquetasProducto(p);
             return (
               <li key={p.id}>
                 <button
                   type="button"
                   onClick={() => agregar(p)}
                   disabled={agotado}
-                  className="w-full h-full text-left rounded-card p-3 transition-colors disabled:opacity-45 disabled:cursor-not-allowed"
+                  className="w-full h-full text-left rounded-card p-3 flex flex-col disabled:opacity-45 disabled:cursor-not-allowed"
                   style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
                 >
                   <p
@@ -247,15 +276,22 @@ export function Mostrador({ catalogo }: Props) {
                   </p>
                   <p className="text-sm font-bold mt-1.5" style={{ color: "var(--accent-ink)" }}>
                     {mxn(p.precio)}
-                    <span className="text-[11px] font-normal" style={{ color: "var(--text-muted)" }}>
-                      {p.granel ? " / kg" : ""}
-                    </span>
+                    {p.granel && (
+                      <span className="text-[11px] font-normal" style={{ color: "var(--text-muted)" }}>
+                        {" "}/ kg
+                      </span>
+                    )}
                   </p>
                   <p className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)" }}>
                     {agotado ? "Agotado" : `${hay} ${p.unidad}`}
-                    {p.granel && " · se pesa"}
-                    {p.presentaciones && " · 2 empaques"}
                   </p>
+                  {etiquetas.length > 0 && (
+                    <span className="flex flex-wrap gap-1 mt-2">
+                      {etiquetas.map((e) => (
+                        <EtiquetaVariacion key={e.texto} etiqueta={e} />
+                      ))}
+                    </span>
+                  )}
                 </button>
               </li>
             );
@@ -269,9 +305,9 @@ export function Mostrador({ catalogo }: Props) {
       </div>
 
       {/* ── Ticket ────────────────────────────────────────────────── */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 min-w-0 lg:sticky lg:top-20">
         <div
-          className="rounded-card p-4 sm:p-5"
+          className="rounded-card p-4 sm:p-5 relative flex flex-col"
           style={{ background: "var(--card)", border: "1px solid var(--border)" }}
         >
           <div className="flex items-baseline justify-between gap-2 mb-3">
@@ -285,60 +321,63 @@ export function Mostrador({ catalogo }: Props) {
             )}
           </div>
 
-          <AnimatePresence initial={false}>
-            {lineas.map((l) => (
-              <motion.div
-                key={l.uid}
-                layout
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <LineaTicket
-                  linea={l}
-                  tieneExtra={extras.some((e) => e.padre === l.uid)}
-                  extraNombre={catalogo.extras[0]?.nombre ?? ""}
-                  onCambiar={(c) => cambiar(l.uid, c)}
-                  onQuitar={() => quitar(l.uid)}
-                  onExtra={() => alternarExtra(l.uid)}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          <div className="flex-1">
+            <AnimatePresence initial={false}>
+              {lineas.map((l) => (
+                <motion.div
+                  key={l.uid}
+                  layout
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <LineaTicket
+                    linea={l}
+                    extrasDelProducto={(l.producto.extras ?? []).map(
+                      (id) => catalogo.extras.find((x) => x.id === id)!,
+                    ).filter(Boolean)}
+                    puestos={extras.filter((e) => e.padre === l.uid).map((e) => e.extra.id)}
+                    onCambiar={(c) => cambiar(l.uid, c)}
+                    onQuitar={() => quitar(l.uid)}
+                    onExtra={(id) => alternarExtra(l.uid, id)}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
 
-          {!lineas.length && (
-            <p className="text-sm py-7 text-center" style={{ color: "var(--text-muted)" }}>
-              Elige un producto para empezar la venta.
-            </p>
-          )}
+            {!lineas.length && (
+              <p className="text-sm py-5 text-center" style={{ color: "var(--text-muted)" }}>
+                Elige un producto para empezar la venta.
+              </p>
+            )}
+          </div>
 
-          {/* Totales */}
           <div className="mt-3 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
-            {[
+            {([
               ["Subtotal", ticket.subtotal, false],
               ["Impuestos", ticket.impuesto, false],
               ["Total", ticket.total, true],
-            ].map(([et, val, fuerte]) => (
-              <div key={et as string} className="flex items-baseline justify-between mb-1 last:mb-0">
+            ] as const).map(([et, val, fuerte]) => (
+              <div key={et} className="flex items-baseline justify-between mb-1 last:mb-0">
                 <span
                   className={fuerte ? "font-heading font-bold text-base" : "text-sm"}
                   style={{ color: fuerte ? "var(--text)" : "var(--text-muted)" }}
                 >
-                  {et as string}
+                  {et}
                 </span>
                 <span
                   className={`tabular-nums ${fuerte ? "font-heading font-bold text-xl" : "text-sm"}`}
                   style={{ color: fuerte ? "var(--text)" : "var(--text-2)" }}
                 >
-                  {mxn(val as number)}
+                  {mxn(val)}
                 </span>
               </div>
             ))}
           </div>
 
-          <div aria-live="polite" className="min-h-0">
+          <div aria-live="polite">
             {aviso && (
               <p
                 className="text-xs rounded-btn px-3 py-2 mt-3"
@@ -371,26 +410,41 @@ export function Mostrador({ catalogo }: Props) {
           >
             Reiniciar el mostrador
           </button>
-        </div>
 
-        <AnimatePresence>
-          {cobrado && (
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-            >
-              <TicketDemo ticket={cobrado} empresa={catalogo.empresa} folio={ventas.n} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/*
+            El ticket sale **sobre la venta**, no debajo: abajo había que
+            buscarlo con la vista y en el teléfono quedaba fuera de pantalla,
+            así que lo que se acababa de hacer no se veía ocurrir.
+          */}
+          <AnimatePresence>
+            {cobrado && (
+              <motion.div
+                role="dialog"
+                aria-label="Ticket de la venta"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 rounded-card overflow-y-auto"
+                style={{ background: "var(--card)" }}
+              >
+                <TicketDemo
+                  ticket={cobrado}
+                  empresa={catalogo.empresa}
+                  folio={ventas.n}
+                  onCerrar={() => setCobrado(null)}
+                  refCerrar={cerrarTicket}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         <TezcaDemo
           contexto={{
             ticket,
             lineas,
-            catalogo: catalogo.productos,
+            catalogo: productos,
             stock,
             ventasCobradas: ventas.n,
             importeCobrado: ventas.importe,
@@ -405,22 +459,20 @@ export function Mostrador({ catalogo }: Props) {
 
 function LineaTicket({
   linea: l,
-  tieneExtra,
-  extraNombre,
+  extrasDelProducto,
+  puestos,
   onCambiar,
   onQuitar,
   onExtra,
 }: {
   linea: Linea;
-  tieneExtra: boolean;
-  extraNombre: string;
+  extrasDelProducto: { id: string; nombre: string; precio: number }[];
+  puestos: string[];
   onCambiar: (c: Partial<Linea>) => void;
   onQuitar: () => void;
-  onExtra: () => void;
+  onExtra: (id: string) => void;
 }) {
   const p = l.producto;
-  // El importe del granel se teclea también: peso e importe son el mismo dato
-  // visto de dos maneras, y se equilibran tecla por tecla en los dos sentidos.
   const [importeBorrador, setImporteBorrador] = useState<string | null>(null);
   const importeVisible = importeBorrador ?? (importeLinea(l) || "").toString();
 
@@ -428,7 +480,7 @@ function LineaTicket({
     <div className="py-2.5" style={{ borderBottom: "1px solid var(--border)" }}>
       <div className="flex items-start justify-between gap-2">
         <p className="text-[13px] font-semibold leading-snug" style={{ color: "var(--text)" }}>
-          {p.nombre}
+          {nombreLinea(l)}
         </p>
         <button
           type="button"
@@ -436,14 +488,35 @@ function LineaTicket({
           className="flex-shrink-0 p-1 -m-1 rounded"
           style={{ color: "var(--text-muted)" }}
         >
-          <span className="sr-only">Quitar {p.nombre} de la venta</span>
+          <span className="sr-only">Quitar {nombreLinea(l)} de la venta</span>
           <Icon name="close" size={14} />
         </button>
       </div>
 
+      {/* La variante: otra cosa, con su propia existencia. */}
+      {p.variantes && (
+        <div className="flex flex-wrap gap-1.5 mt-2" role="group" aria-label={`Variante de ${p.nombre}`}>
+          {p.variantes.map((v, i) => (
+            <button
+              key={v.nombre}
+              type="button"
+              onClick={() => onCambiar({ variante: i })}
+              aria-pressed={l.variante === i}
+              className="text-[11px] px-2 py-1 rounded-full font-semibold"
+              style={{
+                background: l.variante === i ? "var(--color-info)" : "var(--chip)",
+                color: l.variante === i ? "#FFFFFF" : "var(--chip-ink)",
+              }}
+            >
+              {v.nombre}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* La presentación: la misma cosa medida distinto, un solo stock. */}
       {p.presentaciones && (
-        <div className="flex gap-1.5 mt-2" role="group" aria-label={`Empaque de ${p.nombre}`}>
+        <div className="flex flex-wrap gap-1.5 mt-2" role="group" aria-label={`Empaque de ${p.nombre}`}>
           {p.presentaciones.map((pres, i) => (
             <button
               key={pres.nombre}
@@ -463,8 +536,6 @@ function LineaTicket({
       )}
 
       {p.granel ? (
-        /* El granel va en su propio renglón: peso e importe no caben en el
-           hueco de los [−][+] sin partirse en móvil. */
         <div className="flex items-end gap-2 mt-2">
           <div className="flex-1 min-w-0">
             <label className="text-[10px] block mb-0.5" style={{ color: "var(--text-muted)" }}>
@@ -508,20 +579,16 @@ function LineaTicket({
         <div className="flex items-center justify-between gap-2 mt-2">
           <div className="flex items-center gap-1.5">
             <BotonCantidad
-              etiqueta={`Quitar uno de ${p.nombre}`}
+              etiqueta={`Quitar uno de ${nombreLinea(l)}`}
               onClick={() => onCambiar({ cantidad: Math.max(0, l.cantidad - 1) })}
-              icono="close"
             >
               −
             </BotonCantidad>
-            <span
-              className="text-sm font-semibold tabular-nums w-7 text-center"
-              style={{ color: "var(--text)" }}
-            >
+            <span className="text-sm font-semibold tabular-nums w-7 text-center" style={{ color: "var(--text)" }}>
               {l.cantidad}
             </span>
             <BotonCantidad
-              etiqueta={`Agregar uno de ${p.nombre}`}
+              etiqueta={`Agregar uno de ${nombreLinea(l)}`}
               onClick={() => onCambiar({ cantidad: l.cantidad + 1 })}
             >
               +
@@ -542,17 +609,24 @@ function LineaTicket({
         </p>
       )}
 
-      {/* El extra: opcional, en su renglón, y aquí sin inventario. */}
-      {extraNombre && (
-        <button
-          type="button"
-          onClick={onExtra}
-          aria-pressed={tieneExtra}
-          className="text-[11px] mt-1.5 font-semibold underline underline-offset-2"
-          style={{ color: tieneExtra ? "var(--accent-ink)" : "var(--text-muted)" }}
-        >
-          {tieneExtra ? `✓ ${extraNombre}` : `+ ${extraNombre}`}
-        </button>
+      {extrasDelProducto.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-1.5">
+          {extrasDelProducto.map((e) => {
+            const puesto = puestos.includes(e.id);
+            return (
+              <button
+                key={e.id}
+                type="button"
+                onClick={() => onExtra(e.id)}
+                aria-pressed={puesto}
+                className="text-[11px] font-semibold underline underline-offset-2"
+                style={{ color: puesto ? "var(--accent-ink)" : "var(--text-muted)" }}
+              >
+                {puesto ? "✓" : "+"} {e.nombre} {mxn(e.precio)}
+              </button>
+            );
+          })}
+        </div>
       )}
     </div>
   );
@@ -566,7 +640,6 @@ function BotonCantidad({
   children: React.ReactNode;
   etiqueta: string;
   onClick: () => void;
-  icono?: string;
 }) {
   return (
     <button

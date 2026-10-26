@@ -5,7 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
 import { CTASection } from "@/components/sections/CTASection";
-import { Mostrador } from "@/components/demo/Mostrador";
+import { TresPasos } from "@/components/demo/TresPasos";
 import { Revelar } from "@/components/ui/Revelar";
 import { Icon } from "@/components/ui/Icon";
 import type { CatalogoDemo } from "@/lib/demoMostrador";
@@ -13,18 +13,18 @@ import type { CatalogoDemo } from "@/lib/demoMostrador";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
 export const metadata: Metadata = {
-  title: "Pruébalo tú — el punto de venta de PyCore SGC, aquí mismo",
+  title: "Pruébalo tú — compra tu plan, sube tu inventario y ponte a vender",
   description:
-    "Cobra una venta sin registrarte: pesa a granel en gramos, vende por pieza o por cartón, agrega un extra y mira cómo baja el inventario. Catálogo real de un abarrotes.",
+    "El recorrido completo, sin registrarte: elige plan, da de alta un producto y véndelo. Granel en gramos, empaques, variantes y extras, con el ticket al final.",
   keywords: [
     "demo punto de venta", "probar ERP gratis", "POS en línea demo",
     "software para abarrotes", "demo sin registro",
   ],
   alternates: { canonical: `${SITE_URL}/demo` },
   openGraph: {
-    title: "Pruébalo tú — el punto de venta de PyCore SGC",
+    title: "Pruébalo tú — PyCore SGC en tres pasos",
     description:
-      "Cobra una venta aquí mismo, sin registrarte. Granel en gramos, empaques, extras y el ticket al final.",
+      "Compra tu plan, sube tu inventario y ponte a vender. El recorrido completo, aquí mismo y sin registro.",
     url: `${SITE_URL}/demo`,
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Demo de PyCore SGC" }],
   },
@@ -79,14 +79,14 @@ export default async function DemoPage() {
       <main id="main">
         <EncabezadoPagina
           icon="store"
-          cejilla="PRUÉBALO TÚ"
-          titulo="Cobra una venta aquí mismo"
-          bajada="Sin registrarte y sin instalar nada. El catálogo es el de un abarrotes de verdad y las reglas son las del sistema — lo único que no hace es guardar."
+          cejilla="PRUÉBALO TÚ · TRES PASOS"
+          titulo="Compra tu plan, sube tu inventario y ponte a vender"
+          bajada="El recorrido entero de un negocio que empieza, aquí mismo y sin registrarte. Lo que das de alta en el paso dos lo vendes en el tres — eso es lo que no puede enseñar un video."
         />
 
-        <section className="py-10 lg:py-14" style={{ background: "var(--bg)" }} aria-label="Punto de venta de demostración">
+        <section className="py-10 lg:py-12" style={{ background: "var(--bg)" }} aria-label="Recorrido de demostración">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Mostrador catalogo={catalogo} />
+            <TresPasos catalogo={catalogo} />
 
             <Revelar retardo={0.1}>
               <p

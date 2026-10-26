@@ -114,20 +114,39 @@ todas las páginas que lo consumen:
 
 ## El demo interactivo (`/demo`)
 
-«El Mostrador» es el punto de venta jugable de la portada: se cobra una venta
-sin registrarse y sin backend. Lo que lo separa de una maqueta es que **las
-reglas son las del sistema** —granel en gramos, presentación con precio
-absoluto, extra en su renglón, una línea en cero no se cobra— y que el
-catálogo es el de verdad.
+Tres pasos —**compra tu plan, sube tu inventario y ponte a vender**— en una
+sola pantalla, sin registro y sin backend. El punto no son tres demos
+sueltas: es que **lo que haces en un paso aparece en el siguiente**, porque
+el producto que das de alta en el dos se vende en el tres. Eso es lo que no
+puede enseñar un video.
+
+Lo que lo separa de una maqueta es que **las reglas son las del sistema**
+—granel en gramos, presentación con precio absoluto, variante con existencia
+propia, extra en su renglón, una línea en cero no se cobra— y que el catálogo
+es el de verdad.
+
+Las cuatro formas en que un producto deja de ser «una cosa con un precio»
+—granel, presentación, variante, extra— **se distinguen en el selector**, cada
+una con su color y **con su palabra**: un significado que sólo viaja en el
+color no existe para quien no lo distingue (criterio 1.4.1).
+
+El ticket sale **encima** de la venta, no debajo: abajo había que buscarlo con
+la vista y en el teléfono quedaba fuera de pantalla, así que lo que se acababa
+de hacer no se veía ocurrir. Es un diálogo, y cierra con Escape.
 
 - **El catálogo sale del ERP.** `scripts/exportar_catalogo_demo.py` exporta el
   tenant `demo-abarrotes` a `public/demo/catalogo.json`: nombres, precios,
   códigos de barras, unidades e impuesto son los sembrados por
   `manage.py seed_demo`. Lo único añadido para el demo —dos presentaciones y
   un extra— va marcado con `autoria: "demo"` en el JSON.
-- **La aritmética vive aparte**, en `lib/demoMostrador.ts`, con sus pruebas en
-  `lib/demoMostrador.test.ts`. Lo que un mostrador no puede equivocar no se
-  comprueba montando el árbol de React.
+- **La aritmética vive aparte**, en `lib/demoMostrador.ts` y `lib/demoAlta.ts`,
+  con sus pruebas al lado. Lo que un mostrador no puede equivocar —y lo que el
+  sistema hace cuando el dato está mal— no se comprueba montando el árbol de
+  React.
+- **El alta de producto enseña los errores, no el formulario.** Un código
+  repetido dice *cuál* producto ya lo tiene (comparando por la clave, sin los
+  ceros de la izquierda, no por el texto); el costo vacío avisa que sin él no
+  hay margen y que cero no es un costo, es «no se sabe».
 - **TEZCA es guionizado, y lo dice en su encabezado.** Un asistente real en
   una página pública es un gasto por visitante sin techo. Lo que sí es verdad
   es la forma: responde sobre lo que hay en pantalla (`lib/demoTezca.ts`).
@@ -147,8 +166,8 @@ docker compose cp backend:/tmp/catalogo.json "$L/public/demo/catalogo.json"
 ## Pruebas
 
 ```bash
-npm test        # vitest — la lógica del mostrador (23 pruebas)
-npm run e2e     # playwright — navegador real, escritorio y teléfono (62)
+npm test        # vitest — mostrador y alta de producto (56 pruebas)
+npm run e2e     # playwright — navegador real, escritorio y teléfono (84)
 npm run verificar   # tsc + vitest + next build + playwright, todo seguido
 ```
 

@@ -1,4 +1,6 @@
 "use client";
+import type { RefObject } from "react";
+import { Icon } from "@/components/ui/Icon";
 import { mxn, type Ticket } from "@/lib/demoMostrador";
 
 /*
@@ -18,21 +20,40 @@ export function TicketDemo({
   ticket,
   empresa,
   folio,
+  onCerrar,
+  refCerrar,
 }: {
   ticket: Ticket;
   empresa: { nombre: string; sucursal: string };
   folio: number;
+  onCerrar?: () => void;
+  refCerrar?: RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <div
-      className="rounded-card overflow-hidden"
+      className="rounded-card overflow-hidden h-full"
       style={{ background: "#FFFFFF", border: "1px solid var(--border)" }}
     >
-      <div className="px-4 py-3 flex items-center gap-2" style={{ background: "var(--tint)" }}>
+      <div
+        className="px-4 py-3 flex items-center gap-2 sticky top-0 z-10"
+        style={{ background: "var(--tint)" }}
+      >
         <span style={{ color: "var(--accent-ink)" }} aria-hidden="true">✓</span>
-        <p className="text-[13px] font-semibold" style={{ color: "var(--accent-ink)" }}>
+        <p className="text-[13px] font-semibold flex-1" style={{ color: "var(--accent-ink)" }}>
           Venta cobrada · el inventario ya bajó
         </p>
+        {onCerrar && (
+          <button
+            ref={refCerrar}
+            type="button"
+            onClick={onCerrar}
+            className="p-1.5 -m-1 rounded-md flex-shrink-0"
+            style={{ color: "var(--accent-ink)" }}
+          >
+            <span className="sr-only">Cerrar el ticket</span>
+            <Icon name="close" size={16} />
+          </button>
+        )}
       </div>
 
       <div style={{ padding: "16px 18px 18px", maxWidth: 280, margin: "0 auto" }}>
@@ -95,6 +116,17 @@ export function TicketDemo({
         <p style={{ color: TINTA_2, fontSize: 6.5, textAlign: "center", marginTop: 2 }}>
           Generado con PyCore SGC
         </p>
+
+        {onCerrar && (
+          <button
+            type="button"
+            onClick={onCerrar}
+            className="w-full rounded-btn py-2.5 mt-4 font-semibold text-sm"
+            style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
+          >
+            Seguir vendiendo
+          </button>
+        )}
       </div>
     </div>
   );

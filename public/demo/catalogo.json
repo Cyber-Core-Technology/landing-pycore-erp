@@ -16,7 +16,11 @@
    "precio": 42.5,
    "costo": 27.87,
    "tasa_impuesto": 0.0,
-   "stock": 39.31
+   "stock": 39.31,
+   "extras": [
+    "extra-bolsa"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "1c271437-0c34-4a5c-83a2-faa6aaffe39e",
@@ -29,7 +33,11 @@
    "precio": 41.5,
    "costo": 27.29,
    "tasa_impuesto": 0.0,
-   "stock": 35.21
+   "stock": 35.21,
+   "extras": [
+    "extra-bolsa"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "e103607e-9001-4a3a-8383-18d372dfecaf",
@@ -42,7 +50,11 @@
    "precio": 21.5,
    "costo": 13.31,
    "tasa_impuesto": 0.0,
-   "stock": 43.88
+   "stock": 43.88,
+   "extras": [
+    "extra-bolsa"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "8936c4bb-fd24-4816-bded-ed371b889e51",
@@ -55,7 +67,11 @@
    "precio": 47.0,
    "costo": 28.18,
    "tasa_impuesto": 0.0,
-   "stock": 39.59
+   "stock": 39.59,
+   "extras": [
+    "extra-bolsa"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "a1e1c7f8-c05b-4c46-8637-01eb25cdaae8",
@@ -120,7 +136,22 @@
    "precio": 45.9,
    "costo": 27.2,
    "tasa_impuesto": 0.16,
-   "stock": 38
+   "stock": 38,
+   "variantes": [
+    {
+     "nombre": "Original",
+     "stock": 17
+    },
+    {
+     "nombre": "Enchilada",
+     "stock": 13
+    },
+    {
+     "nombre": "Limón",
+     "stock": 7
+    }
+   ],
+   "autoria_variantes": "demo"
   },
   {
    "id": "f07a97d8-2cce-429f-bbec-649585505c09",
@@ -146,7 +177,11 @@
    "precio": 98.9,
    "costo": 67.91,
    "tasa_impuesto": 0.0,
-   "stock": 5
+   "stock": 5,
+   "extras": [
+    "extra-vaso"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "09514483-06a2-4861-834d-401d25558be2",
@@ -159,7 +194,11 @@
    "precio": 99.5,
    "costo": 67.59,
    "tasa_impuesto": 0.0,
-   "stock": 6
+   "stock": 6,
+   "extras": [
+    "extra-vaso"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "a417b080-53b6-4705-b4a2-debf7fc43df4",
@@ -172,7 +211,11 @@
    "precio": 86.5,
    "costo": 59.14,
    "tasa_impuesto": 0.0,
-   "stock": 22
+   "stock": 22,
+   "extras": [
+    "extra-vaso"
+   ],
+   "autoria_extras": "demo"
   },
   {
    "id": "6a0b266f-d38f-4e85-ba14-c181545ea1b8",
@@ -709,6 +752,13 @@
   }
  ],
  "extras": [
+  {
+   "id": "extra-vaso",
+   "nombre": "Vaso térmico",
+   "precio": 12.0,
+   "tasa_impuesto": 0.16,
+   "autoria": "demo"
+  },
   {
    "id": "extra-bolsa",
    "nombre": "Bolsa reutilizable",

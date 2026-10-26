@@ -6,15 +6,27 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Icon } from "@/components/ui/Icon";
 import { useDemoModal } from "@/lib/demo-context";
 
+/*
+  Ocho enlaces sueltos en la barra la dejaban saturada: a partir de cierto
+  número, una lista deja de ser un menú y pasa a ser una pared de palabras
+  que nadie lee entera.
+
+  Los cinco que describen el producto cuelgan de «Producto»; arriba quedan
+  los cuatro que son una decisión: probarlo, cuánto cuesta, y el blog.
+  «Pruébalo» va primero porque es la acción, no un tema más.
+*/
+const PRODUCTO = [
+  { label: "Módulos",     href: "/modulos",     desc: "Los once módulos del sistema" },
+  { label: "Capacidades", href: "/capacidades", desc: "Lo que sólo se ve operando" },
+  { label: "Documentos",  href: "/documentos",  desc: "Los PDF que genera, para bajar" },
+  { label: "TEZCA",       href: "/tezca",       desc: "El asistente con tus datos" },
+  { label: "Tienda",      href: "/tienda",      desc: "Tu catálogo público en línea" },
+];
+
 const links = [
-  { label: "Pruébalo",    href: "/demo" },
-  { label: "Módulos",     href: "/modulos" },
-  { label: "Capacidades", href: "/capacidades" },
-  { label: "Documentos",  href: "/documentos" },
-  { label: "TEZCA",       href: "/tezca" },
-  { label: "Tienda",      href: "/tienda" },
-  { label: "Planes",      href: "/#planes" },
-  { label: "Blog",        href: "/blog" },
+  { label: "Pruébalo", href: "/demo" },
+  { label: "Planes",   href: "/#planes" },
+  { label: "Blog",     href: "/blog" },
 ];
 
 export function Navbar() {
@@ -23,6 +35,34 @@ export function Navbar() {
   const { openModal } = useDemoModal();
   const botonMenu = useRef<HTMLButtonElement>(null);
   const cajon = useRef<HTMLDivElement>(null);
+  const [abierto, setAbierto] = useState(false);
+  const botonProducto = useRef<HTMLButtonElement>(null);
+  const menuProducto = useRef<HTMLDivElement>(null);
+
+  /*
+    El desplegable de «Producto» cierra con Escape devolviendo el foco al
+    botón, y con un clic fuera. Sólo con el clic fuera no se puede cerrar con
+    el teclado, que es como se queda uno atrapado dentro de un menú.
+  */
+  useEffect(() => {
+    if (!abierto) return;
+    const alPulsar = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setAbierto(false);
+      botonProducto.current?.focus();
+    };
+    const alTocar = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (menuProducto.current?.contains(t) || botonProducto.current?.contains(t)) return;
+      setAbierto(false);
+    };
+    document.addEventListener("keydown", alPulsar);
+    document.addEventListener("mousedown", alTocar);
+    return () => {
+      document.removeEventListener("keydown", alPulsar);
+      document.removeEventListener("mousedown", alTocar);
+    };
+  }, [abierto]);
 
   /*
     El cajón del móvil es un diálogo, no un `div` encima de la pantalla.
@@ -104,6 +144,58 @@ export function Navbar() {
         </a>
 
         <ul className="hidden lg:flex items-center gap-6 list-none">
+          <li className="relative">
+            <button
+              ref={botonProducto}
+              type="button"
+              aria-expanded={abierto}
+              aria-haspopup="true"
+              onClick={() => setAbierto((v) => !v)}
+              className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-70"
+              style={{ color: "var(--text-2)" }}
+            >
+              Producto
+              <span
+                className="transition-transform"
+                style={{ transform: abierto ? "rotate(180deg)" : "none" }}
+              >
+                <Icon name="chevronDown" size={14} />
+              </span>
+            </button>
+
+            {abierto && (
+              <motion.div
+                ref={menuProducto}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.16 }}
+                className="absolute left-0 top-full mt-3 rounded-card p-2 z-50"
+                style={{
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "0 12px 32px rgba(28, 26, 23, 0.14)",
+                  width: 280,
+                }}
+              >
+                {PRODUCTO.map((x) => (
+                  <a
+                    key={x.href}
+                    href={x.href}
+                    onClick={() => setAbierto(false)}
+                    className="block rounded-btn px-3 py-2.5 transition-colors hover:opacity-80"
+                  >
+                    <span className="block text-sm font-semibold" style={{ color: "var(--text)" }}>
+                      {x.label}
+                    </span>
+                    <span className="block text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      {x.desc}
+                    </span>
+                  </a>
+                ))}
+              </motion.div>
+            )}
+          </li>
+
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -182,6 +274,30 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+
+          {/* En el cajón no hay desplegable: cabe todo, y un menú dentro de
+              otro menú en un teléfono es un clic de más por nada. */}
+          <p
+            className="text-[11px] font-semibold tracking-[0.12em] uppercase pt-4 pb-1"
+            style={{ color: "var(--text-muted)" }}
+          >
+            Producto
+          </p>
+          <ul className="flex flex-col gap-3 list-none">
+            {PRODUCTO.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-1.5 font-medium transition-opacity hover:opacity-70"
+                  style={{ color: "var(--text-2)" }}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
           <div className="flex flex-col gap-2 pt-3 mt-2" style={{ borderTop: "1px solid var(--border)" }}>
             <a
               href="https://plataforma.pycore.app"

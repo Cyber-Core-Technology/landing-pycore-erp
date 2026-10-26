@@ -25,6 +25,12 @@ export type ProductoDemo = {
   stock: number;
   presentaciones?: { nombre: string; factor: number; precio: number }[];
   autoria_presentaciones?: string;
+  /** Otra cosa, con **su propio stock** — no es una presentación. */
+  variantes?: { nombre: string; stock: number }[];
+  autoria_variantes?: string;
+  /** Qué extras admite este producto. No todos admiten los mismos. */
+  extras?: string[];
+  autoria_extras?: string;
 };
 
 export type ExtraDemo = {
@@ -48,6 +54,8 @@ export type Linea = {
   producto: ProductoDemo;
   /** Índice en `producto.presentaciones`, o null si el producto no tiene. */
   presentacion: number | null;
+  /** Índice en `producto.variantes`, o null. Cada variante tiene su stock. */
+  variante: number | null;
   /**
    * Lo que el cliente se lleva, en la unidad que eligió: piezas, cartones o
    * **gramos** si es granel. La existencia se mide en unidad base — es la
@@ -88,6 +96,17 @@ const redondear = (n: number) => Math.round(n * 100) / 100;
 
 export const mxn = (n: number) =>
   n.toLocaleString("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 2 });
+
+/*
+  La llave con que se mide la existencia.
+
+  Una variante **no comparte stock** con su producto: la playera roja y la
+  azul son dos existencias. Una presentación sí lo comparte —es la misma cosa
+  medida distinto—, así que no entra en la llave.
+*/
+export function claveStock(producto: ProductoDemo, variante: number | null): string {
+  return variante === null ? producto.id : `${producto.id}::${variante}`;
+}
 
 /** El precio de la unidad que el cliente eligió. Absoluto, nunca derivado. */
 export function precioUnitario(l: Linea): number {
@@ -135,9 +154,16 @@ export function gramosDesdeImporte(precioKilo: number, importe: number): number 
 export function consumoPorProducto(lineas: Linea[]): Map<string, number> {
   const m = new Map<string, number>();
   for (const l of lineas) {
-    m.set(l.producto.id, redondear((m.get(l.producto.id) ?? 0) + cantidadBase(l)));
+    const k = claveStock(l.producto, l.variante);
+    m.set(k, redondear((m.get(k) ?? 0) + cantidadBase(l)));
   }
   return m;
+}
+
+/** El nombre que se enseña: el producto, y su variante si la eligió. */
+export function nombreLinea(l: Linea): string {
+  const v = l.variante !== null ? l.producto.variantes?.[l.variante]?.nombre : null;
+  return v ? `${l.producto.nombre} · ${v}` : l.producto.nombre;
 }
 
 export type Problema = { tipo: "sin_pesar" | "sin_cantidad" | "sin_stock"; mensaje: string };
@@ -156,19 +182,19 @@ export function problemasParaCobrar(lineas: Linea[], stock: Map<string, number>)
     if (l.cantidad > 0) continue;
     out.push(
       l.producto.granel
-        ? { tipo: "sin_pesar", mensaje: `Falta pesar ${l.producto.nombre}.` }
-        : { tipo: "sin_cantidad", mensaje: `${l.producto.nombre} va en cero.` },
+        ? { tipo: "sin_pesar", mensaje: `Falta pesar ${nombreLinea(l)}.` }
+        : { tipo: "sin_cantidad", mensaje: `${nombreLinea(l)} va en cero.` },
     );
   }
 
-  for (const [id, necesita] of consumoPorProducto(lineas)) {
-    const hay = stock.get(id) ?? 0;
+  for (const [clave, necesita] of consumoPorProducto(lineas)) {
+    const hay = stock.get(clave) ?? 0;
     if (necesita <= hay + 1e-9) continue;
-    const l = lineas.find((x) => x.producto.id === id)!;
+    const l = lineas.find((x) => claveStock(x.producto, x.variante) === clave)!;
     const u = l.producto.unidad;
     out.push({
       tipo: "sin_stock",
-      mensaje: `No alcanza para ${l.producto.nombre}: quedan ${redondear(hay)} ${u} y se necesitan ${redondear(necesita)} ${u}.`,
+      mensaje: `No alcanza para ${nombreLinea(l)}: quedan ${redondear(hay)} ${u} y se necesitan ${redondear(necesita)} ${u}.`,
     });
   }
 
@@ -205,7 +231,7 @@ export function construirTicket(lineas: Linea[], extras: LineaExtra[]): Ticket {
       l.presentacion !== null ? l.producto.presentaciones?.[l.presentacion]?.nombre : null;
 
     filas.push({
-      nombre: l.producto.nombre,
+      nombre: nombreLinea(l),
       detalle: nombrePres && l.presentacion !== 0 ? nombrePres : "",
       cantidad: l.producto.granel
         ? `${l.cantidad} g`
@@ -263,4 +289,53 @@ export function porCodigoDeBarras(productos: ProductoDemo[], codigo: string): Pr
   const c = codigo.trim();
   if (!c) return null;
   return productos.find((p) => p.codigo_barras === c) ?? null;
+}
+
+/*
+  Las cuatro formas en que un producto deja de ser «una cosa con un precio»,
+  y que el selector tiene que distinguir de un vistazo.
+
+  Son conceptos distintos y confundirlos es el error clásico:
+  la **variante** es otra cosa con su propio stock; la **presentación** es la
+  misma cosa medida distinto y comparte stock; el **granel** se pesa; el
+  **extra** es opcional y se cobra aparte.
+*/
+export type Etiqueta = { texto: string; tono: "granel" | "presentacion" | "variante" | "extra" };
+
+export function etiquetasProducto(p: ProductoDemo): Etiqueta[] {
+  const out: Etiqueta[] = [];
+  if (p.granel) out.push({ texto: "Granel", tono: "granel" });
+  if (p.presentaciones?.length) {
+    out.push({ texto: `${p.presentaciones.length} empaques`, tono: "presentacion" });
+  }
+  if (p.variantes?.length) {
+    out.push({ texto: `${p.variantes.length} variantes`, tono: "variante" });
+  }
+  if (p.extras?.length) out.push({ texto: "Con extras", tono: "extra" });
+  return out;
+}
+
+/*
+  La existencia de salida.
+
+  Un producto con variantes **no tiene existencia propia**: la tiene cada
+  variante. Dejarle además la suya sería contar la mercancía dos veces, que
+  es justo lo que parte un inventario en dos verdades.
+*/
+export function stockInicial(productos: ProductoDemo[]): Map<string, number> {
+  const m = new Map<string, number>();
+  for (const p of productos) {
+    if (p.variantes?.length) {
+      p.variantes.forEach((v, i) => m.set(claveStock(p, i), v.stock));
+    } else {
+      m.set(p.id, p.stock);
+    }
+  }
+  return m;
+}
+
+/** Lo que queda de un producto, sumando sus variantes si las tiene. */
+export function stockDe(p: ProductoDemo, stock: Map<string, number>): number {
+  if (!p.variantes?.length) return stock.get(p.id) ?? 0;
+  return p.variantes.reduce((s, _, i) => s + (stock.get(claveStock(p, i)) ?? 0), 0);
 }

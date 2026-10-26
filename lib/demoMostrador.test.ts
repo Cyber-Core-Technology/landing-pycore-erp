@@ -2,6 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   buscar,
   cantidadBase,
+  claveStock,
+  etiquetasProducto,
+  nombreLinea,
+  stockDe,
+  stockInicial,
   construirTicket,
   consumoPorProducto,
   gramosDesdeImporte,
@@ -52,8 +57,18 @@ const granel = (over: Partial<ProductoDemo> = {}): ProductoDemo => ({
   ...over,
 });
 
-const linea = (producto: ProductoDemo, cantidad: number, presentacion: number | null = null): Linea =>
-  ({ uid: `u-${producto.id}-${cantidad}-${presentacion}`, producto, presentacion, cantidad });
+const linea = (
+  producto: ProductoDemo,
+  cantidad: number,
+  presentacion: number | null = null,
+  variante: number | null = null,
+): Linea => ({
+  uid: `u-${producto.id}-${cantidad}-${presentacion}-${variante}`,
+  producto,
+  presentacion,
+  variante,
+  cantidad,
+});
 
 const BOLSA: ExtraDemo = { id: "extra-bolsa", nombre: "Bolsa reutilizable", precio: 5, tasa_impuesto: 0.16 };
 
@@ -242,5 +257,95 @@ describe("búsqueda", () => {
   it("escanear un código exacto resuelve el producto", () => {
     expect(porCodigoDeBarras(catalogo, "7501055300013")?.id).toBe("p1");
     expect(porCodigoDeBarras(catalogo, "0000")).toBeNull();
+  });
+});
+
+// ── Las variantes ─────────────────────────────────────────────────────────
+describe("variantes", () => {
+  const conSabores = pieza({
+    id: "v1",
+    nombre: "Botana Barcel bolsa familiar",
+    stock: 0,
+    variantes: [
+      { nombre: "Original", stock: 16 },
+      { nombre: "Enchilada", stock: 12 },
+      { nombre: "Limón", stock: 7 },
+    ],
+  });
+
+  it("cada variante lleva SU existencia, no la comparte", () => {
+    // Al revés que una presentación, que es la misma cosa medida distinto.
+    const s = stockInicial([conSabores]);
+    expect(s.get(claveStock(conSabores, 0))).toBe(16);
+    expect(s.get(claveStock(conSabores, 2))).toBe(7);
+    // Y el producto no tiene existencia propia: contarla además sería
+    // inventariar la mercancía dos veces.
+    expect(s.has(conSabores.id)).toBe(false);
+  });
+
+  it("lo que queda del producto es la suma de sus variantes", () => {
+    expect(stockDe(conSabores, stockInicial([conSabores]))).toBe(35);
+  });
+
+  it("vender una variante no toca la existencia de las otras", () => {
+    const s = stockInicial([conSabores]);
+    // Siete de Limón es justo lo que hay; de Enchilada no se tocó nada.
+    expect(problemasParaCobrar([linea(conSabores, 7, null, 2)], s)).toEqual([]);
+    expect(problemasParaCobrar([linea(conSabores, 8, null, 2)], s)).toHaveLength(1);
+    expect(problemasParaCobrar([linea(conSabores, 12, null, 1)], s)).toEqual([]);
+  });
+
+  it("el ticket dice qué variante se llevó", () => {
+    const t = construirTicket([linea(conSabores, 1, null, 1)], []);
+    expect(t.lineas[0]!.nombre).toBe("Botana Barcel bolsa familiar · Enchilada");
+  });
+
+  it("el error de existencia nombra la variante, no sólo el producto", () => {
+    const [p] = problemasParaCobrar([linea(conSabores, 99, null, 2)], stockInicial([conSabores]));
+    expect(p!.mensaje).toContain("· Limón");
+  });
+
+  it("un producto sin variantes sigue llevando su propia existencia", () => {
+    const s = stockInicial([pieza()]);
+    expect(s.get("p1")).toBe(40);
+    expect(nombreLinea(linea(pieza(), 1))).toBe("Refresco Coca-Cola 1.5 lt");
+  });
+});
+
+// ── Las etiquetas del selector ────────────────────────────────────────────
+describe("etiquetas del selector", () => {
+  it("un producto simple no lleva ninguna: la etiqueta distingue, no decora", () => {
+    expect(etiquetasProducto(pieza())).toEqual([]);
+  });
+
+  it("cada complicación tiene su etiqueta y su tono", () => {
+    const todo = pieza({
+      granel: true,
+      presentaciones: [
+        { nombre: "Pieza", factor: 1, precio: 10 },
+        { nombre: "Caja", factor: 12, precio: 110 },
+      ],
+      variantes: [{ nombre: "A", stock: 1 }, { nombre: "B", stock: 2 }],
+      extras: ["extra-bolsa"],
+    });
+    expect(etiquetasProducto(todo).map((e) => e.tono)).toEqual([
+      "granel",
+      "presentacion",
+      "variante",
+      "extra",
+    ]);
+    // Cada una lleva su palabra: un significado que sólo viaja en el color
+    // no existe para quien no lo distingue.
+    expect(etiquetasProducto(todo).every((e) => e.texto.trim().length > 0)).toBe(true);
+  });
+
+  it("cuenta cuántas presentaciones y cuántas variantes hay", () => {
+    const p = pieza({
+      presentaciones: [
+        { nombre: "Pieza", factor: 1, precio: 10 },
+        { nombre: "Caja", factor: 12, precio: 110 },
+      ],
+    });
+    expect(etiquetasProducto(p)[0]!.texto).toBe("2 empaques");
   });
 });

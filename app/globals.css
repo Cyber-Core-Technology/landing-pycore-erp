@@ -142,3 +142,33 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/*
+  El campo del demo de alta.
+
+  Va en la hoja y no en un `style` del JSX porque son nueve campos con la
+  misma pinta: escrito en línea, cambiar el borde de un campo de captura
+  obliga a tocar nueve sitios y el noveno se olvida. `--btn2-border` y no
+  `--border` porque identificar un control pide 3:1 (criterio 1.4.11) y el
+  borde decorativo no llega.
+*/
+.campo-demo {
+  width: 100%;
+  border-radius: var(--radio-btn, 11px);
+  padding: 0.55rem 0.7rem;
+  font-size: 0.875rem;
+  background: var(--bg);
+  border: 1px solid var(--btn2-border);
+  color: var(--text);
+  outline: none;
+}
+
+.campo-demo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.campo-demo:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

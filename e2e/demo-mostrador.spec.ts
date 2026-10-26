@@ -10,17 +10,25 @@ import { expect, test } from "@playwright/test";
   algo que se puede enseñar a un cliente sin miedo.
 */
 
+/* El mostrador es el paso 3: hay que llegar a él antes de cada prueba. */
 test.beforeEach(async ({ page }) => {
   await page.goto("/demo");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await page.getByRole("tab", { name: /Ponte a vender/ }).click();
+  await expect(page.getByLabel(/Buscar producto/i)).toBeVisible();
 });
 
 const buscador = (page: import("@playwright/test").Page) =>
   page.getByLabel(/Buscar producto/i);
 
+/* La lista por su nombre, no por su posición: `ul li button` también
+   alcanza el desplegable del menú, que va antes en el DOM. */
+const tarjetas = (page: import("@playwright/test").Page) =>
+  page.getByRole("list", { name: "Productos del catálogo" }).locator("button");
+
 test("cobra una venta sencilla y el total cuadra", async ({ page }) => {
   await buscador(page).fill("coca");
-  const primero = page.locator("ul li button").first();
+  const primero = tarjetas(page).first();
   await expect(primero).toBeVisible();
   await primero.click();
 
@@ -35,7 +43,7 @@ test("cobra una venta sencilla y el total cuadra", async ({ page }) => {
 
 test("un granel sin pesar no se puede cobrar, y lo dice", async ({ page }) => {
   await buscador(page).fill("granel");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
 
   // Nace sin cantidad: «falta pesar» es un estado legítimo.
   const campoGramos = page.getByLabel(/^Gramos de /i);
@@ -50,7 +58,7 @@ test("un granel sin pesar no se puede cobrar, y lo dice", async ({ page }) => {
 
 test("el granel se captura en gramos y el importe se equilibra solo", async ({ page }) => {
   await buscador(page).fill("granel");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
 
   await page.getByLabel(/^Gramos de /i).fill("500");
   const importe = page.getByLabel(/^Importe de /i);
@@ -68,7 +76,7 @@ test("el granel se captura en gramos y el importe se equilibra solo", async ({ p
 
 test("el inventario baja al cobrar", async ({ page }) => {
   await buscador(page).fill("coca");
-  const tarjeta = page.locator("ul li button").first();
+  const tarjeta = tarjetas(page).first();
   const antes = await tarjeta.innerText();
 
   await tarjeta.click();
@@ -77,13 +85,13 @@ test("el inventario baja al cobrar", async ({ page }) => {
 
   // La misma tarjeta, con una pieza menos.
   await expect(async () => {
-    expect(await page.locator("ul li button").first().innerText()).not.toBe(antes);
+    expect(await tarjetas(page).first().innerText()).not.toBe(antes);
   }).toPass({ timeout: 4000 });
 });
 
 test("se puede elegir el empaque y el precio no es el proporcional", async ({ page }) => {
   await buscador(page).fill("coca");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
 
   const grupo = page.getByRole("group", { name: /Empaque de/i });
   await expect(grupo).toBeVisible();
@@ -99,21 +107,24 @@ test("se puede elegir el empaque y el precio no es el proporcional", async ({ pa
 
 test("el extra se agrega en su propio renglón del ticket", async ({ page }) => {
   await buscador(page).fill("coca");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
 
-  const extra = page.getByRole("button", { name: /Bolsa reutilizable/i });
+  // El extra ahora es del producto: el vaso térmico es del café.
+  await page.getByLabel(/Buscar producto/i).fill("café de olla");
+  await tarjetas(page).first().click();
+  const extra = page.getByRole("button", { name: /Vaso térmico/i }).first();
   await extra.click();
   await expect(extra).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("button", { name: /^Cobrar/ }).click();
-  await expect(page.getByText(/\+ Bolsa reutilizable/)).toBeVisible();
+  await expect(page.getByText(/\+ Vaso térmico/)).toBeVisible();
 });
 
 test("TEZCA contesta sobre lo que hay en pantalla y se anuncia como guionizado", async ({ page }) => {
   await expect(page.getByText(/Respuestas guionizadas/i)).toBeVisible();
 
   await buscador(page).fill("coca");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
 
   await page.getByRole("button", { name: /¿Cómo va este ticket\?/ }).click();
   // Responde con el conteo real del ticket, no con texto fijo.
@@ -122,10 +133,13 @@ test("TEZCA contesta sobre lo que hay en pantalla y se anuncia como guionizado",
 
 test("reiniciar devuelve el mostrador a como estaba", async ({ page }) => {
   await buscador(page).fill("coca");
-  await page.locator("ul li button").first().click();
+  await tarjetas(page).first().click();
   await page.getByRole("button", { name: /^Cobrar/ }).click();
   await expect(page.getByText(/Venta cobrada/i)).toBeVisible();
 
+  // El ticket se superpone al panel, así que primero se cierra: ése es el
+  // punto de que salga encima y no debajo.
+  await page.getByRole("button", { name: "Seguir vendiendo" }).click();
   await page.getByRole("button", { name: /Reiniciar el mostrador/i }).click();
   await expect(page.getByText(/Venta cobrada/i)).toHaveCount(0);
   await expect(page.getByText(/Elige un producto para empezar/i)).toBeVisible();
@@ -133,4 +147,61 @@ test("reiniciar devuelve el mostrador a como estaba", async ({ page }) => {
 
 test("dice que no guarda nada", async ({ page }) => {
   await expect(page.getByText(/no guarda nada/i)).toBeVisible();
+});
+
+test("el ticket sale sobre la venta y se puede cerrar", async ({ page }) => {
+  await page.getByLabel(/Buscar producto/i).fill("coca");
+  await tarjetas(page).first().click();
+  await page.getByRole("button", { name: /^Cobrar/ }).click();
+
+  // Es un diálogo encima de la venta, no un bloque añadido abajo.
+  const ticket = page.getByRole("dialog", { name: /Ticket de la venta/i });
+  await expect(ticket).toBeVisible();
+
+  await ticket.getByRole("button", { name: "Seguir vendiendo" }).click();
+  await expect(ticket).toHaveCount(0);
+  // Y el mostrador queda listo para la siguiente.
+  await expect(page.getByText(/Elige un producto para empezar/i)).toBeVisible();
+});
+
+test("el ticket cierra con Escape", async ({ page }) => {
+  await page.getByLabel(/Buscar producto/i).fill("coca");
+  await tarjetas(page).first().click();
+  await page.getByRole("button", { name: /^Cobrar/ }).click();
+
+  const ticket = page.getByRole("dialog", { name: /Ticket de la venta/i });
+  await expect(ticket).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(ticket).toHaveCount(0);
+});
+
+test("el selector distingue granel, empaques, variantes y extras", async ({ page }) => {
+  const buscar = page.getByLabel(/Buscar producto/i);
+
+  await buscar.fill("granel");
+  await expect(tarjetas(page).first().getByText("Granel", { exact: true })).toBeVisible();
+
+  await buscar.fill("coca");
+  await expect(page.getByText(/\d+ empaques/).first()).toBeVisible();
+
+  await buscar.fill("botana barcel bolsa familiar");
+  await expect(page.getByText(/\d+ variantes/).first()).toBeVisible();
+
+  await buscar.fill("café de olla");
+  await expect(page.getByText("Con extras", { exact: true }).first()).toBeVisible();
+});
+
+test("una variante lleva su propia existencia", async ({ page }) => {
+  await page.getByLabel(/Buscar producto/i).fill("botana barcel bolsa familiar");
+  await tarjetas(page).first().click();
+
+  const grupo = page.getByRole("group", { name: /Variante de/i });
+  await expect(grupo).toBeVisible();
+  const primera = grupo.getByRole("button").first();
+  const segunda = grupo.getByRole("button").nth(1);
+  await expect(primera).toHaveAttribute("aria-pressed", "true");
+
+  await segunda.click();
+  await expect(segunda).toHaveAttribute("aria-pressed", "true");
+  await expect(primera).toHaveAttribute("aria-pressed", "false");
 });

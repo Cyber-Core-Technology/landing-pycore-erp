@@ -92,6 +92,27 @@ PRESENTACIONES_DEMO = {
     ],
 }
 
+# Variantes: otra cosa, con **su propio stock**. No es una presentación —la
+# presentación es la misma cosa medida distinto y comparte existencia—, y
+# por eso cada sabor lleva su contador aparte.
+VARIANTES_DEMO = {
+    'Botana Barcel bolsa familiar': [
+        {'nombre': 'Original', 'parte': 0.45},
+        {'nombre': 'Enchilada', 'parte': 0.35},
+        {'nombre': 'Limón', 'parte': 0.20},
+    ],
+}
+
+# Extras: opcionales, se cobran en su renglón. Van sobre los productos donde
+# un mostrador de verdad los ofrecería, no sobre todos: si todos los tuvieran
+# la etiqueta dejaría de distinguir nada.
+EXTRAS_DEMO = [
+    {'id': 'extra-vaso', 'nombre': 'Vaso térmico', 'precio': 12.0,
+     'tasa_impuesto': 0.16, 'categorias': ['Café y té']},
+    {'id': 'extra-bolsa', 'nombre': 'Bolsa reutilizable', 'precio': 5.0,
+     'tasa_impuesto': 0.16, 'solo_granel': True},
+]
+
 # Granel es lo que se **pesa en la báscula**, y eso no lo dice la unidad: el
 # sembrador le pone `kg` también al arroz embolsado de 1 kg, que se vende por
 # pieza. Pedir «500 gramos de Arroz Morelos 1 kg» no tiene sentido. Así que
@@ -154,6 +175,25 @@ for p in elegidos[:CUANTOS]:
     }
 
     cat = item['categoria']
+
+    # Variantes: el stock del producto se reparte entre ellas, no se suma
+    # encima. Sumarlo inventaría mercancía que nadie contó.
+    if p.nombre in VARIANTES_DEMO:
+        total = item['stock']
+        item['variantes'] = [
+            {'nombre': v['nombre'], 'stock': int(total * v['parte'])}
+            for v in VARIANTES_DEMO[p.nombre]
+        ]
+        item['autoria_variantes'] = 'demo'
+
+    ids_extra = [
+        e['id'] for e in EXTRAS_DEMO
+        if (cat in e.get('categorias', [])) or (e.get('solo_granel') and item['granel'])
+    ]
+    if ids_extra:
+        item['extras'] = ids_extra
+        item['autoria_extras'] = 'demo'
+
     # Nunca sobre algo que YA es un empaque: un «six pack» de un producto
     # llamado «six 355 ml» son 36 cervezas y se lee como un defecto.
     ya_es_paquete = any(w in nombre_l for w in ('six', 'cartón', 'carton', 'caja', 'pack'))
@@ -175,15 +215,10 @@ for p in elegidos[:CUANTOS]:
 
 # El extra: se cobra en su renglón y, si consume un producto, lo descuenta.
 # Éste no consume nada —es un cargo— y por eso no causa movimiento.
-extras = [
-    {
-        'id': 'extra-bolsa',
-        'nombre': 'Bolsa reutilizable',
-        'precio': 5.00,
-        'tasa_impuesto': 0.16,
-        'autoria': 'demo',
-    },
-]
+extras = [{**e, 'autoria': 'demo'} for e in EXTRAS_DEMO]
+for e in extras:
+    e.pop('categorias', None)
+    e.pop('solo_granel', None)
 
 salida = {
     'empresa': {
@@ -200,6 +235,9 @@ with open(DESTINO, 'w', encoding='utf-8') as fh:
 
 con_pres = sum(1 for x in productos if 'presentaciones' in x)
 granel = sum(1 for x in productos if x['granel'])
+con_var = sum(1 for x in productos if 'variantes' in x)
+con_extra = sum(1 for x in productos if 'extras' in x)
 print('empresa:', salida['empresa']['nombre'], '| sucursal:', salida['empresa']['sucursal'])
-print('productos:', len(productos), '| granel:', granel, '| con presentaciones:', con_pres)
+print('productos:', len(productos), '| granel:', granel, '| presentaciones:', con_pres,
+      '| variantes:', con_var, '| con extras:', con_extra)
 print('escrito en', DESTINO)

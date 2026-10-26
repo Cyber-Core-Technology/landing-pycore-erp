@@ -11,7 +11,7 @@ import { expect, test } from "@playwright/test";
 
 const RUTAS = [
   { ruta: "/", titulo: null },
-  { ruta: "/demo", titulo: "Cobra una venta aquí mismo" },
+  { ruta: "/demo", titulo: "Compra tu plan, sube tu inventario y ponte a vender" },
   { ruta: "/modulos", titulo: null },
   { ruta: "/capacidades", titulo: "Los detalles que deciden si un sistema sirve o estorba" },
   { ruta: "/documentos", titulo: "Los documentos ya están hechos" },
@@ -48,11 +48,23 @@ test("se puede llegar al demo desde la portada", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: /Pruébalo tú/i }).first().click();
   await expect(page).toHaveURL(/\/demo$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Cobra una venta");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Compra tu plan");
 });
 
-test("no hay enlaces internos rotos en el menú", async ({ page }) => {
+test("no hay enlaces internos rotos en el menú", async ({ page }, info) => {
   await page.goto("/");
+
+  /*
+    Los cinco de producto no están sueltos en la barra: hay que desplegarlos.
+    Y el gesto es distinto en cada tamaño —en el escritorio es el menú
+    «Producto», en el teléfono es el cajón entero—, que es justo el punto de
+    que la maqueta cambie el árbol y no sólo el CSS.
+  */
+  if (info.project.name === "telefono") {
+    await page.getByRole("button", { name: "Abrir menú" }).click();
+  } else {
+    await page.getByRole("button", { name: "Producto" }).click();
+  }
   const hrefs = await page.locator("header a[href^='/']").evaluateAll((as) =>
     [...new Set(as.map((a) => (a as HTMLAnchorElement).getAttribute("href")!))],
   );
@@ -81,4 +93,31 @@ test("los PDF de ejemplo se descargan de verdad", async ({ page }) => {
     expect(cuerpo.subarray(0, 4).toString()).toBe("%PDF");
     expect(cuerpo.length).toBeGreaterThan(2000);
   }
+});
+
+test("el menú agrupa el producto en un desplegable accesible", async ({ page }, info) => {
+  test.skip(info.project.name !== "escritorio", "Es la barra de escritorio");
+
+  await page.goto("/");
+  const boton = page.getByRole("button", { name: "Producto" });
+  await expect(boton).toHaveAttribute("aria-expanded", "false");
+
+  await boton.click();
+  await expect(boton).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByRole("link", { name: /Capacidades/ })).toBeVisible();
+
+  // Cierra con Escape y devuelve el foco: sólo con un clic fuera no se puede
+  // cerrar con el teclado.
+  await page.keyboard.press("Escape");
+  await expect(boton).toHaveAttribute("aria-expanded", "false");
+  await expect(boton).toBeFocused();
+});
+
+test("la barra no se satura: pocos elementos arriba", async ({ page }, info) => {
+  test.skip(info.project.name !== "escritorio", "Es la barra de escritorio");
+
+  await page.goto("/");
+  const items = page.locator("header nav > ul > li");
+  // Producto + tres: a partir de cierto número una lista deja de ser un menú.
+  await expect(items).toHaveCount(4);
 });

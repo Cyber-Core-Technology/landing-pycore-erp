@@ -57,6 +57,7 @@ test("en el teléfono el mostrador se apila y el buscador se alcanza", async ({ 
   test.skip(info.project.name !== "telefono", "Es la maqueta del teléfono");
 
   await page.goto("/demo");
+  await page.getByRole("tab", { name: /Ponte a vender/ }).click();
   const buscador = page.getByLabel(/Buscar producto/i);
   await expect(buscador).toBeVisible();
 
@@ -76,8 +77,9 @@ test("los controles táctiles tienen un tamaño alcanzable", async ({ page }, in
   test.skip(info.project.name !== "telefono", "Es una regla de puntero grueso");
 
   await page.goto("/demo");
+  await page.getByRole("tab", { name: /Ponte a vender/ }).click();
   await page.getByLabel(/Buscar producto/i).fill("coca");
-  await page.locator("ul li button").first().click();
+  await page.getByRole("list", { name: "Productos del catálogo" }).locator("button").first().click();
 
   // Los [−][+] son el control que más se pulsa en un mostrador.
   const mas = page.getByRole("button", { name: /Agregar uno de/i }).first();
