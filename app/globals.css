@@ -172,3 +172,317 @@ body {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
+/*
+  El riel de redes del canto izquierdo.
+
+  Vive aquí y no en el JSX porque su visibilidad depende del ancho, y eso es
+  maqueta: un `style` en línea no lo alcanza ninguna `@media`. Por debajo de
+  1280 px no existe — a esa anchura el riel y el contenido se pelean por el
+  mismo espacio, y abajo el pie ya lleva las mismas ligas.
+*/
+.riel-redes {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .riel-redes {
+    position: fixed;
+    left: 24px;
+    /* Centrado vertical: anclado abajo competía con el botón de «subir» y
+       se leía como parte del pie. En el centro es una barra de utilidades. */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: block;
+  }
+
+  /* La maqueta va dentro: fuera la pisaría el `transform` que framer-motion
+     escribe en línea al animar, y el riel dejaría de estar centrado. */
+  .riel-redes__grupo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+/*
+  El riel es fijo y la página pasa por debajo, así que cruza fondos opuestos:
+  el lienzo claro y la banda oscura de la cabecera de cada página. Sin fondo
+  propio, los iconos se desvanecían justo al cruzar el título — que es el
+  momento en que más se miran.
+
+  La solución no es subir el contraste del icono: ningún color funciona sobre
+  los dos. Cada enlace lleva **su propia superficie**, así que lo que hay
+  detrás deja de importar.
+*/
+.riel-redes__enlace {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(28, 26, 23, 0.08);
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.riel-redes__enlace:hover {
+  color: var(--accent-fg);
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.riel-redes__enlace:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--accent));
+  outline-offset: 2px;
+}
+
+/* El remate, arriba y abajo: centrado, un solo filete descolgaría el grupo. */
+.riel-redes__filete {
+  width: 1px;
+  height: 48px;
+  /* Se degrada hacia los extremos: sobre la banda oscura un filete sólido se
+     ve como una raya pegada, y sobre el lienzo claro desaparecía. */
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--text-muted) 55%, transparent),
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .riel-redes__enlace:hover { transform: none; }
+}
+
+/*
+  Movimiento continuo, no sólo de entrada.
+
+  El sitio se animaba al aparecer y después se congelaba: una página que no
+  responde al puntero se siente como una captura. Esto es lo mínimo que hace
+  que se note viva sin pedir atención — y todo se apaga entero con
+  `prefers-reduced-motion`, que es la regla de la casa.
+*/
+
+/* Lo pulsable responde al dedo: 60 ms, lo justo para que se sienta. */
+a, button, [role="radio"], [role="tab"] {
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.18s, background-color 0.18s, border-color 0.18s, color 0.18s;
+}
+
+a:active, button:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* La flecha de un enlace avanza: dice hacia dónde lleva antes de pulsarlo. */
+.enlace-avanza svg { transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.enlace-avanza:hover svg { transform: translateX(3px); }
+
+/*
+  El subrayado que crece desde la izquierda. Va en los enlaces de texto del
+  menú: un cambio de opacidad al pasar por encima no dice cuál está debajo
+  del puntero cuando hay cinco pegados.
+*/
+.nav-enlace { position: relative; }
+
+.nav-enlace::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-enlace:hover::after,
+.nav-enlace:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a:active, button:active:not(:disabled) { transform: none; }
+  .enlace-avanza:hover svg { transform: none; }
+  .nav-enlace::after { transition: none; }
+}
+
+/*
+  Movimiento que SÍ se ve.
+
+  La primera pasada fue demasiado tímida: transiciones de 0.18 s y un
+  resplandor al 28 % que nadie notaba. Una animación que no se percibe no
+  está siendo discreta — está ausente. Esto sube la amplitud donde el
+  movimiento informa (lo pulsable, las tarjetas, lo que está vivo) y lo deja
+  quieto donde sólo distraería (los párrafos).
+*/
+
+/* El destello que recorre un botón primario: dice que está vivo y esperando. */
+.boton-vivo {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.boton-vivo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.34) 50%,
+    transparent 75%
+  );
+  transform: translateX(-120%);
+  animation: destello 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes destello {
+  0%, 62% { transform: translateX(-120%); }
+  86%, 100% { transform: translateX(120%); }
+}
+
+/* Las tarjetas se levantan de verdad, no dos píxeles. */
+.tarjeta-viva-hover {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s, border-color 0.28s;
+}
+
+.tarjeta-viva-hover:hover {
+  transform: translateY(-6px);
+}
+
+/*
+  El borde y la sombra van al hijo, no al contenedor: `TarjetaViva` envuelve
+  la tarjeta (es el `li`), y el recuadro visible —con su borde— es lo de
+  dentro. Pintar el contenedor no se vería.
+*/
+.tarjeta-viva-hover:hover > * {
+  box-shadow: 0 16px 36px rgba(28, 26, 23, 0.14);
+  border-color: var(--accent) !important;
+}
+
+/* El punto que late: donde algo está ocurriendo ahora. */
+.punto-vivo {
+  position: relative;
+}
+
+.punto-vivo::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 999px;
+  border: 2px solid var(--accent);
+  animation: latido 2s ease-out infinite;
+}
+
+@keyframes latido {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* El icono de una tarjeta responde cuando el puntero entra en la tarjeta. */
+.tarjeta-viva-hover .icono-reacciona {
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.28s, color 0.28s;
+}
+
+.tarjeta-viva-hover:hover .icono-reacciona {
+  transform: scale(1.12) rotate(-6deg);
+  background: var(--accent) !important;
+  color: var(--accent-fg) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton-vivo::after { animation: none; display: none; }
+  .punto-vivo::before { animation: none; display: none; }
+  .tarjeta-viva-hover:hover { transform: none; }
+  .tarjeta-viva-hover:hover .icono-reacciona { transform: none; }
+}
+
+/*
+  Los resplandores de la cabecera, en CSS y no en framer-motion.
+
+  Escritos como `motion.span` con `animate` en bucle no llegaban a aplicarse:
+  medido en el navegador, `transform` se quedaba en `none` y dos capturas con
+  cinco segundos de diferencia salían idénticas byte a byte. Un bucle
+  decorativo de fondo no necesita el motor de animación de React —no depende
+  del estado ni de la interacción—, y en CSS corre en el compositor, no
+  cuesta un render y se apaga solo con la media query de abajo.
+*/
+.resplandor {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.resplandor--uno {
+  width: 620px;
+  height: 620px;
+  top: -260px;
+  right: -80px;
+  opacity: 0.55;
+  filter: blur(40px);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-secondary) 62%, transparent) 0%,
+    transparent 65%
+  );
+  animation: deriva-uno 16s ease-in-out infinite;
+}
+
+.resplandor--dos {
+  width: 420px;
+  height: 420px;
+  bottom: -200px;
+  left: 22%;
+  opacity: 0.4;
+  filter: blur(50px);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--band-eyebrow) 42%, transparent) 0%,
+    transparent 68%
+  );
+  animation: deriva-dos 21s ease-in-out infinite;
+}
+
+@keyframes deriva-uno {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-180px, 90px) scale(1.25); }
+  66%  { transform: translate(60px, 30px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes deriva-dos {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(140px, -60px) scale(0.85); }
+  66%  { transform: translate(-60px, -20px) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* El icono de la cabecera, flotando. */
+.icono-flota {
+  animation: flota 3.6s ease-in-out infinite;
+}
+
+@keyframes flota {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-7px) rotate(-4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resplandor { animation: none; }
+  .icono-flota { animation: none; }
+}

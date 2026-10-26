@@ -1,27 +1,20 @@
 import type { Metadata } from "next";
+import { metadatosDe, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
+import { TezcaOrigenSection } from "@/components/sections/TezcaOrigenSection";
 import { TEZCAPageContent } from "@/components/pages/TEZCAPageContent";
 import { TEZCASection } from "@/components/sections/TEZCASection";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "TEZCA — Consejero de Negocios con IA",
-  description:
-    "TEZCA es el asistente de inteligencia artificial de PyCore SGC. Analiza tu negocio cada hora, genera alertas automáticas, responde preguntas con tus datos reales y celebra tus logros.",
-  keywords: [
-    "IA para negocios", "inteligencia artificial ERP", "asistente IA México",
-    "TEZCA PyCore", "alertas automáticas negocio", "analítica inteligente PyME",
-  ],
-  alternates: { canonical: `${SITE_URL}/tezca` },
-  openGraph: {
-    title:       "TEZCA — Tu Consejero de Negocios con IA · PyCore SGC",
-    description: "Analiza tu negocio en tiempo real, genera alertas automáticas y te dice qué hacer con tus datos. Sin configuración.",
-    url:         `${SITE_URL}/tezca`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TEZCA IA — PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "TEZCA, el asistente que ve tu negocio",
+  descripcion: "TEZCA es el asistente de inteligencia artificial de PyCore SGC. Analiza tu negocio cada hora, genera alertas automáticas, responde preguntas con tus datos reales y celebra tus logros.",
+  ruta: "/tezca",
+  claves: ["asistente IA negocio", "inteligencia artificial PyME", "TEZCA", "alertas de inventario", "analítica de ventas"],
+  imagenAlt: "TEZCA, el asistente con IA de PyCore SGC",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -62,6 +55,13 @@ export default function TEZCAPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <EncabezadoPagina
+          icon="robot"
+          cejilla="TEZCA · ASISTENTE CON IA"
+          titulo="Te dice qué hacer, no sólo qué pasó"
+          bajada="Analiza tu operación cada hora y trabaja con tus datos reales: alertas de stock y cartera, el resumen de ayer, y a qué cliente conviene escribirle hoy."
+        />
+        <TezcaOrigenSection />
         <TEZCAPageContent />
         <TEZCASection />
       </main>

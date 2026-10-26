@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
-    "verificar": "tsc --noEmit && vitest run && next build && playwright test"
+    "verificar": "tsc --noEmit && vitest run && NEXT_DIST_DIR=.next-pruebas next build && NEXT_DIST_DIR=.next-pruebas playwright test"
   },
   "dependencies": {
     "clsx": "^2.1.0",

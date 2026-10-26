@@ -1,27 +1,19 @@
 import type { Metadata } from "next";
+import { metadatosDe, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
 import { ModulosPageContent } from "@/components/pages/ModulosPageContent";
 import { ModulesSection } from "@/components/sections/ModulesSection";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Módulos de PyCore SGC — Inventario, Ventas, Finanzas y más",
-  description:
-    "Conoce los 11 módulos de PyCore SGC: inventario en tiempo real, ventas POS offline, compras, facturación CFDI, finanzas, recursos humanos y auditoría. Activa solo los que necesitas.",
-  keywords: [
-    "módulos ERP", "inventario México", "punto de venta POS",
-    "control de compras", "finanzas PyME", "recursos humanos software",
-  ],
-  alternates: { canonical: `${SITE_URL}/modulos` },
-  openGraph: {
-    title:       "Módulos de PyCore SGC — 11 módulos para tu negocio",
-    description: "Inventario, ventas, facturación CFDI, finanzas, auditoría y más. Activa solo lo que necesitas.",
-    url:         `${SITE_URL}/modulos`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Módulos de PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "Once módulos integrados para tu negocio",
+  descripcion: "Conoce los 11 módulos de PyCore SGC: inventario en tiempo real, ventas POS offline, compras, facturación CFDI, finanzas, recursos humanos y auditoría. Activa solo los que necesitas.",
+  ruta: "/modulos",
+  claves: ["módulos ERP", "inventario México", "punto de venta POS", "control de compras", "finanzas PyME", "recursos humanos software"],
+  imagenAlt: "Los once módulos de PyCore SGC",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -55,6 +47,12 @@ export default function ModulosPage() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <EncabezadoPagina
+          icon="layers"
+          cejilla="LOS MÓDULOS"
+          titulo="Todo lo que tu negocio necesita, en un solo lugar"
+          bajada="Once módulos integrados. Activas los que necesitas y desactivas los que no: PyCore crece contigo sin cambiar de sistema ni migrar datos."
         />
         <ModulosPageContent />
         <ModulesSection />

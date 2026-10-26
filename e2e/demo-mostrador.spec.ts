@@ -205,3 +205,43 @@ test("una variante lleva su propia existencia", async ({ page }) => {
   await expect(segunda).toHaveAttribute("aria-pressed", "true");
   await expect(primera).toHaveAttribute("aria-pressed", "false");
 });
+
+test("el ticket cabe entero: el botón de cerrar no se corta", async ({ page }) => {
+  /*
+    Iba superpuesto con `absolute inset-0`, así que tomaba el alto del panel
+    de la venta —que al cobrar queda vacío y corto— y se cortaba por abajo:
+    el botón quedaba fuera de la caja. Ahora ocupa su lugar y la tarjeta
+    crece con el contenido.
+  */
+  await buscador(page).fill("granel");
+  await tarjetas(page).first().click();
+  await page.getByLabel(/^Gramos de /i).fill("465");
+  await page.getByRole("button", { name: /^Cobrar/ }).click();
+
+  const ticket = page.getByRole("dialog", { name: /Ticket de la venta/i });
+  await expect(ticket).toBeVisible();
+
+  /*
+    «Cortado» se comprueba como lo ve una persona: que el botón esté
+    **entero** en pantalla. Comparar cajas se enredaba con los márgenes
+    negativos del envoltorio y medía cualquier cosa menos lo que falla.
+
+    Con el ticket superpuesto, el botón quedaba fuera del área visible de su
+    contenedor con scroll, así que esta comprobación es la que se ponía roja.
+  */
+  const boton = ticket.getByRole("button", { name: "Seguir vendiendo" });
+  await expect(boton).toBeInViewport({ ratio: 1 });
+
+  // Y nada por encima lo recorta.
+  const recortado = await boton.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      const estilo = getComputedStyle(p);
+      if (estilo.overflowY === "visible" && estilo.overflowX === "visible") continue;
+      const pr = p.getBoundingClientRect();
+      if (r.bottom > pr.bottom + 1 || r.top < pr.top - 1) return p.className || "(sin clase)";
+    }
+    return null;
+  });
+  expect(recortado, `lo recorta: ${recortado}`).toBeNull();
+});

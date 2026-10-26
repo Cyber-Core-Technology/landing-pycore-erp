@@ -66,15 +66,31 @@ export function CapacidadesSection() {
                 aria-controls={`cap-panel-${g.slug}`}
                 tabIndex={elegida ? 0 : -1}
                 onClick={() => setActivo(i)}
-                className="inline-flex items-center gap-2 rounded-btn px-4 py-2.5 text-sm font-semibold transition-colors"
+                className="relative inline-flex items-center gap-2 rounded-btn px-4 py-2.5 text-sm font-semibold"
                 style={{
-                  background: elegida ? "var(--accent)" : "var(--btn2)",
                   color: elegida ? "var(--accent-fg)" : "var(--text-2)",
-                  border: `1px solid ${elegida ? "var(--accent)" : "var(--btn2-border)"}`,
+                  border: `1px solid ${elegida ? "transparent" : "var(--btn2-border)"}`,
+                  background: elegida ? "transparent" : "var(--btn2)",
                 }}
               >
-                <Icon name={g.icon} size={16} />
-                {g.nombre}
+                {/*
+                  La pastilla **se desliza** de una pestaña a otra en vez de
+                  encenderse y apagarse: con `layoutId` es el mismo elemento
+                  moviéndose, y eso enseña de dónde vino lo que estás viendo.
+                */}
+                {elegida && (
+                  <motion.span
+                    layoutId="cap-pastilla"
+                    aria-hidden="true"
+                    className="absolute inset-0 rounded-btn"
+                    style={{ background: "var(--accent)" }}
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                <span className="relative inline-flex items-center gap-2">
+                  <Icon name={g.icon} size={16} />
+                  {g.nombre}
+                </span>
               </button>
             );
           })}

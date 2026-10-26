@@ -21,12 +21,15 @@ const PRODUCTO = [
   { label: "Documentos",  href: "/documentos",  desc: "Los PDF que genera, para bajar" },
   { label: "TEZCA",       href: "/tezca",       desc: "El asistente con tus datos" },
   { label: "Tienda",      href: "/tienda",      desc: "Tu catálogo público en línea" },
+  { label: "Migración",   href: "/migracion",   desc: "Traer tu sistema actual completo" },
+  { label: "La plataforma", href: "/plataforma", desc: "Panel de mando, seguridad y datos" },
 ];
 
 const links = [
-  { label: "Pruébalo", href: "/demo" },
-  { label: "Planes",   href: "/#planes" },
-  { label: "Blog",     href: "/blog" },
+  { label: "Para tu giro", href: "/giros" },
+  { label: "Pruébalo",     href: "/demo" },
+  { label: "Planes",       href: "/#planes" },
+  { label: "Contacto",     href: "/contacto" },
 ];
 
 export function Navbar() {
@@ -200,7 +203,7 @@ export function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm font-medium transition-colors hover:opacity-70"
+                className="nav-enlace text-sm font-medium"
                 style={{ color: "var(--text-2)" }}
               >
                 {l.label}

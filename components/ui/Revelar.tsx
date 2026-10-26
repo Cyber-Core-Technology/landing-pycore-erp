@@ -94,14 +94,19 @@ export function TarjetaViva({
   const sinMovimiento = useReducedMotion();
   const Etiqueta = motion[as];
 
+  /*
+    El realce del puntero va por CSS (`.tarjeta-viva-hover`) y no por
+    `whileHover`: framer-motion escribe `transform` en línea y entra en
+    conflicto con el de la hoja — el mismo choque que descentró el riel de
+    redes. Aquí sólo se anima la entrada.
+  */
   return (
     <Etiqueta
-      className={className}
+      className={`tarjeta-viva-hover ${className}`}
       initial={sinMovimiento ? undefined : { opacity: 0, y: 18 }}
       whileInView={sinMovimiento ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, delay: retardo, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={sinMovimiento ? undefined : { y: -3 }}
     >
       {children}
     </Etiqueta>

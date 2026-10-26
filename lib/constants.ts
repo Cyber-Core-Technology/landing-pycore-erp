@@ -6,6 +6,27 @@ export const COMPANY_URL  = "https://global-ianalytics.com";
 // Desarrollador del sistema (la empresa es la responsable/dueña)
 export const DEVELOPER_NAME = "Raul Callejas";
 export const DEVELOPER_URL  = "https://scorpion.cyco.tech";
+/** Su ficha en el sitio de la empresa, que es la fuente oficial. */
+export const DEVELOPER_PERFIL =
+  "https://global-ianalytics.com/es/equipo/raul-jovany-callejas-vazquez/";
+
+/*
+  Los datos de contacto, en un solo sitio.
+
+  Estaban escritos a mano en cinco archivos —incluido un `hola@pycore.app`
+  que no existe—, así que cambiar el correo obligaba a encontrarlos todos y
+  el que se olvidara mandaría al vacío en silencio. Un canal de contacto roto
+  no da error: simplemente nadie contesta.
+*/
+export const CONTACTO = {
+  /** El buzón público. `scorpion@cyco.tech` es el personal y no va aquí. */
+  email: "soporte@pycore.app",
+  /** En formato internacional, sin signos: es lo que pide wa.me. */
+  whatsapp: "525644084426",
+  whatsappVisible: "+52 56 4408 4426",
+} as const;
+
+export const WHATSAPP_URL = `https://wa.me/${CONTACTO.whatsapp}`;
 
 // Repositorio público (el código original completo es privado)
 export const REPO_URL = "https://github.com/Cyber-Core-Technology/pycore";
@@ -14,6 +35,7 @@ export const SOCIAL_LINKS = [
   { name: "Facebook",  href: "https://www.facebook.com/pycoresgc" },
   { name: "Instagram", href: "https://www.instagram.com/pycoresgc" },
   { name: "X",         href: "https://x.com/PycoreSGC" },
+  { name: "TikTok",    href: "https://www.tiktok.com/@pycoresgc" },
   { name: "YouTube",   href: "https://www.youtube.com/@PyCore-ERP" },
   { name: "GitHub",    href: REPO_URL },
 ] as const;

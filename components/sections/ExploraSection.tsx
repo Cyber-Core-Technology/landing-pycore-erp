@@ -27,6 +27,20 @@ const DESTINOS = [
     desc: "Cobra una venta aquí mismo: pesa a granel, vende por cartón, agrega un extra y mira bajar el inventario.",
   },
   {
+    href: "/giros",
+    icon: "store",
+    nombre: "Para tu giro",
+    dato: "12 giros",
+    desc: "Una carnicería pesa, una panadería hornea y un billar cobra por reloj. Busca el tuyo.",
+  },
+  {
+    href: "/migracion",
+    icon: "refresh",
+    nombre: "Vienes de otro sistema",
+    dato: "Sin recapturar",
+    desc: "Catálogo, clientes, existencias e historial. Se ensaya completa antes de tocar nada.",
+  },
+  {
     href: "/modulos",
     icon: "layers",
     nombre: "Los módulos",
@@ -96,7 +110,7 @@ export function ExploraSection() {
               >
                 <div className="flex items-center justify-between gap-3">
                   <span
-                    className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
+                    className="icono-reacciona inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
                     style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
                   >
                     <Icon name={d.icon} size={21} />
@@ -123,7 +137,7 @@ export function ExploraSection() {
                 </p>
 
                 <span
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold mt-4 transition-transform group-hover:translate-x-1"
+                  className="enlace-avanza inline-flex items-center gap-1.5 text-sm font-semibold mt-4"
                   style={{ color: "var(--accent-ink)" }}
                 >
                   Ver

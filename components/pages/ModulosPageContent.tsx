@@ -202,65 +202,12 @@ export function ModulosPageContent() {
   return (
     <>
       {/* Hero */}
-      <section
-        className="py-20 text-center"
-        style={{ background: "#16140F" }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <motion.span
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="block text-xs font-semibold tracking-[0.16em] mb-5"
-            style={{ color: "#FFCC99" }}
-          >
-            10 MÓDULOS INTEGRADOS
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-heading text-3xl sm:text-4xl lg:text-6xl font-bold text-[#F2EEE6] mb-5"
-          >
-            Todo lo que tu negocio necesita,
-            <br />
-            <span style={{ color: "#1BAE91" }}>en un solo lugar</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-[#A8A094] text-lg max-w-2xl mx-auto mb-8"
-          >
-            Activa solo los módulos que necesitas. PyCore crece contigo: empieza con lo básico y expande conforme tu negocio lo exija, sin cambiar de sistema ni migrar datos.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center justify-center gap-3 flex-wrap"
-          >
-            <button
-              onClick={() => openModal()}
-              className="rounded-btn px-6 py-3 font-semibold text-sm transition-opacity hover:opacity-90"
-              style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
-            >
-              Solicitar Demo
-            </button>
-            <a
-              href="/#planes"
-              className="border border-[#1BAE91]/50 text-[#7AE0C3] rounded-full px-6 py-2.5 font-semibold text-sm hover:border-[#1BAE91] transition-colors"
-            >
-              Ver Planes →
-            </a>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Stats bar */}
       <div className="bg-[var(--card)] border-y border-[var(--border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           {[
-            { value: "10", label: "Módulos integrados" },
+            { value: "11", label: "Módulos integrados" },
             { value: "1", label: "Única plataforma" },
             { value: "∞", label: "Escalabilidad" },
             { value: "100%", label: "Hecho en México" },

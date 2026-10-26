@@ -5,8 +5,12 @@ import { DemoModalProvider } from "@/lib/demo-context";
 import { DemoModal } from "@/components/ui/DemoModal";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { TransicionPagina, BarraDeAvance } from "@/components/layout/TransicionPagina";
+import { RielRedes } from "@/components/layout/RielRedes";
 import { MascotPopup } from "@/components/ui/MascotPopup";
-import { COMPANY_NAME, COMPANY_URL, DEVELOPER_NAME, DEVELOPER_URL, REPO_URL, SOCIAL_LINKS } from "@/lib/constants";
+import {
+  COMPANY_NAME, COMPANY_URL, CONTACTO, DEVELOPER_NAME, DEVELOPER_PERFIL,
+  DEVELOPER_URL, REPO_URL, SOCIAL_LINKS,
+} from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -123,20 +127,34 @@ const jsonLd = {
         "@type": "ImageObject",
         url:     `${SITE_URL}/Logo-Completo.png`,
       },
+      employee: { "@id": `${SITE_URL}/#developer` },
       contactPoint: {
         "@type":       "ContactPoint",
         contactType:   "sales",
-        email:         "hola@pycore.app",
+        email:         CONTACTO.email,
+        telephone:     `+${CONTACTO.whatsapp}`,
         areaServed:    "MX",
         availableLanguage: "Spanish",
       },
     },
     {
+      /*
+        La persona, con sus perfiles verificables. `sameAs` es lo que permite
+        a un buscador unir este sitio con su ficha en la empresa y su
+        portafolio en vez de tratarlos como tres páginas sin relación — y la
+        entidad pesa hoy más que repetir palabras clave.
+      */
       "@type":   "Person",
       "@id":     `${SITE_URL}/#developer`,
       name:      DEVELOPER_NAME,
-      url:       DEVELOPER_URL,
-      jobTitle:  "Desarrollador de software",
+      url:       DEVELOPER_PERFIL,
+      jobTitle:  "PyCore Lead Developer & DevOps Engineer",
+      sameAs:    [DEVELOPER_PERFIL, DEVELOPER_URL, REPO_URL],
+      worksFor:  { "@id": `${SITE_URL}/#organization` },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name:    "Universidad Autónoma del Estado de México",
+      },
     },
     {
       "@type":            "SoftwareApplication",
@@ -164,6 +182,12 @@ const jsonLd = {
       publisher: { "@id": `${SITE_URL}/#organization` },
       copyrightHolder: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "es-MX",
+      audience: {
+        "@type": "Audience",
+        audienceType: "Pequeñas y medianas empresas",
+        geographicArea: { "@type": "Country", name: "México" },
+      },
+      softwareHelp: { "@type": "CreativeWork", url: `${SITE_URL}/documentos` },
       featureList: [
         "Inventario en tiempo real",
         "Ventas y Punto de Venta (POS) offline",
@@ -281,6 +305,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <DemoModalProvider>
             <BarraDeAvance />
+            <RielRedes />
             <TransicionPagina>{children}</TransicionPagina>
             <DemoModal />
             <ScrollToTop />

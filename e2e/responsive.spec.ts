@@ -13,7 +13,8 @@ import { expect, test } from "@playwright/test";
   ninguna de las dos resoluciones y en ninguna pantalla.
 */
 
-const RUTAS = ["/", "/demo", "/modulos", "/capacidades", "/documentos", "/plataforma", "/tezca", "/tienda"];
+const RUTAS = ["/", "/demo", "/giros", "/migracion", "/contacto", "/accesibilidad",
+  "/modulos", "/capacidades", "/documentos", "/plataforma", "/tezca", "/tienda"];
 
 for (const ruta of RUTAS) {
   test(`${ruta} no desborda a lo ancho`, async ({ page }, info) => {

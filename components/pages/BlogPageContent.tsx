@@ -27,40 +27,6 @@ export function BlogPageContent({ posts }: { posts: PostSummary[] }) {
   return (
     <>
       {/* Hero */}
-      <section
-        className="py-20 relative overflow-hidden"
-        style={{ background: "#16140F" }}
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="block text-xs font-semibold tracking-[0.16em] mb-5"
-            style={{ color: "#FFCC99" }}
-          >
-            BLOG PYCORE
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F2EEE6] mb-5"
-          >
-            Ideas para operar mejor
-            <br />
-            <span style={{ color: "#1BAE91" }}>tu negocio</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-[#A8A094] text-lg max-w-2xl mx-auto"
-          >
-            Inventario, ventas, impuestos y tecnología, explicados para PyMEs mexicanas.
-            Sin humo y sin tecnicismos innecesarios.
-          </motion.p>
-        </div>
-      </section>
 
       {/* Filtro por categoría */}
       <section className="bg-[var(--bg)] pt-10">

@@ -66,8 +66,13 @@ export function BarraDeAvance() {
         top: 0,
         left: 0,
         right: 0,
-        height: "2px",
+        // 2 px no se ven: a ese grosor la barra compite con el borde de la
+        // cabecera y se lee como parte de ella. Con 5 px es un indicador.
+        height: "5px",
         background: "var(--accent)",
+        // Un canto más oscuro abajo la despega de la cabecera, que en tema
+        // claro es casi del mismo tono que el lienzo.
+        boxShadow: "0 1px 3px color-mix(in srgb, var(--accent) 45%, transparent)",
         zIndex: 9998,
       }}
     />

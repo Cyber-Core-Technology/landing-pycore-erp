@@ -3,6 +3,20 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
 
+  /*
+    El directorio de build, configurable por entorno.
+
+    `next build` escribe en el mismo `.next` que está usando `next dev`, así
+    que verificar con el servidor de desarrollo levantado lo dejaba sirviendo
+    una mezcla de dos builds: rutas en 500 intermitente, CSS que no carga y
+    `Cannot find module './611.js'`. Pasó tres veces, y las tres el diagnóstico
+    costó más que el arreglo.
+
+    Con esto, `npm run verificar` construye en `.next-pruebas` y no toca el
+    `.next` de quien está trabajando.
+  */
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+
   // Compresión gzip/br de respuestas
   compress: true,
 
@@ -13,6 +27,18 @@ const nextConfig: NextConfig = {
   },
 
   // Cabeceras HTTP para assets estáticos y seguridad
+  /*
+    `/nosotros` fue una página propia durante un rato y pudo quedar enlazada
+    fuera. Ahora ese contenido vive dentro de Contacto, así que la ruta
+    redirige en vez de dar 404 — y permanente, para que un buscador traslade
+    lo que tuviera indexado en lugar de empezar de cero.
+  */
+  async redirects() {
+    return [
+      { source: "/nosotros", destination: "/contacto#quienes-somos", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {
@@ -24,13 +50,36 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy",         value: "camera=(), microphone=(), geolocation=()" },
         ],
       },
-      {
-        // Assets estáticos: caché agresiva (Next los versionea con hash)
-        source: "/_next/static/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
+      /*
+        Caché agresiva de los assets **sólo en producción**.
+
+        La premisa de `immutable` es que el nombre del archivo cambia cuando
+        cambia su contenido, y eso sólo es cierto en el build: `next dev`
+        sirve nombres fijos como `/_next/static/chunks/webpack.js`. Con este
+        encabezado puesto en desarrollo, el navegador recibe la orden de
+        guardarlo **un año sin revalidar**, así que sigue ejecutando el
+        código de hace tres reinicios contra el HTML nuevo que manda el
+        servidor — y lo que se ve es un error de hidratación señalando a un
+        componente que ya está bien.
+
+        Costó tres sesiones de «recarga forzada y vuelve a probar». Si el
+        archivo no lleva hash, no puede ser `immutable`.
+      */
+      ...(process.env.NODE_ENV === "production"
+        ? [
+            {
+              source: "/_next/static/:path*",
+              headers: [
+                { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+              ],
+            },
+          ]
+        : [
+            {
+              source: "/_next/static/:path*",
+              headers: [{ key: "Cache-Control", value: "no-store, must-revalidate" }],
+            },
+          ]),
       {
         // Imágenes públicas
         source: "/(.*)\\.(png|jpg|jpeg|svg|ico|webp|avif)$",

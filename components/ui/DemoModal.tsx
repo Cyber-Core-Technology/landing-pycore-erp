@@ -256,8 +256,8 @@ export function DemoModal() {
                     {status === "error" && (
                       <p className="text-sm text-[var(--color-error)] text-center">
                         Ocurrió un error. Intenta de nuevo o escríbenos a{" "}
-                        <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@pycore.app"}`} className="underline">
-                          {process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@pycore.app"}
+                        <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "soporte@pycore.app"}`} className="underline">
+                          {process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "soporte@pycore.app"}
                         </a>
                       </p>
                     )}

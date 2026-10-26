@@ -13,6 +13,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority:         1.0,
     },
     {
+      url:              `${base}/giros`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.9,
+    },
+    {
+      url:              `${base}/migracion`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.9,
+    },
+    {
+      url:              `${base}/contacto`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.7,
+    },
+    {
+      url:              `${base}/accesibilidad`,
+      lastModified:     now,
+      changeFrequency:  "monthly",
+      priority:         0.5,
+    },
+    {
       url:              `${base}/demo`,
       lastModified:     now,
       changeFrequency:  "monthly",

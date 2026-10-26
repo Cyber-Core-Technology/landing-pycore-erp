@@ -31,11 +31,11 @@ export function TicketDemo({
 }) {
   return (
     <div
-      className="rounded-card overflow-hidden h-full"
+      className="rounded-card overflow-hidden"
       style={{ background: "#FFFFFF", border: "1px solid var(--border)" }}
     >
       <div
-        className="px-4 py-3 flex items-center gap-2 sticky top-0 z-10"
+        className="px-4 py-3 flex items-center gap-2"
         style={{ background: "var(--tint)" }}
       >
         <span style={{ color: "var(--accent-ink)" }} aria-hidden="true">✓</span>

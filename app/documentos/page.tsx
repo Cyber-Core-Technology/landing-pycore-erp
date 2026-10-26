@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { grafo, metadatosDe, migajaJsonLd, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
@@ -6,25 +7,14 @@ import { DocumentosSection } from "@/components/sections/DocumentosSection";
 import { CTASection } from "@/components/sections/CTASection";
 import { DOCUMENTOS } from "@/lib/documentos";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Documentos que genera PyCore SGC — ejemplos en PDF para descargar",
-  description:
-    "Descarga los PDF que genera el sistema: reporte de ventas, corte de caja, resumen diario, expediente de RRHH y ticket de 80 mm. Archivos reales con datos de ejemplo.",
-  keywords: [
-    "reporte de ventas PDF", "corte de caja PDF", "ticket de venta 80mm",
-    "expediente de empleado", "reportes ERP México",
-  ],
-  alternates: { canonical: `${SITE_URL}/documentos` },
-  openGraph: {
-    title: "Los documentos que genera PyCore SGC",
-    description:
-      "Cinco PDF reales, con datos, listos para descargar: reporte, corte de caja, resumen diario, expediente y ticket.",
-    url: `${SITE_URL}/documentos`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Documentos de PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "PDF de ejemplo: reportes, cortes y tickets",
+  descripcion: "Descarga los PDF que genera el sistema: reporte de ventas, corte de caja, resumen diario, expediente de RRHH y ticket de 80 mm. Archivos reales con datos de ejemplo.",
+  ruta: "/documentos",
+  claves: ["reporte de ventas PDF", "corte de caja PDF", "ticket de venta 80mm", "expediente de empleado", "reportes ERP México"],
+  imagenAlt: "Los cinco PDF de ejemplo que genera PyCore SGC",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",

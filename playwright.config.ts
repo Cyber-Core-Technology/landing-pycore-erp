@@ -28,7 +28,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npx next start -p 3100",
+    // Arranca el build de pruebas, no el de quien está trabajando.
+    command: "NEXT_DIST_DIR=${NEXT_DIST_DIR:-.next-pruebas} npx next start -p 3100",
     url: "http://127.0.0.1:3100",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

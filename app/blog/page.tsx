@@ -1,27 +1,19 @@
 import type { Metadata } from "next";
+import { metadatosDe, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
 import { BlogPageContent } from "@/components/pages/BlogPageContent";
 import { getAllPosts, toSummary } from "@/lib/blog";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Blog — Gestión, inventario y tecnología para PyMEs",
-  description:
-    "Artículos prácticos sobre control de inventario, punto de venta, impuestos mexicanos e inteligencia artificial aplicada a negocios pequeños y medianos.",
-  keywords: [
-    "blog ERP México", "control de inventario PyME", "punto de venta offline",
-    "IVA IEPS software", "IA para PyMEs", "gestión de negocios México",
-  ],
-  alternates: { canonical: `${SITE_URL}/blog` },
-  openGraph: {
-    title:       "Blog PyCore — Ideas para operar mejor tu negocio",
-    description: "Inventario, ventas, impuestos y tecnología explicados para PyMEs mexicanas.",
-    url:         `${SITE_URL}/blog`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Blog PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "Blog: gestión, inventario y tecnología",
+  descripcion: "Artículos prácticos sobre control de inventario, punto de venta, impuestos mexicanos e inteligencia artificial aplicada a negocios pequeños y medianos.",
+  ruta: "/blog",
+  claves: ["blog ERP", "gestión de inventario", "consejos PyME", "tecnología para negocios"],
+  imagenAlt: "Blog de PyCore SGC",
+});
 
 export default function BlogPage() {
   const posts = getAllPosts();
@@ -64,6 +56,12 @@ export default function BlogPage() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <EncabezadoPagina
+          icon="bulb"
+          cejilla="BLOG"
+          titulo="Lo que aprendemos operando"
+          bajada="Inventario, punto de venta, facturación y el día a día de un negocio mexicano. Sin humo y sin listas de diez trucos."
         />
         <BlogPageContent posts={posts.map(toSummary)} />
       </main>

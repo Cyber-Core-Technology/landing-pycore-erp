@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { grafo, metadatosDe, migajaJsonLd, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
@@ -7,25 +8,14 @@ import { DifferentiatorsSection } from "@/components/sections/DifferentiatorsSec
 import { CTASection } from "@/components/sections/CTASection";
 import { CAPACIDADES } from "@/lib/capacidades";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Qué hace PyCore SGC de verdad — las capacidades que sólo se ven operando",
-  description:
-    "Presentaciones de producto, recetas y combos, venta por peso, cola offline que no duplica ventas, listas de precios leídas con IA, CFDI por renglones y migración desde otro POS.",
-  keywords: [
-    "POS offline México", "venta por peso granel", "presentaciones de producto",
-    "lista de precios proveedor", "migración punto de venta", "recetas e insumos",
-  ],
-  alternates: { canonical: `${SITE_URL}/capacidades` },
-  openGraph: {
-    title: "Lo que sólo se ve operando — PyCore SGC",
-    description:
-      "Los detalles que deciden si un sistema sirve o estorba: el cigarro suelto y por cartón, el granel en gramos, cobrar sin internet sin duplicar la venta.",
-    url: `${SITE_URL}/capacidades`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Capacidades de PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "POS offline, granel, presentaciones y CFDI",
+  descripcion: "Presentaciones de producto, recetas y combos, venta por peso, cola offline que no duplica ventas, listas de precios leídas con IA, CFDI por renglones y migración desde otro POS.",
+  ruta: "/capacidades",
+  claves: ["POS offline México", "venta por peso granel", "presentaciones de producto", "lista de precios proveedor", "migración punto de venta", "recetas e insumos"],
+  imagenAlt: "Las capacidades de PyCore SGC que sólo se ven operando",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",

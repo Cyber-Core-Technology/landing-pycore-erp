@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TEZCA">
+  <!-- Jaguar: el nahual de Tezcatlipoca -->
+  <path d="M9.5 8.5L26 15.5C29.5 14.6 34.5 14.6 38 15.5L54.5 8.5L53.5 30C53.5 45 44.5 56.5 32 56.5C19.5 56.5 10.5 45 10.5 30Z" fill="#18AE91" stroke="#18AE91" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Ojos de obsidiana -->
+  <path d="M14.5 30.5C19 26 25 28 27.5 33C22.5 37 16.5 36 14.5 30.5Z" fill="#0A1013"/>
+  <path d="M49.5 30.5C45 26 39 28 36.5 33C41.5 37 47.5 36 49.5 30.5Z" fill="#0A1013"/>
+  <!-- Nariz -->
+  <path d="M27.5 43.5H36.5L32 49Z" fill="#0A1013" stroke="#0A1013" stroke-width="2.5" stroke-linejoin="round"/>
+</svg>

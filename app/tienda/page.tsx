@@ -1,26 +1,18 @@
 import type { Metadata } from "next";
+import { metadatosDe, SITE_URL } from "@/lib/seo";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { EncabezadoPagina } from "@/components/layout/EncabezadoPagina";
 import { TiendaPageContent } from "@/components/pages/TiendaPageContent";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Tienda en Línea para tu Negocio",
-  description:
-    "Lanza tu tienda en línea conectada en tiempo real con tu inventario. Sin doble captura, sin desincronía. Cobros con Mercado Pago, pedidos programados y seguimiento en tiempo real.",
-  keywords: [
-    "tienda en línea México", "e-commerce PyME", "tienda online inventario",
-    "Mercado Pago integrado", "catálogo online", "pedidos en línea México",
-  ],
-  alternates: { canonical: `${SITE_URL}/tienda` },
-  openGraph: {
-    title:       "Tienda en Línea para tu Negocio — PyCore SGC",
-    description: "Tu catálogo público conectado en tiempo real con tu inventario. Sin doble captura. Mercado Pago incluido.",
-    url:         `${SITE_URL}/tienda`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Tienda en Línea — PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "Tienda en línea con stock en tiempo real",
+  descripcion: "Lanza tu tienda en línea conectada en tiempo real con tu inventario. Sin doble captura, sin desincronía. Cobros con Mercado Pago, pedidos programados y seguimiento en tiempo real.",
+  ruta: "/tienda",
+  claves: ["tienda en línea México", "ecommerce con inventario", "catálogo público", "Mercado Pago", "vender en línea PyME"],
+  imagenAlt: "La tienda en línea de PyCore SGC",
+});
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -61,6 +53,12 @@ export default function TiendaPage() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <EncabezadoPagina
+          icon="store"
+          cejilla="TU TIENDA EN LÍNEA"
+          titulo="Tu catálogo público, conectado al mismo inventario"
+          bajada="Lo que vendes en el mostrador y lo que vendes en línea salen de la misma existencia. Sin doble captura y sin que se te caiga el stock por desincronía."
         />
         <TiendaPageContent />
       </main>

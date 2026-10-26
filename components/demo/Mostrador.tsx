@@ -307,9 +307,47 @@ export function Mostrador({ catalogo, agregados = [] }: Props) {
       {/* ── Ticket ────────────────────────────────────────────────── */}
       <div className="flex flex-col gap-4 min-w-0 lg:sticky lg:top-20">
         <div
-          className="rounded-card p-4 sm:p-5 relative flex flex-col"
+          className="rounded-card p-4 sm:p-5 flex flex-col"
           style={{ background: "var(--card)", border: "1px solid var(--border)" }}
         >
+          {/*
+            El ticket **sustituye** a la venta dentro de la misma tarjeta, en
+            vez de superponerse.
+
+            Encima iba `absolute inset-0`, así que tomaba el alto del panel
+            de la venta —que al cobrar se queda vacío y corto— y el ticket se
+            cortaba por abajo: el botón de cerrar quedaba fuera. Ocupando su
+            lugar, la tarjeta crece con el contenido y no hay nada que
+            recortar. Sigue siendo la misma sección, que era el punto.
+          */}
+          <AnimatePresence mode="wait">
+            {cobrado ? (
+              <motion.div
+                key="ticket"
+                role="dialog"
+                aria-label="Ticket de la venta"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                className="-m-4 sm:-m-5"
+              >
+                <TicketDemo
+                  ticket={cobrado}
+                  empresa={catalogo.empresa}
+                  folio={ventas.n}
+                  onCerrar={() => setCobrado(null)}
+                  refCerrar={cerrarTicket}
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="venta"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.22 }}
+                className="flex flex-col"
+              >
           <div className="flex items-baseline justify-between gap-2 mb-3">
             <h3 className="font-heading font-semibold text-[15px]" style={{ color: "var(--text)" }}>
               Venta en curso
@@ -410,34 +448,10 @@ export function Mostrador({ catalogo, agregados = [] }: Props) {
           >
             Reiniciar el mostrador
           </button>
-
-          {/*
-            El ticket sale **sobre la venta**, no debajo: abajo había que
-            buscarlo con la vista y en el teléfono quedaba fuera de pantalla,
-            así que lo que se acababa de hacer no se veía ocurrir.
-          */}
-          <AnimatePresence>
-            {cobrado && (
-              <motion.div
-                role="dialog"
-                aria-label="Ticket de la venta"
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 rounded-card overflow-y-auto"
-                style={{ background: "var(--card)" }}
-              >
-                <TicketDemo
-                  ticket={cobrado}
-                  empresa={catalogo.empresa}
-                  folio={ventas.n}
-                  onCerrar={() => setCobrado(null)}
-                  refCerrar={cerrarTicket}
-                />
               </motion.div>
             )}
           </AnimatePresence>
+
         </div>
 
         <TezcaDemo

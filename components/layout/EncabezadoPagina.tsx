@@ -28,8 +28,21 @@ export function EncabezadoPagina({
   icon: string;
 }) {
   return (
-    <section style={{ background: "var(--band)" }} className="pt-28 pb-14">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      style={{ background: "var(--band)" }}
+      className="pt-28 pb-14 relative overflow-hidden"
+    >
+      {/*
+        Dos resplandores que derivan, cruzándose a distinta velocidad. La
+        maqueta y el bucle viven en `globals.css` (`.resplandor`): escritos
+        con framer-motion no llegaban a aplicarse —`transform` se quedaba en
+        `none`— y un bucle de fondo no necesita el motor de animación de
+        React. Se apagan solos con `prefers-reduced-motion`.
+      */}
+      <span aria-hidden="true" className="resplandor resplandor--uno" />
+      <span aria-hidden="true" className="resplandor resplandor--dos" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <Revelar desde="arriba" duracion={0.4}>
           <nav aria-label="Migaja de pan" className="mb-6">
             <Link
@@ -48,7 +61,7 @@ export function EncabezadoPagina({
         <div className="flex items-start gap-5">
           <Revelar desde="escala" duracion={0.5}>
             <span
-              className="hidden sm:inline-flex items-center justify-center w-14 h-14 rounded-2xl flex-shrink-0"
+              className="icono-flota hidden sm:inline-flex items-center justify-center w-14 h-14 rounded-2xl flex-shrink-0"
               style={{ background: "var(--band-tile)", color: "var(--band-eyebrow)" }}
             >
               <Icon name={icon} size={26} />

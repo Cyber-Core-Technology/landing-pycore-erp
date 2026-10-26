@@ -368,7 +368,7 @@ function ImportScene({ reduced }: SceneProps) {
             <Icon name="database" size={13} />
           </span>
           <span className="text-[10px] font-semibold" style={{ color: "var(--text-2)" }}>
-            Eleventa
+            Tu punto de venta
           </span>
         </motion.div>
       </div>

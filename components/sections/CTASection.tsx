@@ -68,7 +68,7 @@ export function CTASection() {
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={() => openModal()}
-              className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-btn text-base cursor-pointer transition-opacity hover:opacity-90"
+              className="boton-vivo inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-btn text-base cursor-pointer transition-opacity hover:opacity-90"
               style={{ background: "var(--band-btn)", color: "var(--band-btn-fg)" }}
               aria-label="Solicitar demo gratuita de PyCore SGC"
             >

@@ -20,12 +20,13 @@ const TICKET_IN = 2.3;
 // Hardware y cumplimiento que el sistema soporta de verdad: lector de códigos,
 // impresora térmica, báscula, huella del checador y CFDI 4.0.
 const CAPABILITIES = [
-  { icon: "barcode",     text: "Pistola lectora" },
-  { icon: "printer",     text: "Impresora térmica" },
-  { icon: "scale",       text: "Báscula" },
-  { icon: "fingerprint", text: "Checador con huella" },
-  { icon: "receipt",     text: "CFDI 4.0" },
-  { icon: "chat",        text: "Tickets por WhatsApp" },
+  // Cuatro y no seis: seis es una lista, cuatro es un mensaje. Quedan las
+  // tres objeciones reales —hardware, fiscal y quedarse sin red— y el canal
+  // por el que de verdad se entrega un ticket en México.
+  { icon: "barcode", text: "Pistola lectora" },
+  { icon: "scale",   text: "Báscula" },
+  { icon: "receipt", text: "CFDI 4.0" },
+  { icon: "chat",    text: "Tickets por WhatsApp" },
 ];
 
 export function HeroSection() {
@@ -118,8 +119,9 @@ export function HeroSection() {
               style={{ color: "var(--text-3)" }}
             >
               Ventas, inventario, reportes y más, desde un solo lugar. Empieza a
-              operar en tres pasos — y si ya usas Eleventa, migras sin
-              recapturar nada.
+              operar en tres pasos — y si ya traes un punto de venta, tu
+              catálogo, tus clientes y tu historial se migran sin recapturar
+              nada.
             </motion.p>
 
             <motion.div
@@ -131,24 +133,28 @@ export function HeroSection() {
               <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openModal()}
-                className="inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-btn transition-opacity hover:opacity-90 text-base cursor-pointer"
+                className="boton-vivo inline-flex items-center gap-2 font-semibold px-7 py-4 rounded-btn transition-opacity hover:opacity-90 text-base cursor-pointer"
                 style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
                 aria-label="Solicitar demo de PyCore SGC"
               >
                 Solicitar demo gratis
                 <Icon name="arrowRight" size={18} strokeWidth={2} />
               </motion.button>
+              {/*
+                Lleva al demo y no a una lista de funciones: tocarlo convierte
+                mucho más que leerlo, y el demo ya está construido.
+              */}
               <a
-                href="#funciones"
+                href="/demo"
                 className="inline-flex items-center font-semibold px-7 py-4 rounded-btn transition-colors text-base"
                 style={{
                   background: "var(--btn2)",
                   color: "var(--text)",
                   border: "1px solid var(--btn2-border)",
                 }}
-                aria-label="Ver funciones de PyCore SGC"
+                aria-label="Probar PyCore SGC sin registrarte"
               >
-                Ver funciones
+                Pruébalo sin registro
               </a>
             </motion.div>
 
@@ -200,18 +206,97 @@ export function HeroSection() {
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
-            <HeroStepStage
-              step={step}
-              phase={phase}
-              reduced={reduced}
-              onPick={pick}
-              stepMs={STEP_MS}
-              paused={paused}
-              cycle={cycle}
-            />
+            {/*
+              Los satélites se anclan **a la maqueta**, no a la columna.
 
-            <TicketSatellite visible={ticketOut} reduced={reduced} delay={TICKET_IN} />
-            <InsightSatellite visible={insightOut} reduced={reduced} delay={INSIGHT_IN} />
+              Iban sueltos en el contenedor de toda la columna, y al añadir
+              la tarjeta de abajo esa caja creció: el ticket, que se coloca
+              con `bottom`, bajó con ella y quedó encima de lo nuevo. Con su
+              propio `relative` alrededor de la maqueta, lo que pase debajo
+              deja de moverlo.
+            */}
+            <div className="relative">
+              <HeroStepStage
+                step={step}
+                phase={phase}
+                reduced={reduced}
+                onPick={pick}
+                stepMs={STEP_MS}
+                paused={paused}
+                cycle={cycle}
+              />
+
+              <TicketSatellite visible={ticketOut} reduced={reduced} delay={TICKET_IN} />
+              <InsightSatellite visible={insightOut} reduced={reduced} delay={INSIGHT_IN} />
+            </div>
+
+            {/*
+              El pie de la maqueta.
+
+              Está por dos motivos. El de forma: la columna izquierda es más
+              alta —titular, bajada, dos botones, chips y un pie— y la
+              animación sola dejaba la derecha corta, con el bloque flotando
+              a media altura. El de fondo: la maqueta es un ejemplo
+              ilustrativo y lo dice, así que el paso siguiente natural es
+              tocar el de verdad — y hasta ahora no había por dónde.
+            */}
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.75 }}
+              className="rounded-card mt-4 overflow-hidden"
+              style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+            >
+              <a
+                href="/demo"
+                className="flex items-center gap-3 px-4 py-3.5 transition-opacity hover:opacity-85"
+              >
+                <span
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-xl flex-shrink-0"
+                  style={{ background: "var(--tint)", color: "var(--accent-ink)" }}
+                >
+                  <Icon name="cursor" size={19} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-heading font-semibold text-sm" style={{ color: "var(--text)" }}>
+                    Esto no es un video: es el sistema
+                  </span>
+                  <span className="block text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                    Cobra una venta de verdad, sin registrarte
+                  </span>
+                </span>
+                <span className="flex-shrink-0" style={{ color: "var(--accent-ink)" }}>
+                  <Icon name="arrowRight" size={17} />
+                </span>
+              </a>
+
+              <ul
+                className="grid grid-cols-3 list-none p-0 m-0"
+                style={{ borderTop: "1px solid var(--border)" }}
+              >
+                {[
+                  { n: "11", t: "módulos" },
+                  { n: "12", t: "giros" },
+                  { n: "5", t: "PDF de ejemplo" },
+                ].map((x, i) => (
+                  <li
+                    key={x.t}
+                    className="px-3 py-2.5 text-center"
+                    style={{ borderLeft: i > 0 ? "1px solid var(--border)" : undefined }}
+                  >
+                    <span
+                      className="block font-heading font-bold text-base tabular-nums"
+                      style={{ color: "var(--accent-ink)" }}
+                    >
+                      {x.n}
+                    </span>
+                    <span className="block text-[11px]" style={{ color: "var(--text-muted)" }}>
+                      {x.t}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </motion.div>
 
         </div>

@@ -52,3 +52,6 @@ test-results/
 playwright-report/
 blob-report/
 .playwright/
+
+# Build de las pruebas: no es el de desarrollo.
+.next-pruebas/

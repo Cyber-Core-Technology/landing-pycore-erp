@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { grafo, metadatosDe, migajaJsonLd, SITE_URL } from "@/lib/seo";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Navbar } from "@/components/layout/Navbar";
@@ -10,25 +11,14 @@ import { Revelar } from "@/components/ui/Revelar";
 import { Icon } from "@/components/ui/Icon";
 import type { CatalogoDemo } from "@/lib/demoMostrador";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pycore.app";
 
-export const metadata: Metadata = {
-  title: "Pruébalo tú — compra tu plan, sube tu inventario y ponte a vender",
-  description:
-    "El recorrido completo, sin registrarte: elige plan, da de alta un producto y véndelo. Granel en gramos, empaques, variantes y extras, con el ticket al final.",
-  keywords: [
-    "demo punto de venta", "probar ERP gratis", "POS en línea demo",
-    "software para abarrotes", "demo sin registro",
-  ],
-  alternates: { canonical: `${SITE_URL}/demo` },
-  openGraph: {
-    title: "Pruébalo tú — PyCore SGC en tres pasos",
-    description:
-      "Compra tu plan, sube tu inventario y ponte a vender. El recorrido completo, aquí mismo y sin registro.",
-    url: `${SITE_URL}/demo`,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Demo de PyCore SGC" }],
-  },
-};
+export const metadata: Metadata = metadatosDe({
+  titulo: "Prueba el punto de venta sin registro",
+  descripcion: "El recorrido completo, sin registrarte: elige plan, da de alta un producto y véndelo. Granel en gramos, empaques, variantes y extras, con el ticket al final.",
+  ruta: "/demo",
+  claves: ["demo punto de venta", "probar ERP gratis", "POS en línea demo", "software para abarrotes", "demo sin registro"],
+  imagenAlt: "Demo interactiva de PyCore SGC, sin registro",
+});
 
 /*
   El catálogo se lee en el servidor, en build.
