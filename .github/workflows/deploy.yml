@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  # Permite relanzar el deploy desde la pestaña Actions sin inventar un commit.
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -18,15 +24,40 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          command_timeout: 20m
           script: |
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
 
             echo "→ Actualizando código..."
-            git pull origin main
+            git fetch origin main
+            # --ff-only: si el servidor tiene commits propios, el deploy se
+            # detiene y los muestra en vez de mezclarlos o descartarlos.
+            if ! git merge-base --is-ancestor HEAD origin/main; then
+              echo "✗ El servidor tiene commits que no están en origin/main:"
+              git log --oneline origin/main..HEAD
+              exit 1
+            fi
+            git merge --ff-only origin/main
+            echo "  En $(git log -1 --format='%h %s')"
 
+            # Si el build falla, compose no toca el contenedor que está en línea.
             echo "→ Reconstruyendo contenedor..."
             docker compose up -d --build prod
+
+            echo "→ Verificando que el sitio responda..."
+            for i in $(seq 1 15); do
+              if docker compose exec -T prod sh -c 'wget -q --spider "http://$HOSTNAME:3000/"'; then
+                echo "  Responde."
+                break
+              fi
+              if [ "$i" -eq 15 ]; then
+                echo "✗ El contenedor no responde en el puerto 3000."
+                docker compose logs --tail 50 prod
+                exit 1
+              fi
+              sleep 2
+            done
 
             echo "→ Limpiando imágenes antiguas..."
             docker image prune -f
